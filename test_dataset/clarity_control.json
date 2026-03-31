@@ -1,0 +1,118 @@
+{
+  "dataset_name": "clarity_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "instruction": "A predicted score is accepted if it falls within the expected range."
+  },
+  "criterion": "clarity",
+  "items": [
+    {
+      "id": "C001",
+      "previous_message": "As-tu une proposition pour accélérer le traitement des demandes ?",
+      "message": "Je propose de traiter automatiquement les demandes simples et de réserver la validation humaine aux cas sensibles.",
+      "next_message": "D'accord, c'est clair et actionnable.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "C002",
+      "previous_message": "Quel est ton retour sur le nouveau processus ?",
+      "message": "Oui enfin bon, le truc là, avec les étapes, c'est pas forcément idéal comme ça en fait.",
+      "next_message": "Je vois l'idée, mais ce n'est pas très précis.",
+      "expected_score_range": [2, 3]
+    },
+    {
+      "id": "C003",
+      "previous_message": "Comment réduire les erreurs de saisie ?",
+      "message": "Ajouter des contrôles sur les champs critiques et afficher des messages d'erreur explicites permettrait de limiter les erreurs.",
+      "next_message": "Oui, la proposition est facile à comprendre.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "C004",
+      "previous_message": "Que penses-tu du tableau de bord actuel ?",
+      "message": "Il y a des choses qui vont et d'autres non, donc voilà, ça dépend un peu.",
+      "next_message": "Le retour reste trop vague pour être exploitable.",
+      "expected_score_range": [1, 2]
+    },
+    {
+      "id": "C005",
+      "previous_message": "Avez-vous une recommandation pour l'onboarding ?",
+      "message": "Un parcours unique avec checklist, référent identifié et accès outils dès le premier jour serait utile.",
+      "next_message": "Oui, c'est structuré et compréhensible.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "C006",
+      "previous_message": "Faut-il revoir l'organisation des réunions ?",
+      "message": "On pourrait sans doute optimiser un peu le format, peut-être sur certains aspects, selon les cas.",
+      "next_message": "Je comprends l'intention, mais pas la proposition concrète.",
+      "expected_score_range": [2, 3]
+    },
+    {
+      "id": "C007",
+      "previous_message": "Comment améliorer la transmission d'information entre équipes ?",
+      "message": "Créer un point hebdomadaire commun et centraliser les décisions dans un espace partagé améliorerait la circulation de l'information.",
+      "next_message": "Très clair.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "C008",
+      "previous_message": "Quelle est ta lecture du problème ?",
+      "message": "Le souci vient surtout du fait que, globalement, tout se mélange un peu et du coup ce n'est pas simple.",
+      "next_message": "Le constat est compréhensible, mais manque de précision.",
+      "expected_score_range": [2, 3]
+    },
+    {
+      "id": "C009",
+      "previous_message": "As-tu une suggestion sur les validations ?",
+      "message": "Je recommande deux niveaux : validation automatique sous un certain seuil, validation manuelle au-delà.",
+      "next_message": "Très lisible.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "C010",
+      "previous_message": "Peux-tu préciser ton avis sur la documentation ?",
+      "message": "Franchement, c'est pas top, il manque des choses, mais bon.",
+      "next_message": "C'est trop flou pour être vraiment utile.",
+      "expected_score_range": [1, 2]
+    },
+    {
+      "id": "C011",
+      "previous_message": "Comment réduire les tickets répétitifs ?",
+      "message": "Il faudrait identifier les demandes fréquentes, créer des réponses standardisées et les rendre accessibles depuis le portail interne.",
+      "next_message": "Oui, le message est précis.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "C012",
+      "previous_message": "Quel changement prioriser ?",
+      "message": "Celui qui, à mon sens, aurait l'effet le plus visible rapidement serait la simplification du formulaire initial.",
+      "next_message": "C'est compréhensible, même si ça pourrait être encore plus détaillé.",
+      "expected_score_range": [3, 4]
+    },
+    {
+      "id": "C013",
+      "previous_message": "Ton avis sur l'outil actuel ?",
+      "message": "L'outil couvre les besoins de base, mais la navigation est peu intuitive et certaines actions demandent trop d'étapes.",
+      "next_message": "Message clair et exploitable.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "C014",
+      "previous_message": "Que faudrait-il changer dans le process ?",
+      "message": "C'est surtout la manière dont ça se passe qui pose problème, pas forcément le reste.",
+      "next_message": "Le propos est trop indéterminé.",
+      "expected_score_range": [1, 2]
+    },
+    {
+      "id": "C015",
+      "previous_message": "Peux-tu résumer ta recommandation ?",
+      "message": "Je recommande de tester la nouvelle procédure sur un périmètre réduit pendant deux semaines avant un déploiement plus large.",
+      "next_message": "C'est net et facile à suivre.",
+      "expected_score_range": [4, 5]
+    }
+  ]
+}

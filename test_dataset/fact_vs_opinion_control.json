@@ -1,0 +1,117 @@
+{
+    "dataset_name": "fact_vs_opinion_control",
+    "version": "v1",
+    "language": "fr",
+    "scale": {
+      "min": 1,
+      "max": 5,
+      "instruction": "A predicted score is accepted if it falls within the expected range."
+    },
+    "items": [
+      {
+        "id": "FVO001",
+        "previous_message": "Quel est ton avis sur le nouveau processus de validation ?",
+        "message": "Ce processus est mauvais et inefficace.",
+        "next_message": "C'est un jugement, pas un fait vérifié.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "FVO002",
+        "previous_message": "Peux-tu décrire l'impact du nouveau formulaire ?",
+        "message": "Depuis son déploiement, le temps moyen de saisie est passé de 8 à 5 minutes selon les mesures de l'équipe support.",
+        "next_message": "Ici, on a une affirmation factuelle vérifiable.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "FVO003",
+        "previous_message": "Que penses-tu de cette solution ?",
+        "message": "À mon avis, cette interface est plus agréable à utiliser, même si je n'ai pas de mesure précise pour le montrer.",
+        "next_message": "L'opinion est clairement présentée comme telle.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "FVO004",
+        "previous_message": "As-tu un retour sur l'outil actuel ?",
+        "message": "Cet outil est objectivement le meilleur du marché.",
+        "next_message": "La formulation mélange jugement et certitude non étayée.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "FVO005",
+        "previous_message": "Faut-il revoir les réunions hebdomadaires ?",
+        "message": "Plusieurs participants ont signalé que les réunions duraient trop longtemps, mais je trouve aussi le format globalement peu efficace.",
+        "next_message": "Le message mélange fait rapporté et opinion personnelle.",
+        "expected_score_range": [3, 4]
+      },
+      {
+        "id": "FVO006",
+        "previous_message": "Comment évalues-tu la nouvelle documentation ?",
+        "message": "La documentation contient 12 sections et 3 exemples d'intégration, mais je la trouve encore difficile à parcourir.",
+        "next_message": "Distinction claire entre éléments factuels et appréciation.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "FVO007",
+        "previous_message": "Quel est ton retour sur cette décision ?",
+        "message": "Cette décision est une erreur, c'est évident.",
+        "next_message": "Jugement affirmé sans élément vérifiable.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "FVO008",
+        "previous_message": "Le support a-t-il été impacté ?",
+        "message": "Le nombre de tickets a augmenté cette semaine, donc la nouvelle organisation est mauvaise.",
+        "next_message": "On part d'un fait possible, mais la conclusion reste une opinion présentée trop directement.",
+        "expected_score_range": [2, 3]
+      },
+      {
+        "id": "FVO009",
+        "previous_message": "Peux-tu préciser ton analyse ?",
+        "message": "D'après les chiffres du tableau de bord, le taux de réouverture a baissé de 15 %, ce qui suggère une amélioration du traitement.",
+        "next_message": "Bonne articulation entre fait observé et interprétation prudente.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "FVO010",
+        "previous_message": "Comment qualifier cette proposition ?",
+        "message": "C'est une bonne proposition.",
+        "next_message": "Simple opinion, sans confusion explicite mais sans distinction utile non plus.",
+        "expected_score_range": [2, 3]
+      },
+      {
+        "id": "FVO011",
+        "previous_message": "Quel bilan fais-tu du pilote ?",
+        "message": "Le pilote a concerné deux équipes pendant trois semaines. Personnellement, je pense que c'est encore trop court pour conclure.",
+        "next_message": "Les faits et l'opinion sont bien séparés.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "FVO012",
+        "previous_message": "Pourquoi veux-tu changer d'outil ?",
+        "message": "Tout le monde déteste cet outil, donc il faut en changer.",
+        "next_message": "Généralisation vague et opinion présentée comme si elle décrivait la réalité.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "FVO013",
+        "previous_message": "Quel est ton diagnostic ?",
+        "message": "Le délai moyen de traitement reste élevé. En revanche, dire que l'équipe ne fait pas d'effort serait un jugement excessif.",
+        "next_message": "Bonne séparation entre constat factuel et jugement à éviter.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "FVO014",
+        "previous_message": "As-tu des réserves sur ce plan ?",
+        "message": "Je n'aime pas cette approche, même si je reconnais que les indicateurs actuels ne montrent pas encore d'effet négatif.",
+        "next_message": "Le message distingue ressenti personnel et absence de preuve contraire.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "FVO015",
+        "previous_message": "Que peut-on conclure à ce stade ?",
+        "message": "On a observé quelques retards cette semaine, mais il est trop tôt pour affirmer que le nouveau processus est inefficace.",
+        "next_message": "Très bonne distinction entre observation et conclusion prudente.",
+        "expected_score_range": [4, 5]
+      }
+    ]
+  }

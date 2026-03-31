@@ -1,0 +1,118 @@
+{
+    "dataset_name": "relevance_control",
+    "version": "v1",
+    "language": "fr",
+    "scale": {
+      "min": 1,
+      "max": 5,
+      "instruction": "A predicted score is accepted if it falls within the expected range."
+    },
+    "criterion": "relevance",
+    "items": [
+      {
+        "id": "R001",
+        "previous_message": "On doit choisir un nouvel outil de gestion de projet pour le trimestre prochain.",
+        "message": "Je pense qu'il faudrait comparer les fonctionnalités de reporting et d'intégration avant de décider.",
+        "next_message": "Oui, surtout la compatibilité avec nos outils actuels.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R002",
+        "previous_message": "On discute du budget formation pour l'année prochaine.",
+        "message": "Au fait, il fait vraiment froid en ce moment dans les bureaux.",
+        "next_message": "On pourra parler des locaux plus tard, restons sur le budget.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "R003",
+        "previous_message": "Faut-il maintenir deux étapes de validation sur les demandes d'achat ?",
+        "message": "On pourrait supprimer une validation pour les petits montants et garder les deux pour les achats sensibles.",
+        "next_message": "Oui, ça permettrait d'adapter la règle au niveau de risque.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R004",
+        "previous_message": "Quel retour avez-vous sur la nouvelle documentation API ?",
+        "message": "Je préfère travailler le matin, je suis plus efficace.",
+        "next_message": "Ce n'est pas vraiment lié à la documentation.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "R005",
+        "previous_message": "On cherche des pistes pour réduire le délai de traitement des tickets.",
+        "message": "Une meilleure catégorisation automatique pourrait aider à prioriser plus vite les demandes.",
+        "next_message": "Bonne idée, surtout pour les tickets récurrents.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R006",
+        "previous_message": "On doit arbitrer entre trois prestataires cloud.",
+        "message": "Le prestataire B est peut-être plus cher, mais son support et ses garanties de disponibilité peuvent justifier l'écart.",
+        "next_message": "Oui, il faut regarder le coût total et pas seulement le prix facial.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R007",
+        "previous_message": "Avez-vous des idées pour améliorer l'onboarding des nouveaux arrivants ?",
+        "message": "Il faudrait aussi refaire la décoration de la salle de pause.",
+        "next_message": "Sujet intéressant, mais pas prioritaire pour l'onboarding.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "R008",
+        "previous_message": "Le taux d'erreur augmente sur le processus de saisie manuelle.",
+        "message": "On pourrait introduire des contrôles automatiques sur les champs les plus sensibles.",
+        "next_message": "Oui, surtout sur les montants et les identifiants clients.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R009",
+        "previous_message": "Comment mieux organiser les réunions hebdomadaires ?",
+        "message": "Il faudrait envoyer l'ordre du jour à l'avance et limiter les points hors sujet.",
+        "next_message": "D'accord, ça aiderait à mieux cadrer les échanges.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R010",
+        "previous_message": "On débat du choix entre développement interne et achat d'une solution existante.",
+        "message": "Le match d'hier était vraiment incroyable.",
+        "next_message": "Revenons au sujet de la solution logicielle.",
+        "expected_score_range": [1, 1]
+      },
+      {
+        "id": "R011",
+        "previous_message": "Quels indicateurs faudrait-il ajouter au tableau de bord des managers ?",
+        "message": "Un indicateur sur les délais moyens de traitement serait utile, ainsi qu'un suivi des tickets réouverts.",
+        "next_message": "Oui, ça donnerait une vision plus opérationnelle.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R012",
+        "previous_message": "On cherche à réduire les coûts d'infrastructure sans dégrader le service.",
+        "message": "On pourrait commencer par identifier les ressources sous-utilisées avant de couper quoi que ce soit.",
+        "next_message": "Oui, sinon on risque de dégrader la production inutilement.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R013",
+        "previous_message": "Faut-il imposer un format unique pour les comptes-rendus ?",
+        "message": "Je ne sais pas si tout le monde a bien reçu l'invitation de la réunion de demain.",
+        "next_message": "On parlera de l'invitation après, restons sur le format.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "R014",
+        "previous_message": "Le support interne reçoit beaucoup de demandes redondantes.",
+        "message": "Une FAQ plus visible pourrait réduire une partie des sollicitations simples.",
+        "next_message": "Oui, surtout si on la relie directement au portail.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "R015",
+        "previous_message": "Comment améliorer la coordination entre l'équipe produit et l'équipe support ?",
+        "message": "On pourrait instaurer un point mensuel de revue des incidents récurrents et des priorités produit.",
+        "next_message": "Bonne idée, ça créerait un vrai espace de synchronisation.",
+        "expected_score_range": [4, 5]
+      }
+    ]
+  }

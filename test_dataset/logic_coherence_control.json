@@ -1,0 +1,118 @@
+{
+    "dataset_name": "logic_coherence_control",
+    "version": "v1",
+    "language": "fr",
+    "scale": {
+      "min": 1,
+      "max": 5,
+      "instruction": "A predicted score is accepted if it falls within the expected range."
+    },
+    "criterion": "logic_coherence",
+    "items": [
+      {
+        "id": "L001",
+        "previous_message": "On veut réduire le temps de traitement des demandes internes.",
+        "message": "Si on automatise les demandes simples, on réduit le volume traité manuellement et on peut concentrer les équipes sur les cas complexes.",
+        "next_message": "Oui, le raisonnement se tient.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "L002",
+        "previous_message": "Pourquoi proposes-tu de modifier le formulaire ?",
+        "message": "Il faut ajouter plus de champs pour aller plus vite.",
+        "next_message": "Je ne vois pas bien le lien logique.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "L003",
+        "previous_message": "Comment limiter les erreurs sur les commandes ?",
+        "message": "En contrôlant automatiquement les données obligatoires avant soumission, on évite qu'une partie des erreurs arrive jusqu'au traitement manuel.",
+        "next_message": "Oui, c'est cohérent.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "L004",
+        "previous_message": "Faut-il garder deux niveaux de validation ?",
+        "message": "Oui, car moins d'étapes rendrait le processus plus sécurisé.",
+        "next_message": "L'argument paraît contradictoire tel qu'il est formulé.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "L005",
+        "previous_message": "Pourquoi tester sur un périmètre réduit d'abord ?",
+        "message": "Un pilote permet d'identifier les problèmes avant généralisation, ce qui limite le risque d'impact large en cas d'erreur.",
+        "next_message": "Le raisonnement est solide.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "L006",
+        "previous_message": "Que penses-tu du nouveau circuit de validation ?",
+        "message": "Il est à la fois trop long et pas assez encadré, donc il faudrait soit le simplifier soit ajouter encore plus d'étapes.",
+        "next_message": "Le message mélange des pistes sans logique très claire.",
+        "expected_score_range": [2, 3]
+      },
+      {
+        "id": "L007",
+        "previous_message": "Comment mieux répartir les demandes entre équipes ?",
+        "message": "Une catégorisation initiale plus fine permettrait d'orienter les dossiers vers la bonne équipe dès le départ, ce qui réduirait les transferts inutiles.",
+        "next_message": "Oui, bonne cohérence.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "L008",
+        "previous_message": "Pourquoi veux-tu supprimer cette étape ?",
+        "message": "Parce qu'elle prend du temps, donc elle améliore forcément la qualité.",
+        "next_message": "La conclusion ne découle pas du motif donné.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "L009",
+        "previous_message": "Quelle serait une bonne première action ?",
+        "message": "Mesurer d'abord les causes principales de retard permettrait d'éviter de corriger le mauvais problème.",
+        "next_message": "Oui, le raisonnement est cohérent.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "L010",
+        "previous_message": "Quel est ton avis sur les escalades automatiques ?",
+        "message": "C'est utile, sauf quand ça ne l'est pas, donc je suis pour sans vraiment l'être.",
+        "next_message": "La position manque de cohérence interne.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "L011",
+        "previous_message": "Comment réduire le nombre de tickets réouverts ?",
+        "message": "Si on impose une vérification finale sur les dossiers les plus sensibles, on peut réduire les résolutions incomplètes et donc les réouvertures.",
+        "next_message": "Oui, logique.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "L012",
+        "previous_message": "Faut-il augmenter le nombre de notifications ?",
+        "message": "Oui, car moins de notifications aiderait les gens à mieux voir les alertes importantes.",
+        "next_message": "Le lien est contradictoire.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "L013",
+        "previous_message": "Pourquoi centraliser les demandes ?",
+        "message": "Un point d'entrée unique simplifie l'orientation, évite les doublons et améliore le suivi.",
+        "next_message": "Raisonnement clair et cohérent.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "L014",
+        "previous_message": "Que proposes-tu pour améliorer le support ?",
+        "message": "Il faudrait faire quelque chose de plus efficace, parce qu'aujourd'hui ce n'est pas assez efficace.",
+        "next_message": "C'est circulaire et peu argumenté.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "L015",
+        "previous_message": "Comment éviter les arbitrages trop tardifs ?",
+        "message": "Définir plus tôt les critères de décision permettrait de limiter les retours en arrière au moment du choix final.",
+        "next_message": "Oui, c'est cohérent.",
+        "expected_score_range": [4, 5]
+      }
+    ]
+  }

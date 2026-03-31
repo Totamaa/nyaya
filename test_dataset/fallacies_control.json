@@ -1,0 +1,285 @@
+{
+    "dataset_name": "fallacies_control",
+    "version": "v1",
+    "language": "fr",
+    "scale": {
+      "fallacy_present": ["yes", "no"]
+    },
+    "tested_fallacies": [
+      "ad_hominem",
+      "false_dilemma",
+      "hasty_generalization"
+    ],
+    "items": [
+      {
+        "id": "F001",
+        "message": "Ton argument sur le télétravail est mauvais, de toute façon tu n'as jamais géré d'équipe.",
+        "context": "Discussion RH interne",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "ad_hominem"
+        }
+      },
+      {
+        "id": "F002",
+        "message": "Je ne suis pas d'accord avec ta proposition sur le télétravail, car elle risque de compliquer la coordination entre équipes.",
+        "context": "Discussion RH interne",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      },
+      {
+        "id": "F003",
+        "message": "Soit on adopte cet outil dès maintenant, soit on montre qu'on est contre toute innovation.",
+        "context": "Choix d'un outil interne",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "false_dilemma"
+        }
+      },
+      {
+        "id": "F004",
+        "message": "On peut soit faire un test pilote, soit comparer plusieurs solutions avant de décider.",
+        "context": "Choix d'un outil interne",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      },
+      {
+        "id": "F005",
+        "message": "J'ai vu deux réunions mal préparées par cette équipe, donc leurs projets sont toujours mal gérés.",
+        "context": "Retour projet",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "hasty_generalization"
+        }
+      },
+      {
+        "id": "F006",
+        "message": "Sur les trois dernières semaines, plusieurs réunions ont été confuses ; il faudrait vérifier si c'est une tendance.",
+        "context": "Retour projet",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      },
+      {
+        "id": "F007",
+        "message": "Tu proposes ça uniquement parce que tu veux te faire remarquer, donc ton idée ne vaut rien.",
+        "context": "Débat sur un nouveau process",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "ad_hominem"
+        }
+      },
+      {
+        "id": "F008",
+        "message": "Soit on garde le processus actuel, soit ce sera forcément le chaos total.",
+        "context": "Changement de process",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "false_dilemma"
+        }
+      },
+      {
+        "id": "F009",
+        "message": "Un client s'est plaint ce matin, donc ce produit est mauvais pour tout le monde.",
+        "context": "Retour client",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "hasty_generalization"
+        }
+      },
+      {
+        "id": "F010",
+        "message": "Il nous faudrait plus de retours clients avant de conclure sur la qualité du produit.",
+        "context": "Retour client",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      },
+      {
+        "id": "F011",
+        "message": "Ton avis sur la sécurité n'a aucune valeur, tu n'es même pas ingénieur.",
+        "context": "Discussion sécurité",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "ad_hominem"
+        }
+      },
+      {
+        "id": "F012",
+        "message": "Soit on supprime totalement les validations, soit on restera bloqués dans la bureaucratie pour toujours.",
+        "context": "Optimisation de processus",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "false_dilemma"
+        }
+      },
+      {
+        "id": "F013",
+        "message": "Deux stagiaires ont eu du mal avec l'outil, donc il est forcément inutilisable pour tous les nouveaux arrivants.",
+        "context": "Formation outil",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "hasty_generalization"
+        }
+      },
+      {
+        "id": "F014",
+        "message": "Je comprends ton point, mais je pense que ton estimation de délai est trop optimiste au vu des dépendances techniques.",
+        "context": "Planification projet",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      },
+      {
+        "id": "F015",
+        "message": "Tu dis ça parce que tu es toujours négatif, donc on peut ignorer ta remarque.",
+        "context": "Réunion d'équipe",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "ad_hominem"
+        }
+      },
+      {
+        "id": "F016",
+        "message": "Soit on externalise tout, soit on refuse de faire évoluer l'entreprise.",
+        "context": "Stratégie organisationnelle",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "false_dilemma"
+        }
+      },
+      {
+        "id": "F017",
+        "message": "J'ai vu trois tickets mal traités par ce service, donc ils travaillent toujours mal.",
+        "context": "Support interne",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "hasty_generalization"
+        }
+      },
+      {
+        "id": "F018",
+        "message": "Le message manque de précision sur les risques ; peux-tu détailler les impacts attendus ?",
+        "context": "Revue de proposition",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      },
+      {
+        "id": "F019",
+        "message": "Tu n'as jamais livré un projet à temps, donc ta suggestion sur l'organisation n'a aucun intérêt.",
+        "context": "Réunion projet",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "ad_hominem"
+        }
+      },
+      {
+        "id": "F020",
+        "message": "Soit on lance cette fonctionnalité cette semaine, soit la concurrence nous écrase définitivement.",
+        "context": "Roadmap produit",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "false_dilemma"
+        }
+      },
+      {
+        "id": "F021",
+        "message": "Deux développeurs préfèrent travailler tard, donc toute l'équipe serait plus productive avec des horaires décalés.",
+        "context": "Organisation du travail",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "hasty_generalization"
+        }
+      },
+      {
+        "id": "F022",
+        "message": "Je propose qu'on compare les coûts et bénéfices avant de trancher.",
+        "context": "Décision budgétaire",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      },
+      {
+        "id": "F023",
+        "message": "Ton analyse est ridicule, on voit bien que tu ne comprends rien au métier.",
+        "context": "Discussion métier",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "ad_hominem"
+        }
+      },
+      {
+        "id": "F024",
+        "message": "Soit on suit exactement cette méthode, soit on accepte l'échec du projet.",
+        "context": "Méthodologie projet",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "false_dilemma"
+        }
+      },
+      {
+        "id": "F025",
+        "message": "Un bug est apparu après la mise à jour, donc toutes les mises à jour créent des problèmes.",
+        "context": "Maintenance logicielle",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "hasty_generalization"
+        }
+      },
+      {
+        "id": "F026",
+        "message": "La proposition est intéressante, mais j'aimerais comprendre son impact sur la charge de support.",
+        "context": "Analyse de proposition",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      },
+      {
+        "id": "F027",
+        "message": "Vu ton historique, on peut déjà dire que ton avis sur ce sujet n'est pas crédible.",
+        "context": "Débat interne",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "ad_hominem"
+        }
+      },
+      {
+        "id": "F028",
+        "message": "Soit on automatise tout de suite, soit on restera à jamais dépassés.",
+        "context": "Automatisation",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "false_dilemma"
+        }
+      },
+      {
+        "id": "F029",
+        "message": "Trois personnes n'ont pas aimé la formation, donc cette formation est inutile pour l'ensemble de l'entreprise.",
+        "context": "Évaluation formation",
+        "expected": {
+          "fallacy_present": "yes",
+          "fallacy_type": "hasty_generalization"
+        }
+      },
+      {
+        "id": "F030",
+        "message": "Je pense que la décision mérite encore une comparaison avec les autres options disponibles.",
+        "context": "Comité de décision",
+        "expected": {
+          "fallacy_present": "no",
+          "fallacy_type": "none"
+        }
+      }
+    ]
+  }

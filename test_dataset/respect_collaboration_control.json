@@ -1,0 +1,118 @@
+{
+    "dataset_name": "respect_collaboration_control",
+    "version": "v1",
+    "language": "fr",
+    "scale": {
+      "min": 1,
+      "max": 5,
+      "instruction": "A predicted score is accepted if it falls within the expected range."
+    },
+    "criterion": "respect_collaboration",
+    "items": [
+      {
+        "id": "RC001",
+        "previous_message": "Je pense qu'on devrait supprimer une étape de validation.",
+        "message": "Je comprends l'objectif, mais je préfère qu'on regarde d'abord les risques avant de supprimer cette étape.",
+        "next_message": "Oui, c'est une bonne manière de nuancer.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "RC002",
+        "previous_message": "Je pense qu'on devrait supprimer une étape de validation.",
+        "message": "Franchement, c'est une idée absurde, tu compliques toujours tout.",
+        "next_message": "Le ton n'est pas constructif.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "RC003",
+        "previous_message": "Avez-vous un avis sur le nouveau tableau de bord ?",
+        "message": "Merci pour le partage. Je trouve la base intéressante, mais certaines métriques gagneraient à être clarifiées.",
+        "next_message": "Retour constructif.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "RC004",
+        "previous_message": "Peut-on revoir le process actuel ?",
+        "message": "Encore une proposition brillante... On voit le niveau.",
+        "next_message": "Clairement moqueur et peu collaboratif.",
+        "expected_score_range": [1, 1]
+      },
+      {
+        "id": "RC005",
+        "previous_message": "Quelqu'un a-t-il une alternative à proposer ?",
+        "message": "Je ne suis pas convaincu par cette option, mais je serais preneur d'un retour complémentaire si vous voyez des avantages que j'ai manqués.",
+        "next_message": "Très collaboratif.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "RC006",
+        "previous_message": "Que pensez-vous du planning proposé ?",
+        "message": "Ça ne marchera pas. On sait tous très bien comment ça finit à chaque fois avec ce genre d'idée.",
+        "next_message": "Le ton est fermé et peu constructif.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "RC007",
+        "previous_message": "Faut-il automatiser cette étape ?",
+        "message": "Je pense qu'il y a un intérêt à l'automatiser partiellement, mais il faudrait aussi prendre en compte les cas exceptionnels soulevés par l'équipe support.",
+        "next_message": "Oui, c'est respectueux et ouvert.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "RC008",
+        "previous_message": "Peux-tu donner ton retour sur cette proposition ?",
+        "message": "Non mais sérieusement, il suffit de réfléchir deux minutes pour voir que ça ne tient pas.",
+        "next_message": "Le propos est dévalorisant.",
+        "expected_score_range": [1, 2]
+      },
+      {
+        "id": "RC009",
+        "previous_message": "Nous hésitons entre deux options pour l'onboarding.",
+        "message": "Les deux approches ont des avantages ; on pourrait peut-être les tester sur deux populations différentes avant de trancher.",
+        "next_message": "Bonne posture collaborative.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "RC010",
+        "previous_message": "Faut-il revoir la répartition des tickets ?",
+        "message": "Je ne partage pas ton analyse, mais je pense qu'on peut converger si on repart des données de charge.",
+        "next_message": "Désaccord respectueux.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "RC011",
+        "previous_message": "Quel est votre avis sur la nouvelle procédure ?",
+        "message": "C'est n'importe quoi, personne de compétent ne validerait ça.",
+        "next_message": "Très faible sur le respect.",
+        "expected_score_range": [1, 1]
+      },
+      {
+        "id": "RC012",
+        "previous_message": "Avez-vous des réserves sur ce déploiement ?",
+        "message": "J'ai quelques réserves sur le calendrier, mais je pense qu'on peut trouver un compromis réaliste.",
+        "next_message": "Ton constructif.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "RC013",
+        "previous_message": "Peux-tu commenter la proposition ?",
+        "message": "Je vois l'intention, mais la version actuelle me semble incomplète sur les impacts support.",
+        "next_message": "Critique respectueuse.",
+        "expected_score_range": [4, 5]
+      },
+      {
+        "id": "RC014",
+        "previous_message": "Qu'as-tu pensé du plan ?",
+        "message": "Ton plan est mauvais, comme d'habitude.",
+        "next_message": "Attaque personnelle, non collaboratif.",
+        "expected_score_range": [1, 1]
+      },
+      {
+        "id": "RC015",
+        "previous_message": "Avez-vous une recommandation finale ?",
+        "message": "Je proposerais de retenir l'option B, tout en intégrant les remarques soulevées par les équipes concernées.",
+        "next_message": "Oui, bonne posture de synthèse et de coopération.",
+        "expected_score_range": [4, 5]
+      }
+    ]
+  }
