@@ -1,0 +1,17 @@
+[llm]
+backend = "ollama"
+system_prompt = "Tu es un assistant utile et concis."
+temperature = 0.2
+max_tokens = 512
+reasoning_effort = "medium"
+
+[ollama]
+base_url = "http://localhost:11434"
+model = "nemotron-cascade-2:latest"
+timeout_s = 120.0
+
+[mistral]
+api_key_env = "MISTRAL_API_KEY"
+base_url = "https://api.mistral.ai"
+model = "mistral-medium-latest"
+timeout_s = 120.0
