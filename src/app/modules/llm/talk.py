@@ -9,8 +9,8 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from llm.config import load_config
-from llm.connectors.factory import build_llm
+from src.app.modules.llm.config import load_config
+from src.app.modules.llm.connectors.factory import build_llm
 
 
 def parse_args() -> argparse.Namespace:

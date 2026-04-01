@@ -36,7 +36,7 @@ class OllamaClient:
         temperature: float = 0.2,
     ):
         try:
-            import ollama
+            import src.app.modules.llm.connectors.ollama as ollama
         except ImportError as exc:
             raise RuntimeError("Missing optional dependency 'ollama'.") from exc
 
