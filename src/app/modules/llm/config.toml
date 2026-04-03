@@ -2,7 +2,7 @@
 backend = "ollama"
 system_prompt = "Tu es un assistant utile et concis."
 temperature = 0.2
-max_tokens = 512
+max_tokens = 1024
 reasoning_effort = "none"
 
 [ollama]

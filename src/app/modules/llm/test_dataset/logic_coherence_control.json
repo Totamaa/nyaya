@@ -89,9 +89,9 @@
       {
         "id": "L012",
         "previous_message": "Faut-il augmenter le nombre de notifications ?",
-        "message": "Oui, car moins de notifications aiderait les gens à mieux voir les alertes importantes.",
-        "next_message": "Le lien est contradictoire.",
-        "expected_score_range": [1, 2]
+        "message": "Non, car moins de notifications aiderait les gens à mieux voir les alertes importantes.",
+        "next_message": "",
+        "expected_score_range": [4, 5]
       },
       {
         "id": "L013",
