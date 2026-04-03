@@ -9,13 +9,13 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from llm.config import load_config
-from llm.connectors.factory import build_llm
+from src.app.modules.llm.config import load_config
+from src.app.modules.llm.connectors.factory import build_llm
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Pose une question au LLM configure.")
-    parser.add_argument("question", nargs="?", help="Question a envoyer au modele.")
+    parser = argparse.ArgumentParser(description="Pose une question au LLM configuré.")
+    parser.add_argument("question", nargs="?", help="Question à envoyer au modèle.")
     parser.add_argument(
         "--config",
         default=str(Path(__file__).with_name("config.toml")),

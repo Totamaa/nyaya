@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from llm.config import AppConfig
+from src.app.modules.llm.config import AppConfig
 
 from .base import LLMClient
 from .mistral import MistralClient
