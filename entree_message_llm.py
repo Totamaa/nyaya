@@ -23,6 +23,20 @@ ENTREE_MESSAGE = {
     },
 }
 
+ENTREE_POST_MESSAGE = {
+    "content_id": "p_901",
+    "content_type": "post",
+    "text": "Je pense qu'on devrait commencer par mesurer les causes principales de retard avant de modifier le processus.",
+    "created_at": "2026-02-26T10:15:00Z",
+    "author_id": 21,
+    "context": {
+        "edito_id": 12,
+        "phase": "causes",
+        "topic_id": 3,
+        "tags": ["energie", "organisation"],
+    },
+}
+
 content_type
 text 
 parent.text
