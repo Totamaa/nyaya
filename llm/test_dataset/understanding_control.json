@@ -1,0 +1,83 @@
+{
+  "dataset_name": "understanding_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "instruction": "A predicted score is accepted if it falls within the expected range."
+  },
+  "criterion": "volonte_de_comprendre",
+  "items": [
+    {
+      "id": "VU001",
+      "previous_message": "Je pense qu'il faut automatiser complètement le tri des tickets.",
+      "message": "Quand tu dis complètement, tu inclus aussi les cas sensibles ou tu penses à une automatisation partielle ?",
+      "next_message": "La question cherche clairement à préciser la position.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "VU002",
+      "previous_message": "Il faudrait revoir toute la procédure.",
+      "message": "Non.",
+      "next_message": "Aucune tentative de compréhension.",
+      "expected_score_range": [1, 1]
+    },
+    {
+      "id": "VU003",
+      "previous_message": "Je trouve le nouveau tableau de bord trop chargé.",
+      "message": "Si je comprends bien, ton problème principal est la surcharge visuelle, pas le choix des indicateurs.",
+      "next_message": "Bonne reformulation.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "VU004",
+      "previous_message": "Le support doit être réorganisé.",
+      "message": "Ça n'a aucun sens.",
+      "next_message": "Aucune clarification demandée.",
+      "expected_score_range": [1, 2]
+    },
+    {
+      "id": "VU005",
+      "previous_message": "Je pense qu'on devrait fusionner deux équipes.",
+      "message": "Quelles difficultés concrètes essaies-tu de résoudre avec cette fusion ?",
+      "next_message": "Question ouverte et utile.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "VU006",
+      "previous_message": "Il faut réduire les notifications.",
+      "message": "Tu parles surtout des notifications redondantes, ou aussi des alertes critiques ?",
+      "next_message": "Recherche active de clarification.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "VU007",
+      "previous_message": "Il faut revoir l'onboarding.",
+      "message": "Encore une idée floue.",
+      "next_message": "Aucune volonté de comprendre.",
+      "expected_score_range": [1, 2]
+    },
+    {
+      "id": "VU008",
+      "previous_message": "Ce process est trop lent.",
+      "message": "Peux-tu préciser quelles étapes te semblent les plus bloquantes aujourd'hui ?",
+      "next_message": "Bonne invitation à expliciter.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "VU009",
+      "previous_message": "Je veux changer d'outil.",
+      "message": "Je ne suis pas encore convaincu, mais j'aimerais comprendre quels cas d'usage actuels posent le plus de problèmes.",
+      "next_message": "Posture claire de compréhension.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "VU010",
+      "previous_message": "La documentation n'est pas bonne.",
+      "message": "C'est faux.",
+      "next_message": "Réponse fermée et non exploratoire.",
+      "expected_score_range": [1, 1]
+    }
+  ]
+}

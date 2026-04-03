@@ -1,0 +1,83 @@
+{
+  "dataset_name": "open_mindedness_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "instruction": "A predicted score is accepted if it falls within the expected range."
+  },
+  "criterion": "ouverture_d_esprit",
+  "items": [
+    {
+      "id": "OM001",
+      "previous_message": "Je pense qu'il faut supprimer toute validation manuelle.",
+      "message": "Je vois l'intérêt en termes de vitesse, mais il faudrait vérifier les risques sur les dossiers sensibles avant de trancher.",
+      "next_message": "Oui, c'est une position nuancée.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "OM002",
+      "previous_message": "Faut-il centraliser les demandes support ?",
+      "message": "Il n'y a qu'une seule bonne réponse à ce sujet et toute autre option est absurde.",
+      "next_message": "La formulation est fermée et dogmatique.",
+      "expected_score_range": [1, 2]
+    },
+    {
+      "id": "OM003",
+      "previous_message": "Peut-on revoir le circuit de validation ?",
+      "message": "Je suis plutôt favorable à la simplification, même si certains cas garderont peut-être besoin d'un contrôle supplémentaire.",
+      "next_message": "Le propos garde de la nuance.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "OM004",
+      "previous_message": "Quel est ton avis sur la nouvelle organisation ?",
+      "message": "Mon point de vue est forcément le bon, il n'y a rien à discuter.",
+      "next_message": "Très peu d'ouverture.",
+      "expected_score_range": [1, 1]
+    },
+    {
+      "id": "OM005",
+      "previous_message": "Que penses-tu du nouveau tableau de bord ?",
+      "message": "Il est utile sur certains aspects, mais je peux rater des avantages si d'autres équipes l'utilisent différemment.",
+      "next_message": "Bonne reconnaissance de limites.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "OM006",
+      "previous_message": "Faut-il supprimer la réunion hebdomadaire ?",
+      "message": "Je pense que oui, mais je peux entendre des arguments sur sa valeur pour certaines équipes.",
+      "next_message": "Le message reste ouvert à d'autres points de vue.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "OM007",
+      "previous_message": "Quel choix faire entre les deux outils ?",
+      "message": "L'outil A est supérieur sur tous les plans, point final.",
+      "next_message": "Aucune nuance.",
+      "expected_score_range": [1, 2]
+    },
+    {
+      "id": "OM008",
+      "previous_message": "Comment améliorer l'onboarding ?",
+      "message": "Je privilégie un parcours standardisé, tout en reconnaissant qu'un accompagnement plus souple peut mieux convenir à certains profils.",
+      "next_message": "Nuance claire.",
+      "expected_score_range": [4, 5]
+    },
+    {
+      "id": "OM009",
+      "previous_message": "Faut-il revoir la priorisation des tickets ?",
+      "message": "Si les données montrent autre chose que mon intuition, je suis prêt à revoir ma position.",
+      "next_message": "Ouverture forte.",
+      "expected_score_range": [5, 5]
+    },
+    {
+      "id": "OM010",
+      "previous_message": "As-tu des réserves sur ce déploiement ?",
+      "message": "Ce plan est mauvais, et ceux qui le défendent n'ont rien compris.",
+      "next_message": "Message fermé et agressif.",
+      "expected_score_range": [1, 2]
+    }
+  ]
+}
