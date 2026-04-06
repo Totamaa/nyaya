@@ -1,0 +1,8 @@
+-r requirements.in
+
+pytest
+pytest-asyncio
+httpx
+faker
+aiosqlite
+pip-tools
