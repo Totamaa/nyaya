@@ -1,8 +1,8 @@
 name: CI
 
 on:
-  push:
   pull_request:
+    branches: [main, dev]
 
 jobs:
   test:
@@ -15,7 +15,7 @@ jobs:
         env:
           POSTGRES_DB:       nyaya_test
           POSTGRES_USER:     nyaya_user
-          POSTGRES_PASSWORD: ci_password
+          POSTGRES_PASSWORD: ci_db_password
         ports: ["5432:5432"]
         options: >-
           --health-cmd "pg_isready -U nyaya_user"
@@ -38,7 +38,6 @@ jobs:
       APP_VERSION:                     0.1.0
       APP_DESCRIPTION:                 Nyaya backend API
       APP_PORT:                        8000
-      APP_WORKERS:                     1
       CORS_ORIGINS:                    '["*"]'
       LOG_LEVEL:                       DEBUG
       LOG_MAX_BYTES:                   10485760
@@ -47,11 +46,11 @@ jobs:
       DB_PORT:                         5432
       DB_NAME:                         nyaya_test
       DB_USER:                         nyaya_user
-      DB_PASSWORD:                     ci_password
+      DB_PASSWORD:                     ci_db_password
       REDIS_HOST:                      localhost
       REDIS_PORT:                      6379
-      REDIS_PASSWORD:                  ""
-      JWT_SECRET_KEY:                  ci_secret_key_not_used_in_prod_at_least_64_chars_xxxxxxxxxx
+      REDIS_PASSWORD:                  ci_redis_pw
+      JWT_SECRET_KEY:                  ci_secret_key_only_for_testing_not_used_in_prod_xxxxxxxxxx
       JWT_ALGORITHM:                   HS256
       JWT_ACCESS_TOKEN_EXPIRE_MINUTES: 30
       JWT_REFRESH_TOKEN_EXPIRE_DAYS:   7

@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field, model_validator
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -25,7 +25,7 @@ class Settings(BaseSettings):
 
     REDIS_HOST: str = Field(min_length=2, max_length=50)
     REDIS_PORT: int = Field(ge=1, le=65535)
-    REDIS_PASSWORD: str | None = None  # optional in dev/test, required in prod (enforced below)
+    REDIS_PASSWORD: str = Field(min_length=8, max_length=128)
 
     JWT_SECRET_KEY: str = Field()
     JWT_ALGORITHM: str = Field(pattern=r"^(HS256|RS256)$")
@@ -33,12 +33,6 @@ class Settings(BaseSettings):
     JWT_REFRESH_TOKEN_EXPIRE_DAYS: int = Field(le=45)
     JWT_SESSION_MAX_LIFETIME_DAYS: int = Field(le=100)
     JWT_SESSION_MAX_COUNT: int = Field(le=10)
-
-    @model_validator(mode="after")
-    def _require_redis_password_in_prod(self) -> "Settings":
-        if self.ENVIRONMENT == "prod" and not self.REDIS_PASSWORD:
-            raise ValueError("REDIS_PASSWORD is required in prod environment")
-        return self
 
     model_config = SettingsConfigDict(
         env_file=".env",
