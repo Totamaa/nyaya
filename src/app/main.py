@@ -11,6 +11,7 @@ from app.core.errors.handlers.business import handle_business_exceptions
 from app.core.errors.handlers.catchall import handle_generic_exceptions
 from app.core.errors.handlers.db import handle_db_exceptions
 from app.core.middleware.headers import add_global_headers
+from app.core.api.router import router_api
 
 def create_app() -> FastAPI:
     
@@ -62,6 +63,8 @@ def create_app() -> FastAPI:
     @app.get("/health", tags=["Health"])
     async def health_check():
         return {"status": "ok"}
+
+    app.include_router(router_api, prefix="/api")
 
     return app
 
