@@ -19,6 +19,11 @@ if config.config_file_name is not None:
 # Import all models for autogenerate support
 from app.modules.base.model import BaseModel
 from app.modules.users.model import UserModel
+from app.modules.messages.model import MessageModel
+from app.modules.evaluations.model import EvaluationModel
+from app.modules.totems.model import TotemModel
+from app.modules.feedbacks.model import UserMonthlyFeedbackModel
+from app.modules.user_totems.model import UserTotemModel
 
 target_metadata = BaseModel.metadata
 
