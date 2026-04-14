@@ -1,5 +1,6 @@
 alembic
 sqlalchemy
+greenlet
 fastapi[all]
 python-json-logger
 apscheduler
