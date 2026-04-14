@@ -32,6 +32,7 @@ class LLMEvaluationResult(BaseModel):
             volonte_de_comprendre=self.volonte_de_comprendre,
             contribution_utile=self.contribution_utile,
             respect_collaboration=self.respect_collaboration,
+            likes=0,
             score_total=self.score_total,
         )
 
