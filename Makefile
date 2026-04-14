@@ -6,7 +6,7 @@
 # ── Docker compose shortcuts ──────────────────────────────────────────────────
 
 APP_ENTRY := src/app/main.py
-DC_BASE   := docker compose -f infrastructure/docker-compose.base.yml
+DC_BASE   := docker compose -f infrastructure/docker-compose.base.yml --env-file .env
 DC_DEV    := $(DC_BASE) -f infrastructure/docker-compose.dev.yml
 DC_PROD   := $(DC_BASE) -f infrastructure/docker-compose.prod.yml
 
