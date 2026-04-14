@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.api.dependencies.db import get_db
+from app.core.api.dependencies.db import get_session
 from app.core.api.dependencies.request_id import get_request_id
 from app.core.config.logs import get_logger
 from app.modules.evaluations.dependencies import get_evaluation_service
@@ -18,7 +18,7 @@ def get_message_repository() -> MessageRepository:
 
 def get_message_service(
     logger=Depends(get_logger),
-    db: AsyncSession = Depends(get_db),
+    session: AsyncSession = Depends(get_session),
     request_id: str = Depends(get_request_id),
     user_service: UserService = Depends(get_user_service),
     message_repository: MessageRepository = Depends(get_message_repository),
@@ -26,7 +26,7 @@ def get_message_service(
 ) -> MessageService:
     return MessageService(
         logger=logger,
-        db=db,
+        session=session,
         request_id=request_id,
         user_service=user_service,
         message_repository=message_repository,

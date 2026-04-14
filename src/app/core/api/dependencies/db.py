@@ -1,8 +1,11 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from collections.abc import AsyncGenerator
 
-from app.core.config.database import AsyncSessionLocal
+from sqlalchemy.ext.asyncio import AsyncSession
 
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
+from app.core.config.database import AsyncSessionLocal, UnitOfWork
+
+
+async def get_session() -> AsyncGenerator[AsyncSession, None]:
     async with AsyncSessionLocal() as session:
-        yield session
+        async with UnitOfWork(session):
+            yield session

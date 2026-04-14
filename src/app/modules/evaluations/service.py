@@ -4,16 +4,19 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.logs import LoggerManager
-from app.modules.evaluations.model import EvaluationModel
+from app.modules.evaluations.exceptions import EvaluationNotFoundException
 from app.modules.evaluations.repository import EvaluationRepository
-from app.modules.evaluations.schemas import EvaluationResponse
+from app.modules.evaluations.schemas import EvaluationResponse, LLMEvaluationResult
+from app.modules.messages.schemas import CreateMessageRequest
 
 
-def _simulate_llm_evaluation(text: str) -> dict:
+def _simulate_llm_evaluation(request: CreateMessageRequest) -> LLMEvaluationResult:
     """
     Stub: simulates the LLM evaluation call.
     To be replaced by the real LLM connector once available.
+    The real implementation will use `request` (text, context, parent, etc.).
     """
+    _ = request  # unused in stub, will be consumed by the real LLM connector
     scores = [round(random.uniform(0, 10), 2) for _ in range(9)]
     keys = [
         "clarte_des_idees",
@@ -28,7 +31,7 @@ def _simulate_llm_evaluation(text: str) -> dict:
     ]
     result = dict(zip(keys, scores))
     result["score_total"] = round(sum(scores) / len(scores), 2)
-    return result
+    return LLMEvaluationResult(**result)
 
 
 class EvaluationService:
@@ -36,30 +39,26 @@ class EvaluationService:
     def __init__(
         self,
         logger: LoggerManager,
-        db: AsyncSession,
+        session: AsyncSession,
         request_id: str,
         evaluation_repository: EvaluationRepository,
     ):
         self.tag = "SERVICE:Evaluation"
         self.logger = logger
-        self.db = db
+        self.session = session
         self.request_id = request_id
         self.evaluation_repository = evaluation_repository
 
-    async def evaluate(self, message_text: str, message_id: UUID) -> EvaluationResponse:
+    async def evaluate(self, request: CreateMessageRequest, message_id: UUID) -> EvaluationResponse:
         self.logger.info(
             tag=self.tag,
             message=f"Evaluating message_id={message_id}",
             extra=self.request_id,
         )
 
-        scores = _simulate_llm_evaluation(message_text)
-
-        evaluation = EvaluationModel(
-            message_id=message_id,
-            **scores,
-        )
-        await self.evaluation_repository.create(evaluation=evaluation, db=self.db)
+        llm_result = _simulate_llm_evaluation(request)
+        evaluation = llm_result.to_model(message_id=message_id)
+        await self.evaluation_repository.create(evaluation=evaluation, db=self.session)
 
         self.logger.info(
             tag=self.tag,
@@ -69,11 +68,11 @@ class EvaluationService:
 
         return EvaluationResponse.from_model(evaluation)
 
-    async def get_by_message_id(self, message_id: UUID) -> EvaluationResponse | None:
+    async def get_by_message_id(self, message_id: UUID) -> EvaluationResponse:
         evaluation = await self.evaluation_repository.get_by_message_id(
             message_id=message_id,
-            db=self.db,
+            db=self.session,
         )
         if not evaluation:
-            return None
+            raise EvaluationNotFoundException(message_id=message_id)
         return EvaluationResponse.from_model(evaluation)
