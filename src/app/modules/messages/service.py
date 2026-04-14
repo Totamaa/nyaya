@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config.database import UnitOfWork
 from app.core.config.logs import LoggerManager
 from app.modules.base.schemas import IdResponse
+from app.modules.evaluations.service import EvaluationService
 from app.modules.messages.repository import MessageRepository
 from app.modules.messages.schemas import CreateMessageRequest
 from app.modules.users.service import UserService
@@ -17,6 +18,7 @@ class MessageService:
         request_id: str,
         user_service: UserService,
         message_repository: MessageRepository,
+        evaluation_service: EvaluationService,
     ):
         self.tag = "SERVICE:Message"
         self.logger = logger
@@ -24,6 +26,7 @@ class MessageService:
         self.request_id = request_id
         self.user_service = user_service
         self.message_repository = message_repository
+        self.evaluation_service = evaluation_service
 
     async def create(self, request: CreateMessageRequest) -> IdResponse:
         self.logger.info(
@@ -57,6 +60,10 @@ class MessageService:
 
             message = request.to_model(author=user, parent_id=parent_id, root_id=root_id)
             await self.message_repository.create(message=message, db=self.db)
+            await self.evaluation_service.evaluate(
+                message_text=request.text,
+                message_id=message.id,
+            )
 
         self.logger.info(
             tag=self.tag,

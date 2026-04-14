@@ -3,6 +3,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.modules.evaluations.schemas import EvaluationResponse
 from app.modules.messages.model import MessageModel
 from app.modules.users.schemas import UserResponse
 
