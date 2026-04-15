@@ -36,6 +36,10 @@ class Settings(BaseSettings):
 
     LLM_TIMEOUT_SECONDS: int = Field(ge=10, le=300)
 
+    REVIEW_MIN_MESSAGES: int = Field(ge=1, le=100)
+    REVIEW_TOP_WORST_CATEGORIES: int = Field(ge=1, le=9)
+    REVIEW_WORST_MESSAGES_PER_CATEGORY: int = Field(ge=1, le=20)
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",  # silently ignore infra-only vars (DOCKER_IMAGE, CADDY_*, etc.)
