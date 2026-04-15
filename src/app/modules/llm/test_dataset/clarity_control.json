@@ -11,108 +11,683 @@
   "items": [
     {
       "id": "C001",
-      "previous_message": "As-tu une proposition pour accélérer le traitement des demandes ?",
-      "message": "Je propose de traiter automatiquement les demandes simples et de réserver la validation humaine aux cas sensibles.",
-      "next_message": "D'accord, c'est clair et actionnable.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "clarity_control:C001",
+        "content_type": "comment",
+        "text": "Je propose de traiter automatiquement les demandes simples et de réserver la validation humaine aux cas sensibles.",
+        "created_at": "2026-03-01T09:01:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:02:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C001",
+          "text": "As-tu une proposition pour accélérer le traitement des demandes ?",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C001",
+          "text": "As-tu une proposition pour accélérer le traitement des demandes ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "C002",
-      "previous_message": "Quel est ton retour sur le nouveau processus ?",
-      "message": "Oui enfin bon, le truc là, avec les étapes, c'est pas forcément idéal comme ça en fait.",
-      "next_message": "Je vois l'idée, mais ce n'est pas très précis.",
-      "expected_score_range": [2, 3]
+      "input": {
+        "content_id": "clarity_control:C002",
+        "content_type": "comment",
+        "text": "Oui enfin bon, le truc là, avec les étapes, c'est pas forcément idéal comme ça en fait.",
+        "created_at": "2026-03-01T09:02:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:03:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C002",
+          "text": "Quel est ton retour sur le nouveau processus ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C002",
+          "text": "Quel est ton retour sur le nouveau processus ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        2,
+        3
+      ]
     },
     {
       "id": "C003",
-      "previous_message": "Comment réduire les erreurs de saisie ?",
-      "message": "Ajouter des contrôles sur les champs critiques et afficher des messages d'erreur explicites permettrait de limiter les erreurs.",
-      "next_message": "Oui, la proposition est facile à comprendre.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "clarity_control:C003",
+        "content_type": "comment",
+        "text": "Ajouter des contrôles sur les champs critiques et afficher des messages d'erreur explicites permettrait de limiter les erreurs.",
+        "created_at": "2026-03-01T09:03:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:04:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C003",
+          "text": "Comment réduire les erreurs de saisie ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C003",
+          "text": "Comment réduire les erreurs de saisie ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "C004",
-      "previous_message": "Que penses-tu du tableau de bord actuel ?",
-      "message": "Il y a des choses qui vont et d'autres non, donc voilà, ça dépend un peu.",
-      "next_message": "Le retour reste trop vague pour être exploitable.",
-      "expected_score_range": [1, 2]
+      "input": {
+        "content_id": "clarity_control:C004",
+        "content_type": "comment",
+        "text": "Il y a des choses qui vont et d'autres non, donc voilà, ça dépend un peu.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C004",
+          "text": "Que penses-tu du tableau de bord actuel ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C004",
+          "text": "Que penses-tu du tableau de bord actuel ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
     },
     {
       "id": "C005",
-      "previous_message": "Avez-vous une recommandation pour l'onboarding ?",
-      "message": "Un parcours unique avec checklist, référent identifié et accès outils dès le premier jour serait utile.",
-      "next_message": "Oui, c'est structuré et compréhensible.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "clarity_control:C005",
+        "content_type": "comment",
+        "text": "Un parcours unique avec checklist, référent identifié et accès outils dès le premier jour serait utile.",
+        "created_at": "2026-03-01T09:05:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:06:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C005",
+          "text": "Avez-vous une recommandation pour l'onboarding ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C005",
+          "text": "Avez-vous une recommandation pour l'onboarding ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "C006",
-      "previous_message": "Faut-il revoir l'organisation des réunions ?",
-      "message": "On pourrait sans doute optimiser un peu le format, peut-être sur certains aspects, selon les cas.",
-      "next_message": "Je comprends l'intention, mais pas la proposition concrète.",
-      "expected_score_range": [2, 3]
+      "input": {
+        "content_id": "clarity_control:C006",
+        "content_type": "comment",
+        "text": "On pourrait sans doute optimiser un peu le format, peut-être sur certains aspects, selon les cas.",
+        "created_at": "2026-03-01T09:06:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:07:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C006",
+          "text": "Faut-il revoir l'organisation des réunions ?",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C006",
+          "text": "Faut-il revoir l'organisation des réunions ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        2,
+        3
+      ]
     },
     {
       "id": "C007",
-      "previous_message": "Comment améliorer la transmission d'information entre équipes ?",
-      "message": "Créer un point hebdomadaire commun et centraliser les décisions dans un espace partagé améliorerait la circulation de l'information.",
-      "next_message": "Très clair.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "clarity_control:C007",
+        "content_type": "comment",
+        "text": "Créer un point hebdomadaire commun et centraliser les décisions dans un espace partagé améliorerait la circulation de l'information.",
+        "created_at": "2026-03-01T09:07:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:08:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C007",
+          "text": "Comment améliorer la transmission d'information entre équipes ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C007",
+          "text": "Comment améliorer la transmission d'information entre équipes ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "C008",
-      "previous_message": "Quelle est ta lecture du problème ?",
-      "message": "Le souci vient surtout du fait que, globalement, tout se mélange un peu et du coup ce n'est pas simple.",
-      "next_message": "Le constat est compréhensible, mais manque de précision.",
-      "expected_score_range": [2, 3]
+      "input": {
+        "content_id": "clarity_control:C008",
+        "content_type": "comment",
+        "text": "Le souci vient surtout du fait que, globalement, tout se mélange un peu et du coup ce n'est pas simple.",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C008",
+          "text": "Quelle est ta lecture du problème ?",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C008",
+          "text": "Quelle est ta lecture du problème ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        2,
+        3
+      ]
     },
     {
       "id": "C009",
-      "previous_message": "As-tu une suggestion sur les validations ?",
-      "message": "Je recommande deux niveaux : validation automatique sous un certain seuil, validation manuelle au-delà.",
-      "next_message": "Très lisible.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "clarity_control:C009",
+        "content_type": "comment",
+        "text": "Je recommande deux niveaux : validation automatique sous un certain seuil, validation manuelle au-delà.",
+        "created_at": "2026-03-01T09:09:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:10:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C009",
+          "text": "As-tu une suggestion sur les validations ?",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C009",
+          "text": "As-tu une suggestion sur les validations ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "C010",
-      "previous_message": "Peux-tu préciser ton avis sur la documentation ?",
-      "message": "Franchement, c'est pas top, il manque des choses, mais bon.",
-      "next_message": "C'est trop flou pour être vraiment utile.",
-      "expected_score_range": [1, 2]
+      "input": {
+        "content_id": "clarity_control:C010",
+        "content_type": "comment",
+        "text": "Franchement, c'est pas top, il manque des choses, mais bon.",
+        "created_at": "2026-03-01T09:10:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:11:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C010",
+          "text": "Peux-tu préciser ton avis sur la documentation ?",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C010",
+          "text": "Peux-tu préciser ton avis sur la documentation ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
     },
     {
       "id": "C011",
-      "previous_message": "Comment réduire les tickets répétitifs ?",
-      "message": "Il faudrait identifier les demandes fréquentes, créer des réponses standardisées et les rendre accessibles depuis le portail interne.",
-      "next_message": "Oui, le message est précis.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "clarity_control:C011",
+        "content_type": "comment",
+        "text": "Il faudrait identifier les demandes fréquentes, créer des réponses standardisées et les rendre accessibles depuis le portail interne.",
+        "created_at": "2026-03-01T09:11:00Z",
+        "author_id": 11,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:12:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C011",
+          "text": "Comment réduire les tickets répétitifs ?",
+          "author_id": 911,
+          "created_at": "2026-03-01T09:10:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C011",
+          "text": "Comment réduire les tickets répétitifs ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "C012",
-      "previous_message": "Quel changement prioriser ?",
-      "message": "Celui qui, à mon sens, aurait l'effet le plus visible rapidement serait la simplification du formulaire initial.",
-      "next_message": "C'est compréhensible, même si ça pourrait être encore plus détaillé.",
-      "expected_score_range": [3, 4]
+      "input": {
+        "content_id": "clarity_control:C012",
+        "content_type": "comment",
+        "text": "Celui qui, à mon sens, aurait l'effet le plus visible rapidement serait la simplification du formulaire initial.",
+        "created_at": "2026-03-01T09:12:00Z",
+        "author_id": 12,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:13:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C012",
+          "text": "Quel changement prioriser ?",
+          "author_id": 912,
+          "created_at": "2026-03-01T09:11:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C012",
+          "text": "Quel changement prioriser ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        3,
+        4
+      ]
     },
     {
       "id": "C013",
-      "previous_message": "Ton avis sur l'outil actuel ?",
-      "message": "L'outil couvre les besoins de base, mais la navigation est peu intuitive et certaines actions demandent trop d'étapes.",
-      "next_message": "Message clair et exploitable.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "clarity_control:C013",
+        "content_type": "comment",
+        "text": "L'outil couvre les besoins de base, mais la navigation est peu intuitive et certaines actions demandent trop d'étapes.",
+        "created_at": "2026-03-01T09:13:00Z",
+        "author_id": 13,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:14:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C013",
+          "text": "Ton avis sur l'outil actuel ?",
+          "author_id": 913,
+          "created_at": "2026-03-01T09:12:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C013",
+          "text": "Ton avis sur l'outil actuel ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "C014",
-      "previous_message": "Que faudrait-il changer dans le process ?",
-      "message": "C'est surtout la manière dont ça se passe qui pose problème, pas forcément le reste.",
-      "next_message": "Le propos est trop indéterminé.",
-      "expected_score_range": [1, 2]
+      "input": {
+        "content_id": "clarity_control:C014",
+        "content_type": "comment",
+        "text": "C'est surtout la manière dont ça se passe qui pose problème, pas forcément le reste.",
+        "created_at": "2026-03-01T09:14:00Z",
+        "author_id": 14,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:15:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C014",
+          "text": "Que faudrait-il changer dans le process ?",
+          "author_id": 914,
+          "created_at": "2026-03-01T09:13:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C014",
+          "text": "Que faudrait-il changer dans le process ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
     },
     {
       "id": "C015",
-      "previous_message": "Peux-tu résumer ta recommandation ?",
-      "message": "Je recommande de tester la nouvelle procédure sur un périmètre réduit pendant deux semaines avant un déploiement plus large.",
-      "next_message": "C'est net et facile à suivre.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "clarity_control:C015",
+        "content_type": "comment",
+        "text": "Je recommande de tester la nouvelle procédure sur un périmètre réduit pendant deux semaines avant un déploiement plus large.",
+        "created_at": "2026-03-01T09:15:00Z",
+        "author_id": 15,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:16:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C015",
+          "text": "Peux-tu résumer ta recommandation ?",
+          "author_id": 915,
+          "created_at": "2026-03-01T09:14:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:parent:C015",
+          "text": "Peux-tu résumer ta recommandation ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "C016",
+      "input": {
+        "content_id": "clarity_control:C016",
+        "content_type": "comment",
+        "text": "Je propose de traiter automatiquement les demandes simples et de réserver la validation humaine aux cas sensibles.",
+        "created_at": "2026-03-01T09:16:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:17:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C016",
+          "text": "As-tu une proposition pour accélérer le traitement des demandes ?",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:thread:C016",
+          "text": "As-tu une proposition pour accélérer le traitement des demandes ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "C017",
+      "input": {
+        "content_id": "clarity_control:C017",
+        "content_type": "comment",
+        "text": "Oui enfin bon, le truc là, avec les étapes, c'est pas forcément idéal comme ça en fait.",
+        "created_at": "2026-03-01T09:18:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:19:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C017",
+          "text": "Quel est ton retour sur le nouveau processus ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:thread:C017",
+          "text": "Quel est ton retour sur le nouveau processus ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "C018",
+      "input": {
+        "content_id": "clarity_control:C018",
+        "content_type": "comment",
+        "text": "Ajouter des contrôles sur les champs critiques et afficher des messages d'erreur explicites permettrait de limiter les erreurs.",
+        "created_at": "2026-03-01T09:20:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:21:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C018",
+          "text": "Comment réduire les erreurs de saisie ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:thread:C018",
+          "text": "Comment réduire les erreurs de saisie ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "C019",
+      "input": {
+        "content_id": "clarity_control:C019",
+        "content_type": "comment",
+        "text": "Il y a des choses qui vont et d'autres non, donc voilà, ça dépend un peu.",
+        "created_at": "2026-03-01T09:22:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:23:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C019",
+          "text": "Que penses-tu du tableau de bord actuel ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:thread:C019",
+          "text": "Que penses-tu du tableau de bord actuel ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "C020",
+      "input": {
+        "content_id": "clarity_control:C020",
+        "content_type": "comment",
+        "text": "Un parcours unique avec checklist, référent identifié et accès outils dès le premier jour serait utile.",
+        "created_at": "2026-03-01T09:24:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:25:00Z",
+        "parent": {
+          "content_id": "clarity_control:parent:C020",
+          "text": "Avez-vous une recommandation pour l'onboarding ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "clarity_control:thread:C020",
+          "text": "Avez-vous une recommandation pour l'onboarding ?"
+        },
+        "context": {
+          "edito_id": 101,
+          "phase": "test_criterion",
+          "topic_id": 1,
+          "tags": [
+            "clarity"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     }
   ]
 }

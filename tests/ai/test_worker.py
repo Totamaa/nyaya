@@ -37,7 +37,6 @@ def build_output() -> LLMMessageEvaluationOutput:
             "contribution_utile": {"score": 4, "rationale": "Utile."},
             "respect_collaboration": {"score": 4, "rationale": "Respectueux."},
             "analysis_summary": "Bon message.",
-            "context_completeness": "partial",
             "model_confidence": 0.75,
         }
     )
@@ -55,6 +54,7 @@ def build_requests() -> list[MessageEvaluationInput]:
                 "likes_normalized": 0.1 * idx,
                 "tenant_id": "nyaya-test",
                 "evaluation_requested_at": "2026-03-01T09:01:00Z",
+                "context": {"phase": "test", "topic_label": f"sujet {idx}"},
             }
         )
         for idx in range(1, 4)

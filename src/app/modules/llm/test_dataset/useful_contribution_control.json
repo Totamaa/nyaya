@@ -11,73 +11,683 @@
   "items": [
     {
       "id": "CU001",
-      "previous_message": "Comment réduire les délais de traitement ?",
-      "message": "On pourrait mesurer les trois causes principales de retard sur deux semaines, puis automatiser la catégorie la plus fréquente.",
-      "next_message": "Proposition concrète et exploitable.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "useful_contribution_control:CU001",
+        "content_type": "comment",
+        "text": "On pourrait mesurer les trois causes principales de retard sur deux semaines, puis automatiser la catégorie la plus fréquente.",
+        "created_at": "2026-03-01T09:01:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:02:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU001",
+          "text": "Comment réduire les délais de traitement ?",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU001",
+          "text": "Comment réduire les délais de traitement ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "CU002",
-      "previous_message": "Comment améliorer les réunions ?",
-      "message": "Oui.",
-      "next_message": "N'apporte aucune valeur.",
-      "expected_score_range": [1, 1]
+      "input": {
+        "content_id": "useful_contribution_control:CU002",
+        "content_type": "comment",
+        "text": "Oui.",
+        "created_at": "2026-03-01T09:02:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:03:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU002",
+          "text": "Comment améliorer les réunions ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU002",
+          "text": "Comment améliorer les réunions ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
     },
     {
       "id": "CU003",
-      "previous_message": "On cherche à réduire les erreurs de saisie.",
-      "message": "Ajouter des contrôles automatiques sur les montants et les identifiants clients limiterait immédiatement une partie des erreurs critiques.",
-      "next_message": "Contribution utile et actionnable.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "useful_contribution_control:CU003",
+        "content_type": "comment",
+        "text": "Ajouter des contrôles automatiques sur les montants et les identifiants clients limiterait immédiatement une partie des erreurs critiques.",
+        "created_at": "2026-03-01T09:03:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:04:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU003",
+          "text": "On cherche à réduire les erreurs de saisie.",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU003",
+          "text": "On cherche à réduire les erreurs de saisie."
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "CU004",
-      "previous_message": "Quel plan de migration proposer ?",
-      "message": "On verra plus tard.",
-      "next_message": "Inutile.",
-      "expected_score_range": [1, 1]
+      "input": {
+        "content_id": "useful_contribution_control:CU004",
+        "content_type": "comment",
+        "text": "On verra plus tard.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU004",
+          "text": "Quel plan de migration proposer ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU004",
+          "text": "Quel plan de migration proposer ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
     },
     {
       "id": "CU005",
-      "previous_message": "Comment mieux organiser l'onboarding ?",
-      "message": "Un kit d'arrivée avec checklist, accès outils et référent nommé dès J1 permettrait de réduire les oublis.",
-      "next_message": "Apporte une solution claire.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "useful_contribution_control:CU005",
+        "content_type": "comment",
+        "text": "Un kit d'arrivée avec checklist, accès outils et référent nommé dès J1 permettrait de réduire les oublis.",
+        "created_at": "2026-03-01T09:05:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:06:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU005",
+          "text": "Comment mieux organiser l'onboarding ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU005",
+          "text": "Comment mieux organiser l'onboarding ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "CU006",
-      "previous_message": "Que faire pour le support interne ?",
-      "message": "Il faudrait peut-être faire quelque chose.",
-      "next_message": "Trop vague pour être utile.",
-      "expected_score_range": [1, 2]
+      "input": {
+        "content_id": "useful_contribution_control:CU006",
+        "content_type": "comment",
+        "text": "Il faudrait peut-être faire quelque chose.",
+        "created_at": "2026-03-01T09:06:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:07:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU006",
+          "text": "Que faire pour le support interne ?",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU006",
+          "text": "Que faire pour le support interne ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
     },
     {
       "id": "CU007",
-      "previous_message": "Comment réduire les tickets récurrents ?",
-      "message": "Une FAQ visible depuis le portail et alimentée à partir des 20 tickets les plus fréquents pourrait absorber une partie des demandes simples.",
-      "next_message": "Bonne valeur ajoutée.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "useful_contribution_control:CU007",
+        "content_type": "comment",
+        "text": "Une FAQ visible depuis le portail et alimentée à partir des 20 tickets les plus fréquents pourrait absorber une partie des demandes simples.",
+        "created_at": "2026-03-01T09:07:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:08:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU007",
+          "text": "Comment réduire les tickets récurrents ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU007",
+          "text": "Comment réduire les tickets récurrents ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "CU008",
-      "previous_message": "Faut-il revoir les validations ?",
-      "message": "Peut-être.",
-      "next_message": "Aucune perspective nouvelle.",
-      "expected_score_range": [1, 1]
+      "input": {
+        "content_id": "useful_contribution_control:CU008",
+        "content_type": "comment",
+        "text": "Peut-être.",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU008",
+          "text": "Faut-il revoir les validations ?",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU008",
+          "text": "Faut-il revoir les validations ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
     },
     {
       "id": "CU009",
-      "previous_message": "Comment mieux coordonner produit et support ?",
-      "message": "Un point mensuel commun sur les incidents récurrents aiderait à partager les priorités et à réduire les allers-retours.",
-      "next_message": "Contribution pertinente et utile.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "useful_contribution_control:CU009",
+        "content_type": "comment",
+        "text": "Un point mensuel commun sur les incidents récurrents aiderait à partager les priorités et à réduire les allers-retours.",
+        "created_at": "2026-03-01T09:09:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:10:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU009",
+          "text": "Comment mieux coordonner produit et support ?",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU009",
+          "text": "Comment mieux coordonner produit et support ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "CU010",
-      "previous_message": "As-tu une suggestion ?",
-      "message": "Je ne sais pas.",
-      "next_message": "Aucune utilité opérationnelle.",
-      "expected_score_range": [1, 1]
+      "input": {
+        "content_id": "useful_contribution_control:CU010",
+        "content_type": "comment",
+        "text": "Je ne sais pas.",
+        "created_at": "2026-03-01T09:10:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:11:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU010",
+          "text": "As-tu une suggestion ?",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:parent:CU010",
+          "text": "As-tu une suggestion ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "CU011",
+      "input": {
+        "content_id": "useful_contribution_control:CU011",
+        "content_type": "comment",
+        "text": "On pourrait mesurer les trois causes principales de retard sur deux semaines, puis automatiser la catégorie la plus fréquente.",
+        "created_at": "2026-03-01T09:11:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:12:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU011",
+          "text": "Comment réduire les délais de traitement ?",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU011",
+          "text": "Comment réduire les délais de traitement ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "CU012",
+      "input": {
+        "content_id": "useful_contribution_control:CU012",
+        "content_type": "comment",
+        "text": "Oui.",
+        "created_at": "2026-03-01T09:13:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:14:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU012",
+          "text": "Comment améliorer les réunions ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU012",
+          "text": "Comment améliorer les réunions ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "CU013",
+      "input": {
+        "content_id": "useful_contribution_control:CU013",
+        "content_type": "comment",
+        "text": "Ajouter des contrôles automatiques sur les montants et les identifiants clients limiterait immédiatement une partie des erreurs critiques.",
+        "created_at": "2026-03-01T09:15:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:16:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU013",
+          "text": "On cherche à réduire les erreurs de saisie.",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU013",
+          "text": "On cherche à réduire les erreurs de saisie."
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "CU014",
+      "input": {
+        "content_id": "useful_contribution_control:CU014",
+        "content_type": "comment",
+        "text": "On verra plus tard.",
+        "created_at": "2026-03-01T09:17:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:18:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU014",
+          "text": "Quel plan de migration proposer ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU014",
+          "text": "Quel plan de migration proposer ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "CU015",
+      "input": {
+        "content_id": "useful_contribution_control:CU015",
+        "content_type": "comment",
+        "text": "Un kit d'arrivée avec checklist, accès outils et référent nommé dès J1 permettrait de réduire les oublis.",
+        "created_at": "2026-03-01T09:19:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:20:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU015",
+          "text": "Comment mieux organiser l'onboarding ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU015",
+          "text": "Comment mieux organiser l'onboarding ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "CU016",
+      "input": {
+        "content_id": "useful_contribution_control:CU016",
+        "content_type": "comment",
+        "text": "Il faudrait peut-être faire quelque chose.",
+        "created_at": "2026-03-01T09:21:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:22:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU016",
+          "text": "Que faire pour le support interne ?",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU016",
+          "text": "Que faire pour le support interne ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "CU017",
+      "input": {
+        "content_id": "useful_contribution_control:CU017",
+        "content_type": "comment",
+        "text": "Une FAQ visible depuis le portail et alimentée à partir des 20 tickets les plus fréquents pourrait absorber une partie des demandes simples.",
+        "created_at": "2026-03-01T09:23:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:24:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU017",
+          "text": "Comment réduire les tickets récurrents ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU017",
+          "text": "Comment réduire les tickets récurrents ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "CU018",
+      "input": {
+        "content_id": "useful_contribution_control:CU018",
+        "content_type": "comment",
+        "text": "Peut-être.",
+        "created_at": "2026-03-01T09:25:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:26:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU018",
+          "text": "Faut-il revoir les validations ?",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU018",
+          "text": "Faut-il revoir les validations ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "CU019",
+      "input": {
+        "content_id": "useful_contribution_control:CU019",
+        "content_type": "comment",
+        "text": "Un point mensuel commun sur les incidents récurrents aiderait à partager les priorités et à réduire les allers-retours.",
+        "created_at": "2026-03-01T09:27:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:28:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU019",
+          "text": "Comment mieux coordonner produit et support ?",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU019",
+          "text": "Comment mieux coordonner produit et support ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "CU020",
+      "input": {
+        "content_id": "useful_contribution_control:CU020",
+        "content_type": "comment",
+        "text": "Je ne sais pas.",
+        "created_at": "2026-03-01T09:29:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:30:00Z",
+        "parent": {
+          "content_id": "useful_contribution_control:parent:CU020",
+          "text": "As-tu une suggestion ?",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "useful_contribution_control:thread:CU020",
+          "text": "As-tu une suggestion ?"
+        },
+        "context": {
+          "edito_id": 110,
+          "phase": "test_criterion",
+          "topic_id": 10,
+          "tags": [
+            "contribution_utile"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
     }
   ]
 }

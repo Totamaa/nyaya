@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Any
 
 from llm.evaluation.benchmark import BenchmarkRunner
-from llm.evaluation.models import LLMMessageEvaluationOutput
+from llm.evaluation.models import LLMMessageEvaluationOutput, SingleCriterionBenchmarkOutput
 
 
 class FakeLLMClient:
@@ -41,38 +41,41 @@ def build_full_eval(score: int = 5) -> LLMMessageEvaluationOutput:
             "contribution_utile": {"score": score, "rationale": "ok"},
             "respect_collaboration": {"score": score, "rationale": "ok"},
             "analysis_summary": "ok",
-            "context_completeness": "full",
             "model_confidence": 0.9,
         }
     )
 
 
+def build_single(score: int = 5) -> SingleCriterionBenchmarkOutput:
+    return SingleCriterionBenchmarkOutput.model_validate({"score": score, "rationale": "ok"})
+
+
 def test_benchmark_runner_on_selected_datasets() -> None:
     client = FakeLLMClient(
         [
-            build_full_eval(5),
-            build_full_eval(1),
+            build_single(5),
+            build_single(1),
             {"fallacy_present": "yes", "fallacy_type": "ad_hominem", "rationale": "ok"},
         ]
     )
     runner = BenchmarkRunner(client=client, model_name="fake-model", max_tokens=500)
     report = runner.run_paths(
         [
-            Path("llm/test_dataset/relevance_control.json"),
-            Path("llm/test_dataset/fallacies_control.json"),
+            Path("src/app/modules/llm/test_dataset/relevance_control.json"),
+            Path("src/app/modules/llm/test_dataset/fallacies_control.json"),
         ]
     )
 
     assert report.dataset_count == 2
-    assert report.total_items == 45
+    assert report.total_items == 40
     assert report.failed_items >= 1
 
 
 def test_benchmark_runner_respects_explicit_range_dataset_failure() -> None:
-    client = FakeLLMClient([build_full_eval(1)])
+    client = FakeLLMClient([build_single(1)])
     runner = BenchmarkRunner(client=client, model_name="fake-model", max_tokens=500)
-    report = runner.run_paths([Path("llm/test_dataset/clarity_control.json")])
+    report = runner.run_paths([Path("src/app/modules/llm/test_dataset/clarity_control.json")])
 
     assert report.dataset_count == 1
     assert report.summaries[0].dataset_name == "clarity_control"
-    assert report.summaries[0].total == 15
+    assert report.summaries[0].total == 20

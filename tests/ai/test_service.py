@@ -19,10 +19,13 @@ def build_input() -> MessageEvaluationInput:
             "text": "Je comprends le besoin, mais il faudrait comparer le gain attendu et le risque avant de supprimer cette validation.",
             "created_at": "2026-03-01T10:00:00Z",
             "author_id": 7,
-            "parent_content_id": "c_099",
-            "parent_text": "Il faut supprimer cette validation.",
-            "parent_author_id": 4,
-            "parent_created_at": "2026-03-01T09:58:00Z",
+            "parent": {
+                "content_id": "c_099",
+                "text": "Il faut supprimer cette validation.",
+                "author_id": 4,
+                "created_at": "2026-03-01T09:58:00Z",
+            },
+            "context": {"phase": "decision", "topic_label": "workflow achat"},
             "likes_normalized": 0.25,
             "tenant_id": "nyaya-test",
             "evaluation_requested_at": "2026-03-01T10:01:00Z",
@@ -43,7 +46,6 @@ def build_output() -> LLMMessageEvaluationOutput:
             "contribution_utile": {"score": 4, "rationale": "Propose un cadre utile."},
             "respect_collaboration": {"score": 5, "rationale": "Ton respectueux."},
             "analysis_summary": "Message globalement solide et constructif.",
-            "context_completeness": "full",
             "model_confidence": 0.88,
         }
     )
@@ -101,6 +103,7 @@ def test_service_retries_once_and_persists_success(tmp_path: Path) -> None:
     assert record.result is not None
     assert len(client.calls) == 2
     assert record.result.scores["likes"].score == 2.0
+    assert record.result.context_completeness == "full"
     assert record.result.score_100 > 0
 
     evaluations = read_jsonl(tmp_path / "evaluations.jsonl")

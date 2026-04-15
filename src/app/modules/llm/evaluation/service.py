@@ -11,8 +11,10 @@ from .models import (
     LLMMessageEvaluationOutput,
     MessageEvaluationInput,
     MessageEvaluationResult,
+    PreparedEvaluationInput,
     PersistedEvaluationRecord,
 )
+from .preparation import prepare_message_for_evaluation
 from .prompt import build_evaluation_messages
 from .scoring import build_scores, compute_likes_score, compute_weighted_score
 from .storage import JsonlEvaluationEventSink, JsonlEvaluationRepository
@@ -49,45 +51,50 @@ class MessageEvaluationService:
         with self._locks_guard:
             return self._locks.setdefault(key, threading.Lock())
 
-    def _call_llm(self, message_input: MessageEvaluationInput) -> LLMMessageEvaluationOutput:
+    def _call_llm(
+        self,
+        prepared_input: PreparedEvaluationInput,
+        *,
+        max_retries: int = 2,
+    ) -> LLMMessageEvaluationOutput:
+        last_error: Exception | None = None
         messages = build_evaluation_messages(
-            message_input,
+            prepared_input,
             system_prompt=self.system_prompt,
         )
-        try:
-            return self.client.complete_structured(
-                messages,
-                LLMMessageEvaluationOutput,
-                temperature=self.temperature,
-                max_tokens=self.max_tokens,
-            )
-        except Exception:
-            retry_messages = messages + [
-                {
-                    "role": "user",
-                    "content": (
-                        "La réponse précédente n'était pas un JSON strict valide ou complet. "
-                        "Réponds uniquement avec le JSON demandé, sans markdown ni texte additionnel."
-                    ),
-                }
-            ]
-            return self.client.complete_structured(
-                retry_messages,
-                LLMMessageEvaluationOutput,
-                temperature=self.temperature,
-                max_tokens=self.max_tokens,
-            )
+        for attempt in range(max_retries):
+            try:
+                return self.client.complete_structured(
+                    messages,
+                    LLMMessageEvaluationOutput,
+                    temperature=self.temperature,
+                    max_tokens=self.max_tokens,
+                )
+            except Exception as exc:
+                last_error = exc
+                if attempt < max_retries - 1:
+                    messages = messages + [
+                        {
+                            "role": "user",
+                            "content": (
+                                "La réponse précédente n'était pas un JSON strict valide ou complet. "
+                                "Réponds uniquement avec le JSON demandé, sans markdown ni texte additionnel."
+                            ),
+                        }
+                    ]
+        raise last_error or RuntimeError("Échec LLM inconnu")
 
     def _build_success_record(
         self,
         message_input: MessageEvaluationInput,
+        prepared_input: PreparedEvaluationInput,
         llm_output: LLMMessageEvaluationOutput,
     ) -> PersistedEvaluationRecord:
         evaluated_at = datetime.now(UTC)
-        likes_score = compute_likes_score(message_input.likes_normalized)
+        likes_score = compute_likes_score(prepared_input.likes_normalized)
         scores = build_scores(
             llm_output,
-            likes_normalized=message_input.likes_normalized,
+            likes_normalized=prepared_input.likes_normalized,
         )
         weighted_score, score_100 = compute_weighted_score(scores)
         result = MessageEvaluationResult(
@@ -98,7 +105,7 @@ class MessageEvaluationService:
             weighted_score=weighted_score,
             score_100=score_100,
             analysis_summary=llm_output.analysis_summary,
-            context_completeness=llm_output.context_completeness,
+            context_completeness=prepared_input.context_completeness,
             model_confidence=llm_output.model_confidence,
             evaluation_version=self.evaluation_version,
             evaluated_at=evaluated_at,
@@ -112,9 +119,9 @@ class MessageEvaluationService:
             model_name=self.model_name,
             status="success",
             input_snapshot=message_input,
-            context_snapshot=message_input.context_snapshot(),
+            prepared_snapshot=prepared_input.snapshot(),
             result=result,
-            likes_normalized=message_input.likes_normalized,
+            likes_normalized=prepared_input.likes_normalized,
             likes_score=likes_score,
             evaluated_at=evaluated_at,
         )
@@ -122,6 +129,7 @@ class MessageEvaluationService:
     def _build_failure_record(
         self,
         message_input: MessageEvaluationInput,
+        prepared_input: PreparedEvaluationInput,
         failure_reason: str,
     ) -> PersistedEvaluationRecord:
         return PersistedEvaluationRecord(
@@ -133,13 +141,15 @@ class MessageEvaluationService:
             model_name=self.model_name,
             status="failed",
             input_snapshot=message_input,
-            context_snapshot=message_input.context_snapshot(),
-            likes_normalized=message_input.likes_normalized,
-            likes_score=compute_likes_score(message_input.likes_normalized),
+            prepared_snapshot=prepared_input.snapshot(),
+            likes_normalized=prepared_input.likes_normalized,
+            likes_score=compute_likes_score(prepared_input.likes_normalized),
             failure_reason=failure_reason,
         )
 
-    def process(self, message_input: MessageEvaluationInput) -> PersistedEvaluationRecord:
+    def process(
+        self, message_input: MessageEvaluationInput
+    ) -> PersistedEvaluationRecord:
         lock = self._get_lock(message_input.content_id)
         with lock:
             existing = self.repository.get(
@@ -149,11 +159,16 @@ class MessageEvaluationService:
             if existing is not None:
                 return existing
 
+            prepared_input = prepare_message_for_evaluation(message_input)
             try:
-                llm_output = self._call_llm(message_input)
-                record = self._build_success_record(message_input, llm_output)
+                llm_output = self._call_llm(prepared_input)
+                record = self._build_success_record(
+                    message_input, prepared_input, llm_output
+                )
             except Exception as exc:
-                record = self._build_failure_record(message_input, str(exc))
+                record = self._build_failure_record(
+                    message_input, prepared_input, str(exc)
+                )
 
             persisted = self.repository.append(record)
             if persisted.record_id == record.record_id:
@@ -174,7 +189,9 @@ class MessageEvaluationService:
                 )
             return persisted
 
-    def evaluate(self, message_input: MessageEvaluationInput) -> MessageEvaluationResult:
+    def evaluate(
+        self, message_input: MessageEvaluationInput
+    ) -> MessageEvaluationResult:
         record = self.process(message_input)
         if record.result is None:
             raise RuntimeError(record.failure_reason or "Échec d'évaluation inconnu.")

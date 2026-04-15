@@ -12,7 +12,7 @@ Le dépôt contient maintenant une brique `llm.evaluation` qui :
 ### Lancer un lot
 
 ```bash
-python -m llm.evaluate_batch requests.jsonl
+PYTHONPATH=src/app/modules python -m llm.evaluate_batch requests.jsonl
 ```
 
 Chaque ligne de `requests.jsonl` doit contenir un `MessageEvaluationInput` sérialisé en JSON.
@@ -25,14 +25,26 @@ pytest
 
 ### Benchmark datasets
 
+Les jeux de `src/app/modules/llm/test_dataset/*.json` utilisent un `input` au format
+`MessageEvaluationInput` (même forme que les messages entrants), avec 20 items par dataset.
+
 Pour exécuter les jeux de contrôle contre le modèle configuré :
 
 ```bash
-python -m llm.benchmark_datasets
+PYTHONPATH=src/app/modules python -m llm.benchmark_datasets
 ```
 
 Pour limiter l'exécution à un dataset :
 
 ```bash
-python -m llm.benchmark_datasets --dataset llm/test_dataset/relevance_control.json
+PYTHONPATH=src/app/modules python -m llm.benchmark_datasets --dataset src/app/modules/llm/test_dataset/relevance_control.json
+```
+
+### Export train/test au format `ENTREE_MESSAGE`
+
+Pour normaliser les jeux de contrôle vers un format homogène (`input` compatible `MessageEvaluationInput`)
+et égaliser les datasets de critères :
+
+```bash
+PYTHONPATH=src/app/modules python -m llm.export_training_dataset --output data/training_messages_equalized.jsonl
 ```

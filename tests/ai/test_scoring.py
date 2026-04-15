@@ -10,7 +10,6 @@ def build_llm_output(score: float = 5.0) -> LLMMessageEvaluationOutput:
         if name != "likes"
     }
     payload["analysis_summary"] = "Résumé."
-    payload["context_completeness"] = "full"
     payload["model_confidence"] = 0.9
     return LLMMessageEvaluationOutput.model_validate(payload)
 

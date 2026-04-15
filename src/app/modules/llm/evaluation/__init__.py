@@ -4,8 +4,11 @@ from .models import (
     LLMMessageEvaluationOutput,
     MessageEvaluationInput,
     MessageEvaluationResult,
+    PreparedEvaluationInput,
     PersistedEvaluationRecord,
+    SingleCriterionBenchmarkOutput,
 )
+from .preparation import prepare_message_for_evaluation
 from .service import MessageEvaluationService
 from .storage import JsonlEvaluationEventSink, JsonlEvaluationRepository
 from .worker import AsyncMessageEvaluationWorker
@@ -20,6 +23,9 @@ __all__ = [
     "MessageEvaluationInput",
     "MessageEvaluationResult",
     "MessageEvaluationService",
+    "PreparedEvaluationInput",
     "PROMPT_VERSION",
     "PersistedEvaluationRecord",
+    "prepare_message_for_evaluation",
+    "SingleCriterionBenchmarkOutput",
 ]

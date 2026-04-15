@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from llm.connectors.base import LLMClient
 
+from .constants import TEXT_CRITERIA
 from .datasets import (
     EndToEndControlDataset,
     EndToEndControlItem,
@@ -18,7 +19,12 @@ from .datasets import (
     RangeControlItem,
     load_dataset,
 )
-from .models import MessageEvaluationInput, MessageEvaluationResult
+from .models import (
+    MessageEvaluationInput,
+    SingleCriterionBenchmarkOutput,
+)
+from .preparation import prepare_message_for_evaluation
+from .prompt import build_single_criterion_messages
 from .service import MessageEvaluationService
 from .storage import JsonlEvaluationEventSink, JsonlEvaluationRepository
 
@@ -39,6 +45,10 @@ CRITERION_ALIASES: dict[str, str] = {
     "understanding": "volonte_de_comprendre",
     "contribution_utile": "contribution_utile",
     "useful_contribution": "contribution_utile",
+}
+
+CRITERION_DESCRIPTIONS: dict[str, str] = {
+    item.name: item.description for item in TEXT_CRITERIA
 }
 
 
@@ -102,46 +112,40 @@ class BenchmarkRunner:
         item: RangeControlItem,
     ) -> MessageEvaluationInput:
         return MessageEvaluationInput.model_validate(
-            {
-                "content_id": f"{dataset.dataset_name}:{item.id}",
-                "content_type": "comment",
-                "text": item.message,
-                "created_at": "2026-01-01T00:00:00Z",
-                "author_id": "benchmark",
-                "parent_content_id": f"parent:{item.id}",
-                "parent_text": item.previous_message,
-                "parent_author_id": "context",
-                "parent_created_at": "2026-01-01T00:00:00Z",
-                "likes_normalized": 0.5,
-                "tenant_id": "benchmark",
-                "evaluation_requested_at": "2026-01-01T00:00:00Z",
-            }
+            item.to_message_input_payload(dataset_name=dataset.dataset_name)
         )
 
     def _benchmark_range_dataset(self, dataset: RangeControlDataset) -> BenchmarkDatasetSummary:
-        service = self._make_service()
         criterion_key = dataset.criterion or dataset.dataset_name.removesuffix("_control")
         mapped_criterion = CRITERION_ALIASES.get(criterion_key)
         if mapped_criterion is None:
             raise ValueError(f"Critère non mappé pour le dataset {dataset.dataset_name!r}.")
 
+        criterion_description = CRITERION_DESCRIPTIONS[mapped_criterion]
         results: list[BenchmarkItemResult] = []
         for item in dataset.items:
+            prepared_input = prepare_message_for_evaluation(self._range_item_to_input(dataset, item))
             try:
-                evaluation = service.evaluate(self._range_item_to_input(dataset, item))
-                predicted = evaluation.scores[mapped_criterion].score
+                output = self.client.complete_structured(
+                    build_single_criterion_messages(
+                        prepared_input,
+                        criterion_name=mapped_criterion,
+                        criterion_description=criterion_description,
+                        system_prompt=self.system_prompt,
+                    ),
+                    SingleCriterionBenchmarkOutput,
+                    temperature=self.temperature,
+                    max_tokens=min(self.max_tokens or 600, 600),
+                )
                 low, high = item.expected_score_range
-                passed = low <= predicted <= high
+                passed = low <= output.score <= high
                 results.append(
                     BenchmarkItemResult(
                         dataset_name=dataset.dataset_name,
                         item_id=item.id,
                         status="passed" if passed else "failed",
                         expected={"score_range": [low, high], "criterion": mapped_criterion},
-                        actual={
-                            "predicted_score": predicted,
-                            "rationale": evaluation.scores[mapped_criterion].rationale,
-                        },
+                        actual=output.model_dump(),
                     )
                 )
             except Exception as exc:
@@ -150,16 +154,13 @@ class BenchmarkRunner:
                         dataset_name=dataset.dataset_name,
                         item_id=item.id,
                         status="failed",
-                        expected={
-                            "score_range": list(item.expected_score_range),
-                            "criterion": mapped_criterion,
-                        },
+                        expected={"score_range": list(item.expected_score_range), "criterion": mapped_criterion},
                         error=str(exc),
                     )
                 )
         return _build_summary(dataset.dataset_name, results)
 
-    def _build_fallacy_messages(self, item: FallacyControlItem) -> list[dict[str, str]]:
+    def _build_fallacy_messages(self, message: str, context: str) -> list[dict[str, str]]:
         return [
             {
                 "role": "system",
@@ -173,9 +174,9 @@ class BenchmarkRunner:
                 "role": "user",
                 "content": (
                     "Contexte:\n"
-                    f"{item.context}\n\n"
+                    f"{context}\n\n"
                     "Message:\n"
-                    f"{item.message}\n\n"
+                    f"{message}\n\n"
                     "Détermine s'il y a un sophisme parmi: ad_hominem, false_dilemma, hasty_generalization."
                 ),
             },
@@ -184,9 +185,10 @@ class BenchmarkRunner:
     def _benchmark_fallacy_dataset(self, dataset: FallacyControlDataset) -> BenchmarkDatasetSummary:
         results: list[BenchmarkItemResult] = []
         for item in dataset.items:
+            message, context = item.to_message_and_context()
             try:
                 output = self.client.complete_structured(
-                    self._build_fallacy_messages(item),
+                    self._build_fallacy_messages(message, context),
                     FallacyBenchmarkOutput,
                     temperature=self.temperature,
                     max_tokens=min(self.max_tokens or 600, 600),
@@ -240,10 +242,7 @@ class BenchmarkRunner:
             },
         )
 
-    def _benchmark_end_to_end_dataset(
-        self,
-        dataset: EndToEndControlDataset,
-    ) -> BenchmarkDatasetSummary:
+    def _benchmark_end_to_end_dataset(self, dataset: EndToEndControlDataset) -> BenchmarkDatasetSummary:
         service = self._make_service()
         results: list[BenchmarkItemResult] = []
         for item in dataset.items:

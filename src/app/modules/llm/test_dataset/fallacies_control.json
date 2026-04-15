@@ -1,285 +1,718 @@
 {
-    "dataset_name": "fallacies_control",
-    "version": "v1",
-    "language": "fr",
-    "scale": {
-      "fallacy_present": ["yes", "no"]
-    },
-    "tested_fallacies": [
-      "ad_hominem",
-      "false_dilemma",
-      "hasty_generalization"
-    ],
-    "items": [
-      {
-        "id": "F001",
-        "message": "Ton argument sur le télétravail est mauvais, de toute façon tu n'as jamais géré d'équipe.",
-        "context": "Discussion RH interne",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "ad_hominem"
-        }
-      },
-      {
-        "id": "F002",
-        "message": "Je ne suis pas d'accord avec ta proposition sur le télétravail, car elle risque de compliquer la coordination entre équipes.",
-        "context": "Discussion RH interne",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      },
-      {
-        "id": "F003",
-        "message": "Soit on adopte cet outil dès maintenant, soit on montre qu'on est contre toute innovation.",
-        "context": "Choix d'un outil interne",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "false_dilemma"
-        }
-      },
-      {
-        "id": "F004",
-        "message": "On peut soit faire un test pilote, soit comparer plusieurs solutions avant de décider.",
-        "context": "Choix d'un outil interne",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      },
-      {
-        "id": "F005",
-        "message": "J'ai vu deux réunions mal préparées par cette équipe, donc leurs projets sont toujours mal gérés.",
-        "context": "Retour projet",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "hasty_generalization"
-        }
-      },
-      {
-        "id": "F006",
-        "message": "Sur les trois dernières semaines, plusieurs réunions ont été confuses ; il faudrait vérifier si c'est une tendance.",
-        "context": "Retour projet",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      },
-      {
-        "id": "F007",
-        "message": "Tu proposes ça uniquement parce que tu veux te faire remarquer, donc ton idée ne vaut rien.",
-        "context": "Débat sur un nouveau process",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "ad_hominem"
-        }
-      },
-      {
-        "id": "F008",
-        "message": "Soit on garde le processus actuel, soit ce sera forcément le chaos total.",
-        "context": "Changement de process",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "false_dilemma"
-        }
-      },
-      {
-        "id": "F009",
-        "message": "Un client s'est plaint ce matin, donc ce produit est mauvais pour tout le monde.",
-        "context": "Retour client",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "hasty_generalization"
-        }
-      },
-      {
-        "id": "F010",
-        "message": "Il nous faudrait plus de retours clients avant de conclure sur la qualité du produit.",
-        "context": "Retour client",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      },
-      {
-        "id": "F011",
-        "message": "Ton avis sur la sécurité n'a aucune valeur, tu n'es même pas ingénieur.",
-        "context": "Discussion sécurité",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "ad_hominem"
-        }
-      },
-      {
-        "id": "F012",
-        "message": "Soit on supprime totalement les validations, soit on restera bloqués dans la bureaucratie pour toujours.",
-        "context": "Optimisation de processus",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "false_dilemma"
-        }
-      },
-      {
-        "id": "F013",
-        "message": "Deux stagiaires ont eu du mal avec l'outil, donc il est forcément inutilisable pour tous les nouveaux arrivants.",
-        "context": "Formation outil",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "hasty_generalization"
-        }
-      },
-      {
-        "id": "F014",
-        "message": "Je comprends ton point, mais je pense que ton estimation de délai est trop optimiste au vu des dépendances techniques.",
-        "context": "Planification projet",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      },
-      {
-        "id": "F015",
-        "message": "Tu dis ça parce que tu es toujours négatif, donc on peut ignorer ta remarque.",
-        "context": "Réunion d'équipe",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "ad_hominem"
-        }
-      },
-      {
-        "id": "F016",
-        "message": "Soit on externalise tout, soit on refuse de faire évoluer l'entreprise.",
-        "context": "Stratégie organisationnelle",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "false_dilemma"
-        }
-      },
-      {
-        "id": "F017",
-        "message": "J'ai vu trois tickets mal traités par ce service, donc ils travaillent toujours mal.",
-        "context": "Support interne",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "hasty_generalization"
-        }
-      },
-      {
-        "id": "F018",
-        "message": "Le message manque de précision sur les risques ; peux-tu détailler les impacts attendus ?",
-        "context": "Revue de proposition",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      },
-      {
-        "id": "F019",
-        "message": "Tu n'as jamais livré un projet à temps, donc ta suggestion sur l'organisation n'a aucun intérêt.",
-        "context": "Réunion projet",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "ad_hominem"
-        }
-      },
-      {
-        "id": "F020",
-        "message": "Soit on lance cette fonctionnalité cette semaine, soit la concurrence nous écrase définitivement.",
-        "context": "Roadmap produit",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "false_dilemma"
-        }
-      },
-      {
-        "id": "F021",
-        "message": "Deux développeurs préfèrent travailler tard, donc toute l'équipe serait plus productive avec des horaires décalés.",
-        "context": "Organisation du travail",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "hasty_generalization"
-        }
-      },
-      {
-        "id": "F022",
-        "message": "Je propose qu'on compare les coûts et bénéfices avant de trancher.",
-        "context": "Décision budgétaire",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      },
-      {
-        "id": "F023",
-        "message": "Ton analyse est ridicule, on voit bien que tu ne comprends rien au métier.",
-        "context": "Discussion métier",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "ad_hominem"
-        }
-      },
-      {
-        "id": "F024",
-        "message": "Soit on suit exactement cette méthode, soit on accepte l'échec du projet.",
-        "context": "Méthodologie projet",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "false_dilemma"
-        }
-      },
-      {
-        "id": "F025",
-        "message": "Un bug est apparu après la mise à jour, donc toutes les mises à jour créent des problèmes.",
-        "context": "Maintenance logicielle",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "hasty_generalization"
-        }
-      },
-      {
-        "id": "F026",
-        "message": "La proposition est intéressante, mais j'aimerais comprendre son impact sur la charge de support.",
-        "context": "Analyse de proposition",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      },
-      {
-        "id": "F027",
-        "message": "Vu ton historique, on peut déjà dire que ton avis sur ce sujet n'est pas crédible.",
-        "context": "Débat interne",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "ad_hominem"
-        }
-      },
-      {
-        "id": "F028",
-        "message": "Soit on automatise tout de suite, soit on restera à jamais dépassés.",
-        "context": "Automatisation",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "false_dilemma"
-        }
-      },
-      {
-        "id": "F029",
-        "message": "Trois personnes n'ont pas aimé la formation, donc cette formation est inutile pour l'ensemble de l'entreprise.",
-        "context": "Évaluation formation",
-        "expected": {
-          "fallacy_present": "yes",
-          "fallacy_type": "hasty_generalization"
-        }
-      },
-      {
-        "id": "F030",
-        "message": "Je pense que la décision mérite encore une comparaison avec les autres options disponibles.",
-        "context": "Comité de décision",
-        "expected": {
-          "fallacy_present": "no",
-          "fallacy_type": "none"
-        }
-      }
+  "dataset_name": "fallacies_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "fallacy_present": [
+      "yes",
+      "no"
     ]
-  }
+  },
+  "tested_fallacies": [
+    "ad_hominem",
+    "false_dilemma",
+    "hasty_generalization"
+  ],
+  "items": [
+    {
+      "id": "F001",
+      "input": {
+        "content_id": "fallacies_control:F001",
+        "content_type": "comment",
+        "text": "Ton argument sur le télétravail est mauvais, de toute façon tu n'as jamais géré d'équipe.",
+        "created_at": "2026-03-02T10:01:00Z",
+        "author_id": 201,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:02:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F001",
+          "text": "Contexte de discussion: Discussion RH interne",
+          "author_id": 301,
+          "created_at": "2026-03-02T10:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F001",
+          "text": "Débat: Discussion RH interne"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "ad_hominem"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "ad_hominem"
+      }
+    },
+    {
+      "id": "F002",
+      "input": {
+        "content_id": "fallacies_control:F002",
+        "content_type": "comment",
+        "text": "Je ne suis pas d'accord avec ta proposition sur le télétravail, car elle risque de compliquer la coordination entre équipes.",
+        "created_at": "2026-03-02T10:02:00Z",
+        "author_id": 202,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:03:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F002",
+          "text": "Contexte de discussion: Discussion RH interne",
+          "author_id": 302,
+          "created_at": "2026-03-02T10:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F002",
+          "text": "Débat: Discussion RH interne"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "none"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "no",
+        "fallacy_type": "none"
+      }
+    },
+    {
+      "id": "F003",
+      "input": {
+        "content_id": "fallacies_control:F003",
+        "content_type": "comment",
+        "text": "Soit on adopte cet outil dès maintenant, soit on montre qu'on est contre toute innovation.",
+        "created_at": "2026-03-02T10:03:00Z",
+        "author_id": 203,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:04:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F003",
+          "text": "Contexte de discussion: Choix d'un outil interne",
+          "author_id": 303,
+          "created_at": "2026-03-02T10:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F003",
+          "text": "Débat: Choix d'un outil interne"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "false_dilemma"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "false_dilemma"
+      }
+    },
+    {
+      "id": "F004",
+      "input": {
+        "content_id": "fallacies_control:F004",
+        "content_type": "comment",
+        "text": "On peut soit faire un test pilote, soit comparer plusieurs solutions avant de décider.",
+        "created_at": "2026-03-02T10:04:00Z",
+        "author_id": 204,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:05:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F004",
+          "text": "Contexte de discussion: Choix d'un outil interne",
+          "author_id": 304,
+          "created_at": "2026-03-02T10:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F004",
+          "text": "Débat: Choix d'un outil interne"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "none"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "no",
+        "fallacy_type": "none"
+      }
+    },
+    {
+      "id": "F005",
+      "input": {
+        "content_id": "fallacies_control:F005",
+        "content_type": "comment",
+        "text": "J'ai vu deux réunions mal préparées par cette équipe, donc leurs projets sont toujours mal gérés.",
+        "created_at": "2026-03-02T10:05:00Z",
+        "author_id": 205,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:06:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F005",
+          "text": "Contexte de discussion: Retour projet",
+          "author_id": 305,
+          "created_at": "2026-03-02T10:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F005",
+          "text": "Débat: Retour projet"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "hasty_generalization"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "hasty_generalization"
+      }
+    },
+    {
+      "id": "F006",
+      "input": {
+        "content_id": "fallacies_control:F006",
+        "content_type": "comment",
+        "text": "Sur les trois dernières semaines, plusieurs réunions ont été confuses ; il faudrait vérifier si c'est une tendance.",
+        "created_at": "2026-03-02T10:06:00Z",
+        "author_id": 206,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:07:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F006",
+          "text": "Contexte de discussion: Retour projet",
+          "author_id": 306,
+          "created_at": "2026-03-02T10:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F006",
+          "text": "Débat: Retour projet"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "none"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "no",
+        "fallacy_type": "none"
+      }
+    },
+    {
+      "id": "F007",
+      "input": {
+        "content_id": "fallacies_control:F007",
+        "content_type": "comment",
+        "text": "Tu proposes ça uniquement parce que tu veux te faire remarquer, donc ton idée ne vaut rien.",
+        "created_at": "2026-03-02T10:07:00Z",
+        "author_id": 207,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:08:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F007",
+          "text": "Contexte de discussion: Débat sur un nouveau process",
+          "author_id": 307,
+          "created_at": "2026-03-02T10:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F007",
+          "text": "Débat: Débat sur un nouveau process"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "ad_hominem"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "ad_hominem"
+      }
+    },
+    {
+      "id": "F008",
+      "input": {
+        "content_id": "fallacies_control:F008",
+        "content_type": "comment",
+        "text": "Soit on garde le processus actuel, soit ce sera forcément le chaos total.",
+        "created_at": "2026-03-02T10:08:00Z",
+        "author_id": 208,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:09:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F008",
+          "text": "Contexte de discussion: Changement de process",
+          "author_id": 308,
+          "created_at": "2026-03-02T10:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F008",
+          "text": "Débat: Changement de process"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "false_dilemma"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "false_dilemma"
+      }
+    },
+    {
+      "id": "F009",
+      "input": {
+        "content_id": "fallacies_control:F009",
+        "content_type": "comment",
+        "text": "Un client s'est plaint ce matin, donc ce produit est mauvais pour tout le monde.",
+        "created_at": "2026-03-02T10:09:00Z",
+        "author_id": 209,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:10:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F009",
+          "text": "Contexte de discussion: Retour client",
+          "author_id": 309,
+          "created_at": "2026-03-02T10:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F009",
+          "text": "Débat: Retour client"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "hasty_generalization"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "hasty_generalization"
+      }
+    },
+    {
+      "id": "F010",
+      "input": {
+        "content_id": "fallacies_control:F010",
+        "content_type": "comment",
+        "text": "Il nous faudrait plus de retours clients avant de conclure sur la qualité du produit.",
+        "created_at": "2026-03-02T10:10:00Z",
+        "author_id": 210,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:11:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F010",
+          "text": "Contexte de discussion: Retour client",
+          "author_id": 310,
+          "created_at": "2026-03-02T10:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F010",
+          "text": "Débat: Retour client"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "none"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "no",
+        "fallacy_type": "none"
+      }
+    },
+    {
+      "id": "F011",
+      "input": {
+        "content_id": "fallacies_control:F011",
+        "content_type": "comment",
+        "text": "Ton avis sur la sécurité n'a aucune valeur, tu n'es même pas ingénieur.",
+        "created_at": "2026-03-02T10:11:00Z",
+        "author_id": 211,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:12:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F011",
+          "text": "Contexte de discussion: Discussion sécurité",
+          "author_id": 311,
+          "created_at": "2026-03-02T10:10:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F011",
+          "text": "Débat: Discussion sécurité"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "ad_hominem"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "ad_hominem"
+      }
+    },
+    {
+      "id": "F012",
+      "input": {
+        "content_id": "fallacies_control:F012",
+        "content_type": "comment",
+        "text": "Soit on supprime totalement les validations, soit on restera bloqués dans la bureaucratie pour toujours.",
+        "created_at": "2026-03-02T10:12:00Z",
+        "author_id": 212,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:13:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F012",
+          "text": "Contexte de discussion: Optimisation de processus",
+          "author_id": 312,
+          "created_at": "2026-03-02T10:11:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F012",
+          "text": "Débat: Optimisation de processus"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "false_dilemma"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "false_dilemma"
+      }
+    },
+    {
+      "id": "F013",
+      "input": {
+        "content_id": "fallacies_control:F013",
+        "content_type": "comment",
+        "text": "Deux stagiaires ont eu du mal avec l'outil, donc il est forcément inutilisable pour tous les nouveaux arrivants.",
+        "created_at": "2026-03-02T10:13:00Z",
+        "author_id": 213,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:14:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F013",
+          "text": "Contexte de discussion: Formation outil",
+          "author_id": 313,
+          "created_at": "2026-03-02T10:12:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F013",
+          "text": "Débat: Formation outil"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "hasty_generalization"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "hasty_generalization"
+      }
+    },
+    {
+      "id": "F014",
+      "input": {
+        "content_id": "fallacies_control:F014",
+        "content_type": "comment",
+        "text": "Je comprends ton point, mais je pense que ton estimation de délai est trop optimiste au vu des dépendances techniques.",
+        "created_at": "2026-03-02T10:14:00Z",
+        "author_id": 214,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:15:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F014",
+          "text": "Contexte de discussion: Planification projet",
+          "author_id": 314,
+          "created_at": "2026-03-02T10:13:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F014",
+          "text": "Débat: Planification projet"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "none"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "no",
+        "fallacy_type": "none"
+      }
+    },
+    {
+      "id": "F015",
+      "input": {
+        "content_id": "fallacies_control:F015",
+        "content_type": "comment",
+        "text": "Tu dis ça parce que tu es toujours négatif, donc on peut ignorer ta remarque.",
+        "created_at": "2026-03-02T10:15:00Z",
+        "author_id": 215,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:16:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F015",
+          "text": "Contexte de discussion: Réunion d'équipe",
+          "author_id": 315,
+          "created_at": "2026-03-02T10:14:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F015",
+          "text": "Débat: Réunion d'équipe"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "ad_hominem"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "ad_hominem"
+      }
+    },
+    {
+      "id": "F016",
+      "input": {
+        "content_id": "fallacies_control:F016",
+        "content_type": "comment",
+        "text": "Soit on externalise tout, soit on refuse de faire évoluer l'entreprise.",
+        "created_at": "2026-03-02T10:16:00Z",
+        "author_id": 216,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:17:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F016",
+          "text": "Contexte de discussion: Stratégie organisationnelle",
+          "author_id": 316,
+          "created_at": "2026-03-02T10:15:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F016",
+          "text": "Débat: Stratégie organisationnelle"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "false_dilemma"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "false_dilemma"
+      }
+    },
+    {
+      "id": "F017",
+      "input": {
+        "content_id": "fallacies_control:F017",
+        "content_type": "comment",
+        "text": "J'ai vu trois tickets mal traités par ce service, donc ils travaillent toujours mal.",
+        "created_at": "2026-03-02T10:17:00Z",
+        "author_id": 217,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:18:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F017",
+          "text": "Contexte de discussion: Support interne",
+          "author_id": 317,
+          "created_at": "2026-03-02T10:16:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F017",
+          "text": "Débat: Support interne"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "hasty_generalization"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "hasty_generalization"
+      }
+    },
+    {
+      "id": "F018",
+      "input": {
+        "content_id": "fallacies_control:F018",
+        "content_type": "comment",
+        "text": "Le message manque de précision sur les risques ; peux-tu détailler les impacts attendus ?",
+        "created_at": "2026-03-02T10:18:00Z",
+        "author_id": 218,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:19:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F018",
+          "text": "Contexte de discussion: Revue de proposition",
+          "author_id": 318,
+          "created_at": "2026-03-02T10:17:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F018",
+          "text": "Débat: Revue de proposition"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "none"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "no",
+        "fallacy_type": "none"
+      }
+    },
+    {
+      "id": "F019",
+      "input": {
+        "content_id": "fallacies_control:F019",
+        "content_type": "comment",
+        "text": "Tu n'as jamais livré un projet à temps, donc ta suggestion sur l'organisation n'a aucun intérêt.",
+        "created_at": "2026-03-02T10:19:00Z",
+        "author_id": 219,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:20:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F019",
+          "text": "Contexte de discussion: Réunion projet",
+          "author_id": 319,
+          "created_at": "2026-03-02T10:18:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F019",
+          "text": "Débat: Réunion projet"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "ad_hominem"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "ad_hominem"
+      }
+    },
+    {
+      "id": "F020",
+      "input": {
+        "content_id": "fallacies_control:F020",
+        "content_type": "comment",
+        "text": "Soit on lance cette fonctionnalité cette semaine, soit la concurrence nous écrase définitivement.",
+        "created_at": "2026-03-02T10:20:00Z",
+        "author_id": 220,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-02T10:21:00Z",
+        "parent": {
+          "content_id": "fallacies_control:parent:F020",
+          "text": "Contexte de discussion: Roadmap produit",
+          "author_id": 320,
+          "created_at": "2026-03-02T10:19:00Z"
+        },
+        "thread_root": {
+          "content_id": "fallacies_control:thread:F020",
+          "text": "Débat: Roadmap produit"
+        },
+        "context": {
+          "edito_id": 203,
+          "phase": "fallacies",
+          "topic_id": 53,
+          "tags": [
+            "fallacies_control",
+            "false_dilemma"
+          ]
+        }
+      },
+      "expected": {
+        "fallacy_present": "yes",
+        "fallacy_type": "false_dilemma"
+      }
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 [llm]
 backend = "ollama"
 system_prompt = "Tu es un assistant utile et concis."
-temperature = 0.2
+temperature = 0.0
 max_tokens = 1024
 reasoning_effort = "none"
 
 [ollama]
 base_url = "http://localhost:11434"
-model = "nemotron-cascade-2:latest"
+model = "gemma4:31b"
 timeout_s = 120.0
 
 [mistral]

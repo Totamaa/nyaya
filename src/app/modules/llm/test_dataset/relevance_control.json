@@ -1,118 +1,693 @@
 {
-    "dataset_name": "relevance_control",
-    "version": "v1",
-    "language": "fr",
-    "scale": {
-      "min": 1,
-      "max": 5,
-      "instruction": "A predicted score is accepted if it falls within the expected range."
+  "dataset_name": "relevance_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "instruction": "A predicted score is accepted if it falls within the expected range."
+  },
+  "criterion": "relevance",
+  "items": [
+    {
+      "id": "R001",
+      "input": {
+        "content_id": "relevance_control:R001",
+        "content_type": "comment",
+        "text": "Je pense qu'il faudrait comparer les fonctionnalités de reporting et d'intégration avant de décider.",
+        "created_at": "2026-03-01T09:01:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:02:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R001",
+          "text": "On doit choisir un nouvel outil de gestion de projet pour le trimestre prochain.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R001",
+          "text": "On doit choisir un nouvel outil de gestion de projet pour le trimestre prochain."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
-    "criterion": "relevance",
-    "items": [
-      {
-        "id": "R001",
-        "previous_message": "On doit choisir un nouvel outil de gestion de projet pour le trimestre prochain.",
-        "message": "Je pense qu'il faudrait comparer les fonctionnalités de reporting et d'intégration avant de décider.",
-        "next_message": "Oui, surtout la compatibilité avec nos outils actuels.",
-        "expected_score_range": [4, 5]
+    {
+      "id": "R002",
+      "input": {
+        "content_id": "relevance_control:R002",
+        "content_type": "comment",
+        "text": "Au fait, il fait vraiment froid en ce moment dans les bureaux.",
+        "created_at": "2026-03-01T09:02:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:03:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R002",
+          "text": "On discute du budget formation pour l'année prochaine.",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R002",
+          "text": "On discute du budget formation pour l'année prochaine."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R002",
-        "previous_message": "On discute du budget formation pour l'année prochaine.",
-        "message": "Au fait, il fait vraiment froid en ce moment dans les bureaux.",
-        "next_message": "On pourra parler des locaux plus tard, restons sur le budget.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "R003",
+      "input": {
+        "content_id": "relevance_control:R003",
+        "content_type": "comment",
+        "text": "On pourrait supprimer une validation pour les petits montants et garder les deux pour les achats sensibles.",
+        "created_at": "2026-03-01T09:03:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:04:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R003",
+          "text": "Faut-il maintenir deux étapes de validation sur les demandes d'achat ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R003",
+          "text": "Faut-il maintenir deux étapes de validation sur les demandes d'achat ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R003",
-        "previous_message": "Faut-il maintenir deux étapes de validation sur les demandes d'achat ?",
-        "message": "On pourrait supprimer une validation pour les petits montants et garder les deux pour les achats sensibles.",
-        "next_message": "Oui, ça permettrait d'adapter la règle au niveau de risque.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R004",
+      "input": {
+        "content_id": "relevance_control:R004",
+        "content_type": "comment",
+        "text": "Je préfère travailler le matin, je suis plus efficace.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R004",
+          "text": "Quel retour avez-vous sur la nouvelle documentation API ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R004",
+          "text": "Quel retour avez-vous sur la nouvelle documentation API ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R004",
-        "previous_message": "Quel retour avez-vous sur la nouvelle documentation API ?",
-        "message": "Je préfère travailler le matin, je suis plus efficace.",
-        "next_message": "Ce n'est pas vraiment lié à la documentation.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "R005",
+      "input": {
+        "content_id": "relevance_control:R005",
+        "content_type": "comment",
+        "text": "Une meilleure catégorisation automatique pourrait aider à prioriser plus vite les demandes.",
+        "created_at": "2026-03-01T09:05:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:06:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R005",
+          "text": "On cherche des pistes pour réduire le délai de traitement des tickets.",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R005",
+          "text": "On cherche des pistes pour réduire le délai de traitement des tickets."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R005",
-        "previous_message": "On cherche des pistes pour réduire le délai de traitement des tickets.",
-        "message": "Une meilleure catégorisation automatique pourrait aider à prioriser plus vite les demandes.",
-        "next_message": "Bonne idée, surtout pour les tickets récurrents.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R006",
+      "input": {
+        "content_id": "relevance_control:R006",
+        "content_type": "comment",
+        "text": "Le prestataire B est peut-être plus cher, mais son support et ses garanties de disponibilité peuvent justifier l'écart.",
+        "created_at": "2026-03-01T09:06:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:07:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R006",
+          "text": "On doit arbitrer entre trois prestataires cloud.",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R006",
+          "text": "On doit arbitrer entre trois prestataires cloud."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R006",
-        "previous_message": "On doit arbitrer entre trois prestataires cloud.",
-        "message": "Le prestataire B est peut-être plus cher, mais son support et ses garanties de disponibilité peuvent justifier l'écart.",
-        "next_message": "Oui, il faut regarder le coût total et pas seulement le prix facial.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R007",
+      "input": {
+        "content_id": "relevance_control:R007",
+        "content_type": "comment",
+        "text": "Il faudrait aussi refaire la décoration de la salle de pause.",
+        "created_at": "2026-03-01T09:07:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:08:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R007",
+          "text": "Avez-vous des idées pour améliorer l'onboarding des nouveaux arrivants ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R007",
+          "text": "Avez-vous des idées pour améliorer l'onboarding des nouveaux arrivants ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R007",
-        "previous_message": "Avez-vous des idées pour améliorer l'onboarding des nouveaux arrivants ?",
-        "message": "Il faudrait aussi refaire la décoration de la salle de pause.",
-        "next_message": "Sujet intéressant, mais pas prioritaire pour l'onboarding.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "R008",
+      "input": {
+        "content_id": "relevance_control:R008",
+        "content_type": "comment",
+        "text": "On pourrait introduire des contrôles automatiques sur les champs les plus sensibles.",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R008",
+          "text": "Le taux d'erreur augmente sur le processus de saisie manuelle.",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R008",
+          "text": "Le taux d'erreur augmente sur le processus de saisie manuelle."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R008",
-        "previous_message": "Le taux d'erreur augmente sur le processus de saisie manuelle.",
-        "message": "On pourrait introduire des contrôles automatiques sur les champs les plus sensibles.",
-        "next_message": "Oui, surtout sur les montants et les identifiants clients.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R009",
+      "input": {
+        "content_id": "relevance_control:R009",
+        "content_type": "comment",
+        "text": "Il faudrait envoyer l'ordre du jour à l'avance et limiter les points hors sujet.",
+        "created_at": "2026-03-01T09:09:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:10:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R009",
+          "text": "Comment mieux organiser les réunions hebdomadaires ?",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R009",
+          "text": "Comment mieux organiser les réunions hebdomadaires ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R009",
-        "previous_message": "Comment mieux organiser les réunions hebdomadaires ?",
-        "message": "Il faudrait envoyer l'ordre du jour à l'avance et limiter les points hors sujet.",
-        "next_message": "D'accord, ça aiderait à mieux cadrer les échanges.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R010",
+      "input": {
+        "content_id": "relevance_control:R010",
+        "content_type": "comment",
+        "text": "Le match d'hier était vraiment incroyable.",
+        "created_at": "2026-03-01T09:10:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:11:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R010",
+          "text": "On débat du choix entre développement interne et achat d'une solution existante.",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R010",
+          "text": "On débat du choix entre développement interne et achat d'une solution existante."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R010",
-        "previous_message": "On débat du choix entre développement interne et achat d'une solution existante.",
-        "message": "Le match d'hier était vraiment incroyable.",
-        "next_message": "Revenons au sujet de la solution logicielle.",
-        "expected_score_range": [1, 1]
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "R011",
+      "input": {
+        "content_id": "relevance_control:R011",
+        "content_type": "comment",
+        "text": "Un indicateur sur les délais moyens de traitement serait utile, ainsi qu'un suivi des tickets réouverts.",
+        "created_at": "2026-03-01T09:11:00Z",
+        "author_id": 11,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:12:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R011",
+          "text": "Quels indicateurs faudrait-il ajouter au tableau de bord des managers ?",
+          "author_id": 911,
+          "created_at": "2026-03-01T09:10:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R011",
+          "text": "Quels indicateurs faudrait-il ajouter au tableau de bord des managers ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R011",
-        "previous_message": "Quels indicateurs faudrait-il ajouter au tableau de bord des managers ?",
-        "message": "Un indicateur sur les délais moyens de traitement serait utile, ainsi qu'un suivi des tickets réouverts.",
-        "next_message": "Oui, ça donnerait une vision plus opérationnelle.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R012",
+      "input": {
+        "content_id": "relevance_control:R012",
+        "content_type": "comment",
+        "text": "On pourrait commencer par identifier les ressources sous-utilisées avant de couper quoi que ce soit.",
+        "created_at": "2026-03-01T09:12:00Z",
+        "author_id": 12,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:13:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R012",
+          "text": "On cherche à réduire les coûts d'infrastructure sans dégrader le service.",
+          "author_id": 912,
+          "created_at": "2026-03-01T09:11:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R012",
+          "text": "On cherche à réduire les coûts d'infrastructure sans dégrader le service."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R012",
-        "previous_message": "On cherche à réduire les coûts d'infrastructure sans dégrader le service.",
-        "message": "On pourrait commencer par identifier les ressources sous-utilisées avant de couper quoi que ce soit.",
-        "next_message": "Oui, sinon on risque de dégrader la production inutilement.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R013",
+      "input": {
+        "content_id": "relevance_control:R013",
+        "content_type": "comment",
+        "text": "Je ne sais pas si tout le monde a bien reçu l'invitation de la réunion de demain.",
+        "created_at": "2026-03-01T09:13:00Z",
+        "author_id": 13,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:14:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R013",
+          "text": "Faut-il imposer un format unique pour les comptes-rendus ?",
+          "author_id": 913,
+          "created_at": "2026-03-01T09:12:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R013",
+          "text": "Faut-il imposer un format unique pour les comptes-rendus ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R013",
-        "previous_message": "Faut-il imposer un format unique pour les comptes-rendus ?",
-        "message": "Je ne sais pas si tout le monde a bien reçu l'invitation de la réunion de demain.",
-        "next_message": "On parlera de l'invitation après, restons sur le format.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "R014",
+      "input": {
+        "content_id": "relevance_control:R014",
+        "content_type": "comment",
+        "text": "Une FAQ plus visible pourrait réduire une partie des sollicitations simples.",
+        "created_at": "2026-03-01T09:14:00Z",
+        "author_id": 14,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:15:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R014",
+          "text": "Le support interne reçoit beaucoup de demandes redondantes.",
+          "author_id": 914,
+          "created_at": "2026-03-01T09:13:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R014",
+          "text": "Le support interne reçoit beaucoup de demandes redondantes."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R014",
-        "previous_message": "Le support interne reçoit beaucoup de demandes redondantes.",
-        "message": "Une FAQ plus visible pourrait réduire une partie des sollicitations simples.",
-        "next_message": "Oui, surtout si on la relie directement au portail.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R015",
+      "input": {
+        "content_id": "relevance_control:R015",
+        "content_type": "comment",
+        "text": "On pourrait instaurer un point mensuel de revue des incidents récurrents et des priorités produit.",
+        "created_at": "2026-03-01T09:15:00Z",
+        "author_id": 15,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:16:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R015",
+          "text": "Comment améliorer la coordination entre l'équipe produit et l'équipe support ?",
+          "author_id": 915,
+          "created_at": "2026-03-01T09:14:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:parent:R015",
+          "text": "Comment améliorer la coordination entre l'équipe produit et l'équipe support ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
       },
-      {
-        "id": "R015",
-        "previous_message": "Comment améliorer la coordination entre l'équipe produit et l'équipe support ?",
-        "message": "On pourrait instaurer un point mensuel de revue des incidents récurrents et des priorités produit.",
-        "next_message": "Bonne idée, ça créerait un vrai espace de synchronisation.",
-        "expected_score_range": [4, 5]
-      }
-    ]
-  }
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R016",
+      "input": {
+        "content_id": "relevance_control:R016",
+        "content_type": "comment",
+        "text": "Je pense qu'il faudrait comparer les fonctionnalités de reporting et d'intégration avant de décider.",
+        "created_at": "2026-03-01T09:16:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:17:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R016",
+          "text": "On doit choisir un nouvel outil de gestion de projet pour le trimestre prochain.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:thread:R016",
+          "text": "On doit choisir un nouvel outil de gestion de projet pour le trimestre prochain."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R017",
+      "input": {
+        "content_id": "relevance_control:R017",
+        "content_type": "comment",
+        "text": "Au fait, il fait vraiment froid en ce moment dans les bureaux.",
+        "created_at": "2026-03-01T09:18:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:19:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R017",
+          "text": "On discute du budget formation pour l'année prochaine.",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:thread:R017",
+          "text": "On discute du budget formation pour l'année prochaine."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "R018",
+      "input": {
+        "content_id": "relevance_control:R018",
+        "content_type": "comment",
+        "text": "On pourrait supprimer une validation pour les petits montants et garder les deux pour les achats sensibles.",
+        "created_at": "2026-03-01T09:20:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:21:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R018",
+          "text": "Faut-il maintenir deux étapes de validation sur les demandes d'achat ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:thread:R018",
+          "text": "Faut-il maintenir deux étapes de validation sur les demandes d'achat ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "R019",
+      "input": {
+        "content_id": "relevance_control:R019",
+        "content_type": "comment",
+        "text": "Je préfère travailler le matin, je suis plus efficace.",
+        "created_at": "2026-03-01T09:22:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:23:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R019",
+          "text": "Quel retour avez-vous sur la nouvelle documentation API ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:thread:R019",
+          "text": "Quel retour avez-vous sur la nouvelle documentation API ?"
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "R020",
+      "input": {
+        "content_id": "relevance_control:R020",
+        "content_type": "comment",
+        "text": "Une meilleure catégorisation automatique pourrait aider à prioriser plus vite les demandes.",
+        "created_at": "2026-03-01T09:24:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:25:00Z",
+        "parent": {
+          "content_id": "relevance_control:parent:R020",
+          "text": "On cherche des pistes pour réduire le délai de traitement des tickets.",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "relevance_control:thread:R020",
+          "text": "On cherche des pistes pour réduire le délai de traitement des tickets."
+        },
+        "context": {
+          "edito_id": 107,
+          "phase": "test_criterion",
+          "topic_id": 7,
+          "tags": [
+            "relevance"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    }
+  ]
+}

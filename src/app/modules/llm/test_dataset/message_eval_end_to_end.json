@@ -11,13 +11,24 @@
         "text": "Je propose de mesurer pendant deux semaines les causes principales de retard avant de modifier le process.",
         "created_at": "2026-03-01T09:00:00Z",
         "author_id": 12,
-        "likes_normalized": 0.40,
+        "context": {
+          "phase": "diagnostic",
+          "topic_label": "retards de traitement",
+          "tags": [
+            "process",
+            "mesure"
+          ]
+        },
+        "likes_normalized": 0.4,
         "tenant_id": "nyaya-demo",
         "evaluation_requested_at": "2026-03-01T09:05:00Z"
       },
       "expected": {
         "context_completeness": "full",
-        "expected_score_range": [65, 95]
+        "expected_score_range": [
+          65,
+          95
+        ]
       }
     },
     {
@@ -28,17 +39,34 @@
         "text": "Quand tu dis supprimer une validation, tu penses aussi aux achats sensibles ?",
         "created_at": "2026-03-01T10:00:00Z",
         "author_id": 15,
-        "parent_content_id": "p_101",
-        "parent_text": "Je pense qu'il faudrait supprimer une étape de validation.",
-        "parent_author_id": 4,
-        "parent_created_at": "2026-03-01T09:58:00Z",
+        "parent": {
+          "content_id": "p_101",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation.",
+          "author_id": 4,
+          "created_at": "2026-03-01T09:58:00Z"
+        },
         "likes_normalized": 0.15,
         "tenant_id": "nyaya-demo",
-        "evaluation_requested_at": "2026-03-01T10:01:00Z"
+        "evaluation_requested_at": "2026-03-01T10:01:00Z",
+        "context": {
+          "edito_id": 305,
+          "phase": "end_to_end",
+          "topic_id": 95,
+          "tags": [
+            "end_to_end"
+          ]
+        },
+        "thread_root": {
+          "content_id": "p_101",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation."
+        }
       },
       "expected": {
         "context_completeness": "full",
-        "expected_score_range": [60, 95]
+        "expected_score_range": [
+          60,
+          95
+        ]
       }
     },
     {
@@ -55,7 +83,10 @@
       },
       "expected": {
         "context_completeness": "low",
-        "expected_score_range": [10, 45]
+        "expected_score_range": [
+          10,
+          45
+        ]
       }
     },
     {
@@ -66,19 +97,525 @@
         "text": "Je comprends l'objectif, mais il faudrait d'abord comparer l'impact sur les délais et sur le risque avant de décider.",
         "created_at": "2026-03-01T12:00:00Z",
         "author_id": 31,
-        "parent_content_id": "c_010",
-        "parent_text": "On devrait supprimer toutes les validations.",
-        "parent_author_id": 8,
-        "parent_created_at": "2026-03-01T11:59:00Z",
-        "thread_root_id": "p_200",
-        "thread_root_text": "Comment simplifier le processus d'achat ?",
-        "likes_normalized": 0.80,
+        "parent": {
+          "content_id": "c_010",
+          "text": "On devrait supprimer toutes les validations.",
+          "author_id": 8,
+          "created_at": "2026-03-01T11:59:00Z"
+        },
+        "thread_root": {
+          "content_id": "p_200",
+          "text": "Comment simplifier le processus d'achat ?"
+        },
+        "context": {
+          "phase": "arbitrage",
+          "topic_label": "processus d'achat",
+          "tags": [
+            "achat"
+          ]
+        },
+        "likes_normalized": 0.8,
         "tenant_id": "nyaya-demo",
         "evaluation_requested_at": "2026-03-01T12:01:00Z"
       },
       "expected": {
         "context_completeness": "full",
-        "expected_score_range": [70, 100]
+        "expected_score_range": [
+          70,
+          100
+        ]
+      }
+    },
+    {
+      "id": "EE2005",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2005",
+        "content_type": "post",
+        "text": "Je propose de mesurer pendant deux semaines les causes principales de retard avant de modifier le process.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 12,
+        "context": {
+          "phase": "diagnostic",
+          "topic_label": "retards de traitement",
+          "tags": [
+            "process",
+            "mesure"
+          ]
+        },
+        "likes_normalized": 0.4,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z"
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          65,
+          95
+        ]
+      }
+    },
+    {
+      "id": "EE2006",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2006",
+        "content_type": "comment",
+        "text": "Quand tu dis supprimer une validation, tu penses aussi aux achats sensibles ?",
+        "created_at": "2026-03-01T10:05:00Z",
+        "author_id": 15,
+        "parent": {
+          "content_id": "message_eval_end_to_end:parent:EE2006",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation.",
+          "author_id": 4,
+          "created_at": "2026-03-01T09:58:00Z"
+        },
+        "likes_normalized": 0.15,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T10:06:00Z",
+        "context": {
+          "edito_id": 305,
+          "phase": "end_to_end",
+          "topic_id": 95,
+          "tags": [
+            "end_to_end"
+          ]
+        },
+        "thread_root": {
+          "content_id": "message_eval_end_to_end:thread:EE2006",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation."
+        }
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          60,
+          95
+        ]
+      }
+    },
+    {
+      "id": "EE2007",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2007",
+        "content_type": "comment",
+        "text": "C'est absurde.",
+        "created_at": "2026-03-01T11:06:00Z",
+        "author_id": 22,
+        "likes_normalized": 0.05,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T11:07:00Z"
+      },
+      "expected": {
+        "context_completeness": "low",
+        "expected_score_range": [
+          10,
+          45
+        ]
+      }
+    },
+    {
+      "id": "EE2008",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2008",
+        "content_type": "comment",
+        "text": "Je comprends l'objectif, mais il faudrait d'abord comparer l'impact sur les délais et sur le risque avant de décider.",
+        "created_at": "2026-03-01T12:07:00Z",
+        "author_id": 31,
+        "parent": {
+          "content_id": "message_eval_end_to_end:parent:EE2008",
+          "text": "On devrait supprimer toutes les validations.",
+          "author_id": 8,
+          "created_at": "2026-03-01T11:59:00Z"
+        },
+        "thread_root": {
+          "content_id": "message_eval_end_to_end:thread:EE2008",
+          "text": "Comment simplifier le processus d'achat ?"
+        },
+        "context": {
+          "phase": "arbitrage",
+          "topic_label": "processus d'achat",
+          "tags": [
+            "achat"
+          ]
+        },
+        "likes_normalized": 0.8,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T12:08:00Z"
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          70,
+          100
+        ]
+      }
+    },
+    {
+      "id": "EE2009",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2009",
+        "content_type": "post",
+        "text": "Je propose de mesurer pendant deux semaines les causes principales de retard avant de modifier le process.",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 12,
+        "context": {
+          "phase": "diagnostic",
+          "topic_label": "retards de traitement",
+          "tags": [
+            "process",
+            "mesure"
+          ]
+        },
+        "likes_normalized": 0.4,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z"
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          65,
+          95
+        ]
+      }
+    },
+    {
+      "id": "EE2010",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2010",
+        "content_type": "comment",
+        "text": "Quand tu dis supprimer une validation, tu penses aussi aux achats sensibles ?",
+        "created_at": "2026-03-01T10:09:00Z",
+        "author_id": 15,
+        "parent": {
+          "content_id": "message_eval_end_to_end:parent:EE2010",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation.",
+          "author_id": 4,
+          "created_at": "2026-03-01T09:58:00Z"
+        },
+        "likes_normalized": 0.15,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T10:10:00Z",
+        "context": {
+          "edito_id": 305,
+          "phase": "end_to_end",
+          "topic_id": 95,
+          "tags": [
+            "end_to_end"
+          ]
+        },
+        "thread_root": {
+          "content_id": "message_eval_end_to_end:thread:EE2010",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation."
+        }
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          60,
+          95
+        ]
+      }
+    },
+    {
+      "id": "EE2011",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2011",
+        "content_type": "comment",
+        "text": "C'est absurde.",
+        "created_at": "2026-03-01T11:10:00Z",
+        "author_id": 22,
+        "likes_normalized": 0.05,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T11:11:00Z"
+      },
+      "expected": {
+        "context_completeness": "low",
+        "expected_score_range": [
+          10,
+          45
+        ]
+      }
+    },
+    {
+      "id": "EE2012",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2012",
+        "content_type": "comment",
+        "text": "Je comprends l'objectif, mais il faudrait d'abord comparer l'impact sur les délais et sur le risque avant de décider.",
+        "created_at": "2026-03-01T12:11:00Z",
+        "author_id": 31,
+        "parent": {
+          "content_id": "message_eval_end_to_end:parent:EE2012",
+          "text": "On devrait supprimer toutes les validations.",
+          "author_id": 8,
+          "created_at": "2026-03-01T11:59:00Z"
+        },
+        "thread_root": {
+          "content_id": "message_eval_end_to_end:thread:EE2012",
+          "text": "Comment simplifier le processus d'achat ?"
+        },
+        "context": {
+          "phase": "arbitrage",
+          "topic_label": "processus d'achat",
+          "tags": [
+            "achat"
+          ]
+        },
+        "likes_normalized": 0.8,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T12:12:00Z"
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          70,
+          100
+        ]
+      }
+    },
+    {
+      "id": "EE2013",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2013",
+        "content_type": "post",
+        "text": "Je propose de mesurer pendant deux semaines les causes principales de retard avant de modifier le process.",
+        "created_at": "2026-03-01T09:12:00Z",
+        "author_id": 12,
+        "context": {
+          "phase": "diagnostic",
+          "topic_label": "retards de traitement",
+          "tags": [
+            "process",
+            "mesure"
+          ]
+        },
+        "likes_normalized": 0.4,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T09:13:00Z"
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          65,
+          95
+        ]
+      }
+    },
+    {
+      "id": "EE2014",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2014",
+        "content_type": "comment",
+        "text": "Quand tu dis supprimer une validation, tu penses aussi aux achats sensibles ?",
+        "created_at": "2026-03-01T10:13:00Z",
+        "author_id": 15,
+        "parent": {
+          "content_id": "message_eval_end_to_end:parent:EE2014",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation.",
+          "author_id": 4,
+          "created_at": "2026-03-01T09:58:00Z"
+        },
+        "likes_normalized": 0.15,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T10:14:00Z",
+        "context": {
+          "edito_id": 305,
+          "phase": "end_to_end",
+          "topic_id": 95,
+          "tags": [
+            "end_to_end"
+          ]
+        },
+        "thread_root": {
+          "content_id": "message_eval_end_to_end:thread:EE2014",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation."
+        }
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          60,
+          95
+        ]
+      }
+    },
+    {
+      "id": "EE2015",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2015",
+        "content_type": "comment",
+        "text": "C'est absurde.",
+        "created_at": "2026-03-01T11:14:00Z",
+        "author_id": 22,
+        "likes_normalized": 0.05,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T11:15:00Z"
+      },
+      "expected": {
+        "context_completeness": "low",
+        "expected_score_range": [
+          10,
+          45
+        ]
+      }
+    },
+    {
+      "id": "EE2016",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2016",
+        "content_type": "comment",
+        "text": "Je comprends l'objectif, mais il faudrait d'abord comparer l'impact sur les délais et sur le risque avant de décider.",
+        "created_at": "2026-03-01T12:15:00Z",
+        "author_id": 31,
+        "parent": {
+          "content_id": "message_eval_end_to_end:parent:EE2016",
+          "text": "On devrait supprimer toutes les validations.",
+          "author_id": 8,
+          "created_at": "2026-03-01T11:59:00Z"
+        },
+        "thread_root": {
+          "content_id": "message_eval_end_to_end:thread:EE2016",
+          "text": "Comment simplifier le processus d'achat ?"
+        },
+        "context": {
+          "phase": "arbitrage",
+          "topic_label": "processus d'achat",
+          "tags": [
+            "achat"
+          ]
+        },
+        "likes_normalized": 0.8,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T12:16:00Z"
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          70,
+          100
+        ]
+      }
+    },
+    {
+      "id": "EE2017",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2017",
+        "content_type": "post",
+        "text": "Je propose de mesurer pendant deux semaines les causes principales de retard avant de modifier le process.",
+        "created_at": "2026-03-01T09:16:00Z",
+        "author_id": 12,
+        "context": {
+          "phase": "diagnostic",
+          "topic_label": "retards de traitement",
+          "tags": [
+            "process",
+            "mesure"
+          ]
+        },
+        "likes_normalized": 0.4,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T09:17:00Z"
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          65,
+          95
+        ]
+      }
+    },
+    {
+      "id": "EE2018",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2018",
+        "content_type": "comment",
+        "text": "Quand tu dis supprimer une validation, tu penses aussi aux achats sensibles ?",
+        "created_at": "2026-03-01T10:17:00Z",
+        "author_id": 15,
+        "parent": {
+          "content_id": "message_eval_end_to_end:parent:EE2018",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation.",
+          "author_id": 4,
+          "created_at": "2026-03-01T09:58:00Z"
+        },
+        "likes_normalized": 0.15,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T10:18:00Z",
+        "context": {
+          "edito_id": 305,
+          "phase": "end_to_end",
+          "topic_id": 95,
+          "tags": [
+            "end_to_end"
+          ]
+        },
+        "thread_root": {
+          "content_id": "message_eval_end_to_end:thread:EE2018",
+          "text": "Je pense qu'il faudrait supprimer une étape de validation."
+        }
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          60,
+          95
+        ]
+      }
+    },
+    {
+      "id": "EE2019",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2019",
+        "content_type": "comment",
+        "text": "C'est absurde.",
+        "created_at": "2026-03-01T11:18:00Z",
+        "author_id": 22,
+        "likes_normalized": 0.05,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T11:19:00Z"
+      },
+      "expected": {
+        "context_completeness": "low",
+        "expected_score_range": [
+          10,
+          45
+        ]
+      }
+    },
+    {
+      "id": "EE2020",
+      "input": {
+        "content_id": "message_eval_end_to_end:EE2020",
+        "content_type": "comment",
+        "text": "Je comprends l'objectif, mais il faudrait d'abord comparer l'impact sur les délais et sur le risque avant de décider.",
+        "created_at": "2026-03-01T12:19:00Z",
+        "author_id": 31,
+        "parent": {
+          "content_id": "message_eval_end_to_end:parent:EE2020",
+          "text": "On devrait supprimer toutes les validations.",
+          "author_id": 8,
+          "created_at": "2026-03-01T11:59:00Z"
+        },
+        "thread_root": {
+          "content_id": "message_eval_end_to_end:thread:EE2020",
+          "text": "Comment simplifier le processus d'achat ?"
+        },
+        "context": {
+          "phase": "arbitrage",
+          "topic_label": "processus d'achat",
+          "tags": [
+            "achat"
+          ]
+        },
+        "likes_normalized": 0.8,
+        "tenant_id": "nyaya-demo",
+        "evaluation_requested_at": "2026-03-01T12:20:00Z"
+      },
+      "expected": {
+        "context_completeness": "full",
+        "expected_score_range": [
+          70,
+          100
+        ]
       }
     }
   ]

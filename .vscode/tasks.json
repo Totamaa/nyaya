@@ -4,9 +4,12 @@
     {
       "label": "llm: run all benchmarks",
       "type": "shell",
-      "command": "python -m src.app.modules.llm.benchmark_datasets --dataset-dir src/app/modules/llm/test_dataset",
+      "command": "python src/app/modules/llm/benchmark_datasets.py --dataset-dir src/app/modules/llm/test_dataset",
       "options": {
-        "cwd": "${workspaceFolder}/src/app/modules"
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "src/app/modules:${PYTHONPATH}"
+        }
       },
       "group": "test",
       "presentation": {

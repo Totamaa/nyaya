@@ -12,25 +12,29 @@ class JsonlEvaluationRepository:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self._lock = threading.Lock()
-        self._index: dict[tuple[str, str], PersistedEvaluationRecord] = {}
-        self._load_existing()
+        self._index: dict[tuple[str, str], PersistedEvaluationRecord] | None = None
 
-    def _load_existing(self) -> None:
-        if not self.path.exists():
+    def _ensure_loaded(self) -> None:
+        if self._index is not None:
             return
-        with self.path.open("r", encoding="utf-8") as handle:
-            for line in handle:
-                line = line.strip()
-                if not line:
-                    continue
-                record = PersistedEvaluationRecord.model_validate_json(line)
-                key = (record.content_id, record.evaluation_version)
-                self._index[key] = record
+        self._index = {}
+        if self.path.exists():
+            with self.path.open("r", encoding="utf-8") as handle:
+                for line in handle:
+                    if line.strip():
+                        record = PersistedEvaluationRecord.model_validate_json(line)
+                        self._index[(record.content_id, record.evaluation_version)] = (
+                            record
+                        )
 
-    def get(self, content_id: str, evaluation_version: str) -> PersistedEvaluationRecord | None:
+    def get(
+        self, content_id: str, evaluation_version: str
+    ) -> PersistedEvaluationRecord | None:
+        self._ensure_loaded()
         return self._index.get((content_id, evaluation_version))
 
     def append(self, record: PersistedEvaluationRecord) -> PersistedEvaluationRecord:
+        self._ensure_loaded()
         key = (record.content_id, record.evaluation_version)
         with self._lock:
             existing = self._index.get(key)

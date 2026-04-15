@@ -11,73 +11,683 @@
   "items": [
     {
       "id": "VU001",
-      "previous_message": "Je pense qu'il faut automatiser complètement le tri des tickets.",
-      "message": "Quand tu dis complètement, tu inclus aussi les cas sensibles ou tu penses à une automatisation partielle ?",
-      "next_message": "La question cherche clairement à préciser la position.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "understanding_control:VU001",
+        "content_type": "comment",
+        "text": "Quand tu dis complètement, tu inclus aussi les cas sensibles ou tu penses à une automatisation partielle ?",
+        "created_at": "2026-03-01T09:01:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:02:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU001",
+          "text": "Je pense qu'il faut automatiser complètement le tri des tickets.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU001",
+          "text": "Je pense qu'il faut automatiser complètement le tri des tickets."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "VU002",
-      "previous_message": "Il faudrait revoir toute la procédure.",
-      "message": "Non.",
-      "next_message": "Aucune tentative de compréhension.",
-      "expected_score_range": [1, 1]
+      "input": {
+        "content_id": "understanding_control:VU002",
+        "content_type": "comment",
+        "text": "Non.",
+        "created_at": "2026-03-01T09:02:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:03:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU002",
+          "text": "Il faudrait revoir toute la procédure.",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU002",
+          "text": "Il faudrait revoir toute la procédure."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
     },
     {
       "id": "VU003",
-      "previous_message": "Je trouve le nouveau tableau de bord trop chargé.",
-      "message": "Si je comprends bien, ton problème principal est la surcharge visuelle, pas le choix des indicateurs.",
-      "next_message": "Bonne reformulation.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "understanding_control:VU003",
+        "content_type": "comment",
+        "text": "Si je comprends bien, ton problème principal est la surcharge visuelle, pas le choix des indicateurs.",
+        "created_at": "2026-03-01T09:03:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:04:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU003",
+          "text": "Je trouve le nouveau tableau de bord trop chargé.",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU003",
+          "text": "Je trouve le nouveau tableau de bord trop chargé."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "VU004",
-      "previous_message": "Le support doit être réorganisé.",
-      "message": "Ça n'a aucun sens.",
-      "next_message": "Aucune clarification demandée.",
-      "expected_score_range": [1, 2]
+      "input": {
+        "content_id": "understanding_control:VU004",
+        "content_type": "comment",
+        "text": "Ça n'a aucun sens.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU004",
+          "text": "Le support doit être réorganisé.",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU004",
+          "text": "Le support doit être réorganisé."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
     },
     {
       "id": "VU005",
-      "previous_message": "Je pense qu'on devrait fusionner deux équipes.",
-      "message": "Quelles difficultés concrètes essaies-tu de résoudre avec cette fusion ?",
-      "next_message": "Question ouverte et utile.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "understanding_control:VU005",
+        "content_type": "comment",
+        "text": "Quelles difficultés concrètes essaies-tu de résoudre avec cette fusion ?",
+        "created_at": "2026-03-01T09:05:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:06:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU005",
+          "text": "Je pense qu'on devrait fusionner deux équipes.",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU005",
+          "text": "Je pense qu'on devrait fusionner deux équipes."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "VU006",
-      "previous_message": "Il faut réduire les notifications.",
-      "message": "Tu parles surtout des notifications redondantes, ou aussi des alertes critiques ?",
-      "next_message": "Recherche active de clarification.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "understanding_control:VU006",
+        "content_type": "comment",
+        "text": "Tu parles surtout des notifications redondantes, ou aussi des alertes critiques ?",
+        "created_at": "2026-03-01T09:06:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:07:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU006",
+          "text": "Il faut réduire les notifications.",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU006",
+          "text": "Il faut réduire les notifications."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "VU007",
-      "previous_message": "Il faut revoir l'onboarding.",
-      "message": "Encore une idée floue.",
-      "next_message": "Aucune volonté de comprendre.",
-      "expected_score_range": [1, 2]
+      "input": {
+        "content_id": "understanding_control:VU007",
+        "content_type": "comment",
+        "text": "Encore une idée floue.",
+        "created_at": "2026-03-01T09:07:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:08:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU007",
+          "text": "Il faut revoir l'onboarding.",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU007",
+          "text": "Il faut revoir l'onboarding."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
     },
     {
       "id": "VU008",
-      "previous_message": "Ce process est trop lent.",
-      "message": "Peux-tu préciser quelles étapes te semblent les plus bloquantes aujourd'hui ?",
-      "next_message": "Bonne invitation à expliciter.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "understanding_control:VU008",
+        "content_type": "comment",
+        "text": "Peux-tu préciser quelles étapes te semblent les plus bloquantes aujourd'hui ?",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU008",
+          "text": "Ce process est trop lent.",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU008",
+          "text": "Ce process est trop lent."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "VU009",
-      "previous_message": "Je veux changer d'outil.",
-      "message": "Je ne suis pas encore convaincu, mais j'aimerais comprendre quels cas d'usage actuels posent le plus de problèmes.",
-      "next_message": "Posture claire de compréhension.",
-      "expected_score_range": [4, 5]
+      "input": {
+        "content_id": "understanding_control:VU009",
+        "content_type": "comment",
+        "text": "Je ne suis pas encore convaincu, mais j'aimerais comprendre quels cas d'usage actuels posent le plus de problèmes.",
+        "created_at": "2026-03-01T09:09:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:10:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU009",
+          "text": "Je veux changer d'outil.",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU009",
+          "text": "Je veux changer d'outil."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
     {
       "id": "VU010",
-      "previous_message": "La documentation n'est pas bonne.",
-      "message": "C'est faux.",
-      "next_message": "Réponse fermée et non exploratoire.",
-      "expected_score_range": [1, 1]
+      "input": {
+        "content_id": "understanding_control:VU010",
+        "content_type": "comment",
+        "text": "C'est faux.",
+        "created_at": "2026-03-01T09:10:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:11:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU010",
+          "text": "La documentation n'est pas bonne.",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:parent:VU010",
+          "text": "La documentation n'est pas bonne."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "VU011",
+      "input": {
+        "content_id": "understanding_control:VU011",
+        "content_type": "comment",
+        "text": "Quand tu dis complètement, tu inclus aussi les cas sensibles ou tu penses à une automatisation partielle ?",
+        "created_at": "2026-03-01T09:11:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:12:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU011",
+          "text": "Je pense qu'il faut automatiser complètement le tri des tickets.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU011",
+          "text": "Je pense qu'il faut automatiser complètement le tri des tickets."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "VU012",
+      "input": {
+        "content_id": "understanding_control:VU012",
+        "content_type": "comment",
+        "text": "Non.",
+        "created_at": "2026-03-01T09:13:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:14:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU012",
+          "text": "Il faudrait revoir toute la procédure.",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU012",
+          "text": "Il faudrait revoir toute la procédure."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "VU013",
+      "input": {
+        "content_id": "understanding_control:VU013",
+        "content_type": "comment",
+        "text": "Si je comprends bien, ton problème principal est la surcharge visuelle, pas le choix des indicateurs.",
+        "created_at": "2026-03-01T09:15:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:16:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU013",
+          "text": "Je trouve le nouveau tableau de bord trop chargé.",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU013",
+          "text": "Je trouve le nouveau tableau de bord trop chargé."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "VU014",
+      "input": {
+        "content_id": "understanding_control:VU014",
+        "content_type": "comment",
+        "text": "Ça n'a aucun sens.",
+        "created_at": "2026-03-01T09:17:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:18:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU014",
+          "text": "Le support doit être réorganisé.",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU014",
+          "text": "Le support doit être réorganisé."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "VU015",
+      "input": {
+        "content_id": "understanding_control:VU015",
+        "content_type": "comment",
+        "text": "Quelles difficultés concrètes essaies-tu de résoudre avec cette fusion ?",
+        "created_at": "2026-03-01T09:19:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:20:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU015",
+          "text": "Je pense qu'on devrait fusionner deux équipes.",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU015",
+          "text": "Je pense qu'on devrait fusionner deux équipes."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "VU016",
+      "input": {
+        "content_id": "understanding_control:VU016",
+        "content_type": "comment",
+        "text": "Tu parles surtout des notifications redondantes, ou aussi des alertes critiques ?",
+        "created_at": "2026-03-01T09:21:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:22:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU016",
+          "text": "Il faut réduire les notifications.",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU016",
+          "text": "Il faut réduire les notifications."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "VU017",
+      "input": {
+        "content_id": "understanding_control:VU017",
+        "content_type": "comment",
+        "text": "Encore une idée floue.",
+        "created_at": "2026-03-01T09:23:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:24:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU017",
+          "text": "Il faut revoir l'onboarding.",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU017",
+          "text": "Il faut revoir l'onboarding."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "VU018",
+      "input": {
+        "content_id": "understanding_control:VU018",
+        "content_type": "comment",
+        "text": "Peux-tu préciser quelles étapes te semblent les plus bloquantes aujourd'hui ?",
+        "created_at": "2026-03-01T09:25:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:26:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU018",
+          "text": "Ce process est trop lent.",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU018",
+          "text": "Ce process est trop lent."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "VU019",
+      "input": {
+        "content_id": "understanding_control:VU019",
+        "content_type": "comment",
+        "text": "Je ne suis pas encore convaincu, mais j'aimerais comprendre quels cas d'usage actuels posent le plus de problèmes.",
+        "created_at": "2026-03-01T09:27:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:28:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU019",
+          "text": "Je veux changer d'outil.",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU019",
+          "text": "Je veux changer d'outil."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "VU020",
+      "input": {
+        "content_id": "understanding_control:VU020",
+        "content_type": "comment",
+        "text": "C'est faux.",
+        "created_at": "2026-03-01T09:29:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:30:00Z",
+        "parent": {
+          "content_id": "understanding_control:parent:VU020",
+          "text": "La documentation n'est pas bonne.",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "understanding_control:thread:VU020",
+          "text": "La documentation n'est pas bonne."
+        },
+        "context": {
+          "edito_id": 109,
+          "phase": "test_criterion",
+          "topic_id": 9,
+          "tags": [
+            "volonte_de_comprendre"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
     }
   ]
 }

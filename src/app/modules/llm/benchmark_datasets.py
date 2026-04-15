@@ -6,9 +6,10 @@ import sys
 from pathlib import Path
 
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-if str(ROOT_DIR) not in sys.path:
-    sys.path.insert(0, str(ROOT_DIR))
+LLM_DIR = Path(__file__).resolve().parent
+
+if str(LLM_DIR) not in sys.path:
+    sys.path.insert(0, str(LLM_DIR))
 
 from llm.config import load_config
 from llm.connectors.factory import build_llm
@@ -21,7 +22,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--dataset-dir",
-        default="llm/test_dataset",
+        default=str(Path(__file__).with_name("test_dataset")),
         help="Répertoire contenant les datasets JSON.",
     )
     parser.add_argument(
@@ -82,7 +83,9 @@ def print_human_summary(report: dict[str, object]) -> None:
             f"{summary['passed']}/{summary['total']} passed "
             f"({summary['accuracy']:.2%})"
         )
-        failures = [item for item in summary["results"] if item["status"] == "failed"][:3]
+        failures = [item for item in summary["results"] if item["status"] == "failed"][
+            :3
+        ]
         for failure in failures:
             print(
                 f"  - {failure['item_id']}: expected={failure['expected']} "
