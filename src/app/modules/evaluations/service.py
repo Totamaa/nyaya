@@ -79,11 +79,11 @@ class EvaluationService:
 
         return EvaluationResponse.from_model(evaluation)
 
-    async def get_by_message_id(self, message_id: UUID) -> EvaluationResponse:
-        evaluation = await self.evaluation_repository.get_by_message_id(
-            message_id=message_id,
+    async def get_by_message_external_id(self, message_external_id: str) -> EvaluationResponse:
+        evaluation = await self.evaluation_repository.get_by_message_external_id(
+            external_id=message_external_id,
             db=self.session,
         )
         if not evaluation:
-            raise EvaluationNotFoundException(message_id=message_id)
+            raise EvaluationNotFoundException(message_external_id=message_external_id)
         return EvaluationResponse.from_model(evaluation)
