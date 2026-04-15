@@ -15,11 +15,13 @@ DC_PROD   := $(DC_BASE) -f infrastructure/docker-compose.prod.yml
 # persist. Pointing directly to the venv binaries is exactly equivalent.
 
 ifeq ($(OS),Windows_NT)
-  VENV_BIN      := .venv/Scripts
-  PYTHON_SYSTEM := py
+  VENV_BIN           := .venv/Scripts
+  PYTHON_SYSTEM      := py
+  TASKIQ_WORKER_OPTS :=
 else
-  VENV_BIN      := .venv/bin
-  PYTHON_SYSTEM := python3
+  VENV_BIN           := .venv/bin
+  PYTHON_SYSTEM      := python3
+  TASKIQ_WORKER_OPTS := --reload
 endif
 
 PYTHON      := $(VENV_BIN)/python
@@ -29,6 +31,7 @@ PIP_COMPILE := $(VENV_BIN)/pip-compile
 FASTAPI     := $(VENV_BIN)/fastapi
 ALEMBIC     := $(VENV_BIN)/alembic
 PYTEST      := $(VENV_BIN)/pytest
+TASKIQ    	:= $(VENV_BIN)/taskiq
 
 .PHONY: _venv-check
 _venv-check:
@@ -95,8 +98,11 @@ sync: _venv-check up ## Recompile deps + sync venv + apply migrations — run af
 	$(ALEMBIC) upgrade head
 
 .PHONY: dev
-dev: _venv-check up ## Start FastAPI dev server with hot reload
-	$(FASTAPI) dev $(APP_ENTRY)
+dev: _venv-check up ## Start API + worker (Ctrl+C stops all)
+	@trap 'kill 0' INT TERM; \
+	$(TASKIQ) worker app.core.config.broker:broker app.background.tasks $(TASKIQ_WORKER_OPTS) & \
+	$(FASTAPI) dev $(APP_ENTRY) & \
+	wait
 
 .PHONY: down
 down: ## Stop dev services

@@ -21,4 +21,5 @@ class UserRepository:
         db: AsyncSession,
     ) -> UserModel:
         db.add(user)
+        await db.flush()
         return user

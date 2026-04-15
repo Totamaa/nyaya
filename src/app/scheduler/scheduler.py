@@ -1,19 +1,21 @@
+import asyncio
+import functools
+
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from app.core.config.logs import get_logger
-from app.jobs.scheduled.jobs.cleanup import cleanup_old_messages
+from app.scheduler.jobs.periodic_review import periodic_review_job
 
 logger = get_logger()
 scheduler = BackgroundScheduler()
 
 
 def start_scheduler():
+    loop = asyncio.get_event_loop()
     scheduler.add_job(
-        cleanup_old_messages,
-        trigger="cron",
-        hour=3,
-        minute=0,
-        id="cleanup_old_messages",
+        functools.partial(periodic_review_job, loop),
+        "cron",
+        minute="*/2",
     )
 
     scheduler.start()

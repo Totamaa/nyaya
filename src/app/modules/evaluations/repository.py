@@ -23,4 +23,5 @@ class EvaluationRepository:
         db: AsyncSession,
     ) -> EvaluationModel:
         db.add(evaluation)
+        await db.flush()
         return evaluation

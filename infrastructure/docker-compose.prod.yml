@@ -59,6 +59,24 @@ services:
         condition: service_healthy
     networks:
       - backend
+  
+  worker:
+    image: ${DOCKER_IMAGE:-nyaya-app:latest}
+    container_name: nyaya-worker
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      DB_HOST:    postgres
+      REDIS_HOST: redis
+    command: taskiq worker app.core.config.broker:broker app.background.tasks
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - backend
 
 volumes:
   caddy_data:     # TLS certs — never delete this in prod

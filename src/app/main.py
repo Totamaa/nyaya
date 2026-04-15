@@ -12,7 +12,7 @@ from app.core.errors.handlers.catchall import handle_generic_exceptions
 from app.core.errors.handlers.db import handle_db_exceptions
 from app.core.middleware.headers import add_global_headers
 from app.core.api.router import router_api
-from app.jobs.scheduled.scheduler import start_scheduler, stop_scheduler
+from app.scheduler.scheduler import start_scheduler, stop_scheduler
 
 def create_app() -> FastAPI:
     
