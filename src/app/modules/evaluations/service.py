@@ -1,16 +1,18 @@
+import asyncio
 import random
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.logs import LoggerManager
-from app.modules.evaluations.exceptions import EvaluationNotFoundException
+from app.core.config.settings import get_settings
+from app.modules.evaluations.exceptions import EvaluationNotFoundException, LLMTimeoutException
 from app.modules.evaluations.repository import EvaluationRepository
 from app.modules.evaluations.schemas import EvaluationResponse, LLMEvaluationResult
 from app.modules.messages.schemas import CreateMessageRequest
 
 
-def _simulate_llm_evaluation(request: CreateMessageRequest) -> LLMEvaluationResult:
+async def _simulate_llm_evaluation(request: CreateMessageRequest) -> LLMEvaluationResult:
     """
     Stub: simulates the LLM evaluation call.
     To be replaced by the real LLM connector once available.
@@ -56,7 +58,16 @@ class EvaluationService:
             extra=self.request_id,
         )
 
-        llm_result = _simulate_llm_evaluation(request)
+        settings = get_settings()
+        timeout = settings.LLM_TIMEOUT_SECONDS
+        try:
+            llm_result = await asyncio.wait_for(
+                _simulate_llm_evaluation(request),
+                timeout=timeout,
+            )
+        except asyncio.TimeoutError:
+            raise LLMTimeoutException(timeout_seconds=timeout)
+
         evaluation = llm_result.to_model(message_id=message_id)
         await self.evaluation_repository.create(evaluation=evaluation, db=self.session)
 

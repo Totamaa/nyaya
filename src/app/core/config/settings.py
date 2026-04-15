@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     JWT_SESSION_MAX_LIFETIME_DAYS: int = Field(le=100)
     JWT_SESSION_MAX_COUNT: int = Field(le=10)
 
+    LLM_TIMEOUT_SECONDS: int = Field(ge=10, le=300)
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",  # silently ignore infra-only vars (DOCKER_IMAGE, CADDY_*, etc.)
