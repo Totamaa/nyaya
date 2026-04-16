@@ -41,9 +41,10 @@ class LLMFeedbackResult(BaseModel):
     content: str
     worst_categories: list[str]
 
-    def to_model(self, user_id: UUID, month: date) -> UserMonthlyFeedbackModel:
+    def to_model(self, user_id: UUID, user_external_id: str, month: date) -> UserMonthlyFeedbackModel:
         return UserMonthlyFeedbackModel(
             user_id=user_id,
+            user_external_id=user_external_id,
             month=month,
             content=self.content,
             worst_categories=self.worst_categories,
@@ -54,7 +55,7 @@ class LLMFeedbackResult(BaseModel):
 class UserMonthlyFeedbackResponse(BaseModel):
     id: UUID
     user_id: UUID
-    user_external_id: str | None
+    user_external_id: str
     month: date
     content: str | None
     worst_categories: list[str] | None
@@ -63,14 +64,11 @@ class UserMonthlyFeedbackResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     @staticmethod
-    def from_model(
-        feedback: UserMonthlyFeedbackModel,
-        user_external_id: str | None = None,
-    ) -> "UserMonthlyFeedbackResponse":
+    def from_model(feedback: UserMonthlyFeedbackModel) -> "UserMonthlyFeedbackResponse":
         return UserMonthlyFeedbackResponse(
             id=feedback.id,
             user_id=feedback.user_id,
-            user_external_id=user_external_id,
+            user_external_id=feedback.user_external_id,
             month=feedback.month,
             content=feedback.content,
             worst_categories=feedback.worst_categories,

@@ -133,6 +133,15 @@ class FeedbackService:
             extra=self.request_id,
         )
 
+        user = await self.user_repository.get_by_id(user_id=user_id, db=self.session)
+        if not user:
+            self.logger.warning(
+                tag=self.tag,
+                message=f"User not found for user_id={user_id}, skipping.",
+                extra=self.request_id,
+            )
+            return None
+
         existing = await self.feedback_repository.get_by_user_and_month(
             user_id=user_id,
             month=month,
@@ -183,7 +192,7 @@ class FeedbackService:
             )
             return None
 
-        feedback = llm_result.to_model(user_id=user_id, month=month)
+        feedback = llm_result.to_model(user_id=user_id, user_external_id=user.external_id, month=month)
         await self.feedback_repository.create(feedback=feedback, db=self.session)
 
         self.logger.info(
