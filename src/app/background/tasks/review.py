@@ -14,11 +14,11 @@ logger = get_logger()
 
 
 @broker.task(task_name="review:orchestrate")
-async def orchestrate_periodic_reviews() -> None:
+async def orchestrate_monthly_reviews() -> None:
     """
     Récupère les user_ids éligibles et dispatch une tâche par user.
     """
-    logger.info("TASK:orchestrate", "Starting periodic review orchestration")
+    logger.info("TASK:orchestrate", "Starting monthly review orchestration")
 
     async with AsyncSessionLocal() as session:
         async with UnitOfWork(session):
@@ -28,7 +28,7 @@ async def orchestrate_periodic_reviews() -> None:
                 request_id="task:review:orchestrate",
                 user_repository=get_user_repository(),
             )
-            user_ids = await user_service.get_eligible_user_ids_for_periodic_review()
+            user_ids = await user_service.get_eligible_user_ids_for_monthly_review()
 
     logger.info("TASK:orchestrate", f"Found {len(user_ids)} eligible users")
 

@@ -10,7 +10,7 @@ from app.modules.messages.model import MessageModel
 
 class MessageRepository:
 
-    async def get_eligible_user_ids_for_periodic_review(
+    async def get_eligible_user_ids_for_monthly_review(
         self,
         db: AsyncSession,
         period_start: datetime,
