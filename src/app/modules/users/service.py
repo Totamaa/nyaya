@@ -36,7 +36,7 @@ class UserService:
             raise UserNotFoundException(external_id=external_id)
         return UserResponse.model_validate(user)
 
-    async def get_eligible_user_ids_for_periodic_review(self) -> list[UUID]:
+    async def get_eligible_user_ids_for_monthly_review(self) -> list[UUID]:
         settings = get_settings()
         now = datetime.now(timezone.utc)
         period_end = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -45,7 +45,7 @@ class UserService:
         else:
             period_start = period_end.replace(month=now.month - 1)
 
-        return await MessageRepository().get_eligible_user_ids_for_periodic_review(
+        return await MessageRepository().get_eligible_user_ids_for_monthly_review(
             db=self.session,
             period_start=period_start,
             period_end=period_end,

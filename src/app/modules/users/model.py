@@ -11,4 +11,4 @@ class UserModel(BaseModel):
 
     messages = relationship("MessageModel", back_populates="author", foreign_keys="MessageModel.author_id")
     totems = relationship("UserTotemModel", back_populates="user")
-    monthly_feedbacks = relationship("UserMonthlyFeedbackModel", back_populates="user")
+    monthly_feedbacks = relationship("UserMonthlyFeedbackModel", back_populates="user", foreign_keys="UserMonthlyFeedbackModel.user_id")

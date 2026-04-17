@@ -1,4 +1,6 @@
 import logging
+from uuid import UUID
+
 from fastapi import status
 
 from app.core.errors.exceptions.base import BusinessException
