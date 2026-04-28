@@ -1,0 +1,693 @@
+{
+  "dataset_name": "open_mindedness_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "instruction": "A predicted score is accepted if it falls within the expected range."
+  },
+  "criterion": "ouverture_d_esprit",
+  "items": [
+    {
+      "id": "OM001",
+      "input": {
+        "content_id": "open_mindedness_control:OM001",
+        "content_type": "comment",
+        "text": "Je vois l'intérêt en termes de vitesse, mais il faudrait vérifier les risques sur les dossiers sensibles avant de trancher.",
+        "created_at": "2026-03-01T09:01:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:02:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM001",
+          "text": "Je pense qu'il faut supprimer toute validation manuelle.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM001",
+          "text": "Je pense qu'il faut supprimer toute validation manuelle."
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM002",
+      "input": {
+        "content_id": "open_mindedness_control:OM002",
+        "content_type": "comment",
+        "text": "Il n'y a qu'une seule bonne réponse à ce sujet et toute autre option est absurde.",
+        "created_at": "2026-03-01T09:02:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:03:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM002",
+          "text": "Faut-il centraliser les demandes support ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM002",
+          "text": "Faut-il centraliser les demandes support ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "OM003",
+      "input": {
+        "content_id": "open_mindedness_control:OM003",
+        "content_type": "comment",
+        "text": "Je suis plutôt favorable à la simplification, même si certains cas garderont peut-être besoin d'un contrôle supplémentaire.",
+        "created_at": "2026-03-01T09:03:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:04:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM003",
+          "text": "Peut-on revoir le circuit de validation ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM003",
+          "text": "Peut-on revoir le circuit de validation ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM004",
+      "input": {
+        "content_id": "open_mindedness_control:OM004",
+        "content_type": "comment",
+        "text": "Mon point de vue est forcément le bon, il n'y a rien à discuter.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM004",
+          "text": "Quel est ton avis sur la nouvelle organisation ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM004",
+          "text": "Quel est ton avis sur la nouvelle organisation ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "OM005",
+      "input": {
+        "content_id": "open_mindedness_control:OM005",
+        "content_type": "comment",
+        "text": "Il est utile sur certains aspects, mais je peux rater des avantages si d'autres équipes l'utilisent différemment.",
+        "created_at": "2026-03-01T09:05:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:06:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM005",
+          "text": "Que penses-tu du nouveau tableau de bord ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM005",
+          "text": "Que penses-tu du nouveau tableau de bord ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM006",
+      "input": {
+        "content_id": "open_mindedness_control:OM006",
+        "content_type": "comment",
+        "text": "Je pense que oui, mais je peux entendre des arguments sur sa valeur pour certaines équipes.",
+        "created_at": "2026-03-01T09:06:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:07:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM006",
+          "text": "Faut-il supprimer la réunion hebdomadaire ?",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM006",
+          "text": "Faut-il supprimer la réunion hebdomadaire ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM007",
+      "input": {
+        "content_id": "open_mindedness_control:OM007",
+        "content_type": "comment",
+        "text": "L'outil A est supérieur sur tous les plans, point final.",
+        "created_at": "2026-03-01T09:07:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:08:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM007",
+          "text": "Quel choix faire entre les deux outils ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM007",
+          "text": "Quel choix faire entre les deux outils ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "OM008",
+      "input": {
+        "content_id": "open_mindedness_control:OM008",
+        "content_type": "comment",
+        "text": "Je privilégie un parcours standardisé, tout en reconnaissant qu'un accompagnement plus souple peut mieux convenir à certains profils.",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM008",
+          "text": "Comment améliorer l'onboarding ?",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM008",
+          "text": "Comment améliorer l'onboarding ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM009",
+      "input": {
+        "content_id": "open_mindedness_control:OM009",
+        "content_type": "comment",
+        "text": "Si les données montrent autre chose que mon intuition, je suis prêt à revoir ma position.",
+        "created_at": "2026-03-01T09:09:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:10:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM009",
+          "text": "Faut-il revoir la priorisation des tickets ?",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM009",
+          "text": "Faut-il revoir la priorisation des tickets ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        5,
+        5
+      ]
+    },
+    {
+      "id": "OM010",
+      "input": {
+        "content_id": "open_mindedness_control:OM010",
+        "content_type": "comment",
+        "text": "Ce plan est mauvais, et ceux qui le défendent n'ont rien compris.",
+        "created_at": "2026-03-01T09:10:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:11:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM010",
+          "text": "As-tu des réserves sur ce déploiement ?",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:parent:OM010",
+          "text": "As-tu des réserves sur ce déploiement ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "OM011",
+      "input": {
+        "content_id": "open_mindedness_control:OM011",
+        "content_type": "comment",
+        "text": "Je vois l'intérêt en termes de vitesse, mais il faudrait vérifier les risques sur les dossiers sensibles avant de trancher.",
+        "created_at": "2026-03-01T09:11:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:12:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM011",
+          "text": "Je pense qu'il faut supprimer toute validation manuelle.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM011",
+          "text": "Je pense qu'il faut supprimer toute validation manuelle."
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM012",
+      "input": {
+        "content_id": "open_mindedness_control:OM012",
+        "content_type": "comment",
+        "text": "Il n'y a qu'une seule bonne réponse à ce sujet et toute autre option est absurde.",
+        "created_at": "2026-03-01T09:13:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:14:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM012",
+          "text": "Faut-il centraliser les demandes support ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM012",
+          "text": "Faut-il centraliser les demandes support ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "OM013",
+      "input": {
+        "content_id": "open_mindedness_control:OM013",
+        "content_type": "comment",
+        "text": "Je suis plutôt favorable à la simplification, même si certains cas garderont peut-être besoin d'un contrôle supplémentaire.",
+        "created_at": "2026-03-01T09:15:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:16:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM013",
+          "text": "Peut-on revoir le circuit de validation ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM013",
+          "text": "Peut-on revoir le circuit de validation ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM014",
+      "input": {
+        "content_id": "open_mindedness_control:OM014",
+        "content_type": "comment",
+        "text": "Mon point de vue est forcément le bon, il n'y a rien à discuter.",
+        "created_at": "2026-03-01T09:17:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:18:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM014",
+          "text": "Quel est ton avis sur la nouvelle organisation ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM014",
+          "text": "Quel est ton avis sur la nouvelle organisation ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "OM015",
+      "input": {
+        "content_id": "open_mindedness_control:OM015",
+        "content_type": "comment",
+        "text": "Il est utile sur certains aspects, mais je peux rater des avantages si d'autres équipes l'utilisent différemment.",
+        "created_at": "2026-03-01T09:19:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:20:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM015",
+          "text": "Que penses-tu du nouveau tableau de bord ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM015",
+          "text": "Que penses-tu du nouveau tableau de bord ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM016",
+      "input": {
+        "content_id": "open_mindedness_control:OM016",
+        "content_type": "comment",
+        "text": "Je pense que oui, mais je peux entendre des arguments sur sa valeur pour certaines équipes.",
+        "created_at": "2026-03-01T09:21:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:22:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM016",
+          "text": "Faut-il supprimer la réunion hebdomadaire ?",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM016",
+          "text": "Faut-il supprimer la réunion hebdomadaire ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM017",
+      "input": {
+        "content_id": "open_mindedness_control:OM017",
+        "content_type": "comment",
+        "text": "L'outil A est supérieur sur tous les plans, point final.",
+        "created_at": "2026-03-01T09:23:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:24:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM017",
+          "text": "Quel choix faire entre les deux outils ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM017",
+          "text": "Quel choix faire entre les deux outils ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "OM018",
+      "input": {
+        "content_id": "open_mindedness_control:OM018",
+        "content_type": "comment",
+        "text": "Je privilégie un parcours standardisé, tout en reconnaissant qu'un accompagnement plus souple peut mieux convenir à certains profils.",
+        "created_at": "2026-03-01T09:25:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:26:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM018",
+          "text": "Comment améliorer l'onboarding ?",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM018",
+          "text": "Comment améliorer l'onboarding ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "OM019",
+      "input": {
+        "content_id": "open_mindedness_control:OM019",
+        "content_type": "comment",
+        "text": "Si les données montrent autre chose que mon intuition, je suis prêt à revoir ma position.",
+        "created_at": "2026-03-01T09:27:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:28:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM019",
+          "text": "Faut-il revoir la priorisation des tickets ?",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM019",
+          "text": "Faut-il revoir la priorisation des tickets ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        5,
+        5
+      ]
+    },
+    {
+      "id": "OM020",
+      "input": {
+        "content_id": "open_mindedness_control:OM020",
+        "content_type": "comment",
+        "text": "Ce plan est mauvais, et ceux qui le défendent n'ont rien compris.",
+        "created_at": "2026-03-01T09:29:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:30:00Z",
+        "parent": {
+          "content_id": "open_mindedness_control:parent:OM020",
+          "text": "As-tu des réserves sur ce déploiement ?",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "open_mindedness_control:thread:OM020",
+          "text": "As-tu des réserves sur ce déploiement ?"
+        },
+        "context": {
+          "edito_id": 106,
+          "phase": "test_criterion",
+          "topic_id": 6,
+          "tags": [
+            "ouverture_d_esprit"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    }
+  ]
+}

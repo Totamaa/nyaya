@@ -1,117 +1,692 @@
 {
-    "dataset_name": "fact_vs_opinion_control",
-    "version": "v1",
-    "language": "fr",
-    "scale": {
-      "min": 1,
-      "max": 5,
-      "instruction": "A predicted score is accepted if it falls within the expected range."
+  "dataset_name": "fact_vs_opinion_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "instruction": "A predicted score is accepted if it falls within the expected range."
+  },
+  "items": [
+    {
+      "id": "FVO001",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO001",
+        "content_type": "comment",
+        "text": "Ce processus est mauvais et inefficace.",
+        "created_at": "2026-03-01T09:01:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:02:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO001",
+          "text": "Quel est ton avis sur le nouveau processus de validation ?",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO001",
+          "text": "Quel est ton avis sur le nouveau processus de validation ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
     },
-    "items": [
-      {
-        "id": "FVO001",
-        "previous_message": "Quel est ton avis sur le nouveau processus de validation ?",
-        "message": "Ce processus est mauvais et inefficace.",
-        "next_message": "C'est un jugement, pas un fait vérifié.",
-        "expected_score_range": [1, 2]
+    {
+      "id": "FVO002",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO002",
+        "content_type": "comment",
+        "text": "Depuis son déploiement, le temps moyen de saisie est passé de 8 à 5 minutes selon les mesures de l'équipe support.",
+        "created_at": "2026-03-01T09:02:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:03:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO002",
+          "text": "Peux-tu décrire l'impact du nouveau formulaire ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO002",
+          "text": "Peux-tu décrire l'impact du nouveau formulaire ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO002",
-        "previous_message": "Peux-tu décrire l'impact du nouveau formulaire ?",
-        "message": "Depuis son déploiement, le temps moyen de saisie est passé de 8 à 5 minutes selon les mesures de l'équipe support.",
-        "next_message": "Ici, on a une affirmation factuelle vérifiable.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO003",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO003",
+        "content_type": "comment",
+        "text": "À mon avis, cette interface est plus agréable à utiliser, même si je n'ai pas de mesure précise pour le montrer.",
+        "created_at": "2026-03-01T09:03:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:04:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO003",
+          "text": "Que penses-tu de cette solution ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO003",
+          "text": "Que penses-tu de cette solution ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO003",
-        "previous_message": "Que penses-tu de cette solution ?",
-        "message": "À mon avis, cette interface est plus agréable à utiliser, même si je n'ai pas de mesure précise pour le montrer.",
-        "next_message": "L'opinion est clairement présentée comme telle.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO004",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO004",
+        "content_type": "comment",
+        "text": "Cet outil est objectivement le meilleur du marché.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO004",
+          "text": "As-tu un retour sur l'outil actuel ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO004",
+          "text": "As-tu un retour sur l'outil actuel ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO004",
-        "previous_message": "As-tu un retour sur l'outil actuel ?",
-        "message": "Cet outil est objectivement le meilleur du marché.",
-        "next_message": "La formulation mélange jugement et certitude non étayée.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "FVO005",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO005",
+        "content_type": "comment",
+        "text": "Plusieurs participants ont signalé que les réunions duraient trop longtemps, mais je trouve aussi le format globalement peu efficace.",
+        "created_at": "2026-03-01T09:05:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:06:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO005",
+          "text": "Faut-il revoir les réunions hebdomadaires ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO005",
+          "text": "Faut-il revoir les réunions hebdomadaires ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO005",
-        "previous_message": "Faut-il revoir les réunions hebdomadaires ?",
-        "message": "Plusieurs participants ont signalé que les réunions duraient trop longtemps, mais je trouve aussi le format globalement peu efficace.",
-        "next_message": "Le message mélange fait rapporté et opinion personnelle.",
-        "expected_score_range": [3, 4]
+      "expected_score_range": [
+        3,
+        4
+      ]
+    },
+    {
+      "id": "FVO006",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO006",
+        "content_type": "comment",
+        "text": "La documentation contient 12 sections et 3 exemples d'intégration, mais je la trouve encore difficile à parcourir.",
+        "created_at": "2026-03-01T09:06:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:07:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO006",
+          "text": "Comment évalues-tu la nouvelle documentation ?",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO006",
+          "text": "Comment évalues-tu la nouvelle documentation ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO006",
-        "previous_message": "Comment évalues-tu la nouvelle documentation ?",
-        "message": "La documentation contient 12 sections et 3 exemples d'intégration, mais je la trouve encore difficile à parcourir.",
-        "next_message": "Distinction claire entre éléments factuels et appréciation.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO007",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO007",
+        "content_type": "comment",
+        "text": "Cette décision est une erreur, c'est évident.",
+        "created_at": "2026-03-01T09:07:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:08:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO007",
+          "text": "Quel est ton retour sur cette décision ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO007",
+          "text": "Quel est ton retour sur cette décision ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO007",
-        "previous_message": "Quel est ton retour sur cette décision ?",
-        "message": "Cette décision est une erreur, c'est évident.",
-        "next_message": "Jugement affirmé sans élément vérifiable.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "FVO008",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO008",
+        "content_type": "comment",
+        "text": "Le nombre de tickets a augmenté cette semaine, donc la nouvelle organisation est mauvaise.",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO008",
+          "text": "Le support a-t-il été impacté ?",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO008",
+          "text": "Le support a-t-il été impacté ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO008",
-        "previous_message": "Le support a-t-il été impacté ?",
-        "message": "Le nombre de tickets a augmenté cette semaine, donc la nouvelle organisation est mauvaise.",
-        "next_message": "On part d'un fait possible, mais la conclusion reste une opinion présentée trop directement.",
-        "expected_score_range": [2, 3]
+      "expected_score_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "FVO009",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO009",
+        "content_type": "comment",
+        "text": "D'après les chiffres du tableau de bord, le taux de réouverture a baissé de 15 %, ce qui suggère une amélioration du traitement.",
+        "created_at": "2026-03-01T09:09:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:10:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO009",
+          "text": "Peux-tu préciser ton analyse ?",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO009",
+          "text": "Peux-tu préciser ton analyse ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO009",
-        "previous_message": "Peux-tu préciser ton analyse ?",
-        "message": "D'après les chiffres du tableau de bord, le taux de réouverture a baissé de 15 %, ce qui suggère une amélioration du traitement.",
-        "next_message": "Bonne articulation entre fait observé et interprétation prudente.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO010",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO010",
+        "content_type": "comment",
+        "text": "C'est une bonne proposition.",
+        "created_at": "2026-03-01T09:10:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:11:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO010",
+          "text": "Comment qualifier cette proposition ?",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO010",
+          "text": "Comment qualifier cette proposition ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO010",
-        "previous_message": "Comment qualifier cette proposition ?",
-        "message": "C'est une bonne proposition.",
-        "next_message": "Simple opinion, sans confusion explicite mais sans distinction utile non plus.",
-        "expected_score_range": [2, 3]
+      "expected_score_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "FVO011",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO011",
+        "content_type": "comment",
+        "text": "Le pilote a concerné deux équipes pendant trois semaines. Personnellement, je pense que c'est encore trop court pour conclure.",
+        "created_at": "2026-03-01T09:11:00Z",
+        "author_id": 11,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:12:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO011",
+          "text": "Quel bilan fais-tu du pilote ?",
+          "author_id": 911,
+          "created_at": "2026-03-01T09:10:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO011",
+          "text": "Quel bilan fais-tu du pilote ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO011",
-        "previous_message": "Quel bilan fais-tu du pilote ?",
-        "message": "Le pilote a concerné deux équipes pendant trois semaines. Personnellement, je pense que c'est encore trop court pour conclure.",
-        "next_message": "Les faits et l'opinion sont bien séparés.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO012",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO012",
+        "content_type": "comment",
+        "text": "Tout le monde déteste cet outil, donc il faut en changer.",
+        "created_at": "2026-03-01T09:12:00Z",
+        "author_id": 12,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:13:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO012",
+          "text": "Pourquoi veux-tu changer d'outil ?",
+          "author_id": 912,
+          "created_at": "2026-03-01T09:11:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO012",
+          "text": "Pourquoi veux-tu changer d'outil ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO012",
-        "previous_message": "Pourquoi veux-tu changer d'outil ?",
-        "message": "Tout le monde déteste cet outil, donc il faut en changer.",
-        "next_message": "Généralisation vague et opinion présentée comme si elle décrivait la réalité.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "FVO013",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO013",
+        "content_type": "comment",
+        "text": "Le délai moyen de traitement reste élevé. En revanche, dire que l'équipe ne fait pas d'effort serait un jugement excessif.",
+        "created_at": "2026-03-01T09:13:00Z",
+        "author_id": 13,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:14:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO013",
+          "text": "Quel est ton diagnostic ?",
+          "author_id": 913,
+          "created_at": "2026-03-01T09:12:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO013",
+          "text": "Quel est ton diagnostic ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO013",
-        "previous_message": "Quel est ton diagnostic ?",
-        "message": "Le délai moyen de traitement reste élevé. En revanche, dire que l'équipe ne fait pas d'effort serait un jugement excessif.",
-        "next_message": "Bonne séparation entre constat factuel et jugement à éviter.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO014",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO014",
+        "content_type": "comment",
+        "text": "Je n'aime pas cette approche, même si je reconnais que les indicateurs actuels ne montrent pas encore d'effet négatif.",
+        "created_at": "2026-03-01T09:14:00Z",
+        "author_id": 14,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:15:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO014",
+          "text": "As-tu des réserves sur ce plan ?",
+          "author_id": 914,
+          "created_at": "2026-03-01T09:13:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO014",
+          "text": "As-tu des réserves sur ce plan ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO014",
-        "previous_message": "As-tu des réserves sur ce plan ?",
-        "message": "Je n'aime pas cette approche, même si je reconnais que les indicateurs actuels ne montrent pas encore d'effet négatif.",
-        "next_message": "Le message distingue ressenti personnel et absence de preuve contraire.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO015",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO015",
+        "content_type": "comment",
+        "text": "On a observé quelques retards cette semaine, mais il est trop tôt pour affirmer que le nouveau processus est inefficace.",
+        "created_at": "2026-03-01T09:15:00Z",
+        "author_id": 15,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:16:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO015",
+          "text": "Que peut-on conclure à ce stade ?",
+          "author_id": 915,
+          "created_at": "2026-03-01T09:14:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:parent:FVO015",
+          "text": "Que peut-on conclure à ce stade ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
       },
-      {
-        "id": "FVO015",
-        "previous_message": "Que peut-on conclure à ce stade ?",
-        "message": "On a observé quelques retards cette semaine, mais il est trop tôt pour affirmer que le nouveau processus est inefficace.",
-        "next_message": "Très bonne distinction entre observation et conclusion prudente.",
-        "expected_score_range": [4, 5]
-      }
-    ]
-  }
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO016",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO016",
+        "content_type": "comment",
+        "text": "Ce processus est mauvais et inefficace.",
+        "created_at": "2026-03-01T09:16:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:17:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO016",
+          "text": "Quel est ton avis sur le nouveau processus de validation ?",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:thread:FVO016",
+          "text": "Quel est ton avis sur le nouveau processus de validation ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "FVO017",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO017",
+        "content_type": "comment",
+        "text": "Depuis son déploiement, le temps moyen de saisie est passé de 8 à 5 minutes selon les mesures de l'équipe support.",
+        "created_at": "2026-03-01T09:18:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:19:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO017",
+          "text": "Peux-tu décrire l'impact du nouveau formulaire ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:thread:FVO017",
+          "text": "Peux-tu décrire l'impact du nouveau formulaire ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO018",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO018",
+        "content_type": "comment",
+        "text": "À mon avis, cette interface est plus agréable à utiliser, même si je n'ai pas de mesure précise pour le montrer.",
+        "created_at": "2026-03-01T09:20:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:21:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO018",
+          "text": "Que penses-tu de cette solution ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:thread:FVO018",
+          "text": "Que penses-tu de cette solution ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "FVO019",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO019",
+        "content_type": "comment",
+        "text": "Cet outil est objectivement le meilleur du marché.",
+        "created_at": "2026-03-01T09:22:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:23:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO019",
+          "text": "As-tu un retour sur l'outil actuel ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:thread:FVO019",
+          "text": "As-tu un retour sur l'outil actuel ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "FVO020",
+      "input": {
+        "content_id": "fact_vs_opinion_control:FVO020",
+        "content_type": "comment",
+        "text": "Plusieurs participants ont signalé que les réunions duraient trop longtemps, mais je trouve aussi le format globalement peu efficace.",
+        "created_at": "2026-03-01T09:24:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:25:00Z",
+        "parent": {
+          "content_id": "fact_vs_opinion_control:parent:FVO020",
+          "text": "Faut-il revoir les réunions hebdomadaires ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "fact_vs_opinion_control:thread:FVO020",
+          "text": "Faut-il revoir les réunions hebdomadaires ?"
+        },
+        "context": {
+          "edito_id": 102,
+          "phase": "test_criterion",
+          "topic_id": 2,
+          "tags": [
+            "fact_vs_opinion"
+          ]
+        }
+      },
+      "expected_score_range": [
+        3,
+        4
+      ]
+    }
+  ]
+}

@@ -37,7 +37,7 @@ class MistralClient:
     ) -> None:
         if not api_key:
             raise RuntimeError(
-                "Aucune cle API Mistral fournie. Definis `mistral.api_key` "
+                "Aucune clé API Mistral fournie. Définis `mistral.api_key` "
                 "ou la variable d'environnement `MISTRAL_API_KEY`."
             )
 

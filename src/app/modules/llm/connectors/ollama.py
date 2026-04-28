@@ -18,6 +18,24 @@ def _extract_message_content(response: Any) -> str:
     return (content or "").strip()
 
 
+def _extract_done_reason(response: Any) -> str | None:
+    value = getattr(response, "done_reason", None)
+    if value is None and isinstance(response, dict):
+        value = response.get("done_reason")
+    return value
+
+
+def _extract_thinking(response: Any) -> str:
+    message = getattr(response, "message", None)
+    if message is None and isinstance(response, dict):
+        message = response.get("message")
+
+    thinking = getattr(message, "thinking", None)
+    if thinking is None and isinstance(message, dict):
+        thinking = message.get("thinking")
+    return (thinking or "").strip()
+
+
 def _raise_ollama_unavailable(exc: Exception, *, base_url: str, model: str) -> None:
     raise RuntimeError(
         f"Ollama est indisponible sur {base_url} pour le modèle '{model}'. "
@@ -36,7 +54,7 @@ class OllamaClient:
         temperature: float = 0.2,
     ):
         try:
-            import src.app.modules.llm.connectors.ollama as ollama
+            import ollama
         except ImportError as exc:
             raise RuntimeError("Missing optional dependency 'ollama'.") from exc
 
@@ -88,7 +106,24 @@ class OllamaClient:
             response = self._client.chat(**kwargs)
         except ConnectionError as exc:
             _raise_ollama_unavailable(exc, base_url=self.base_url, model=self.model)
-        return _extract_message_content(response)
+        content = _extract_message_content(response)
+        if content:
+            return content
+
+        done_reason = _extract_done_reason(response)
+        thinking = _extract_thinking(response)
+        if think not in (None, False) and done_reason == "length" and thinking:
+            retry_kwargs = dict(kwargs)
+            retry_kwargs["think"] = False
+            try:
+                retry_response = self._client.chat(**retry_kwargs)
+            except ConnectionError as exc:
+                _raise_ollama_unavailable(exc, base_url=self.base_url, model=self.model)
+            retry_content = _extract_message_content(retry_response)
+            if retry_content:
+                return retry_content
+
+        return content
 
     def stream_text(
         self,

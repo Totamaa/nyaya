@@ -1,118 +1,693 @@
 {
-    "dataset_name": "logic_coherence_control",
-    "version": "v1",
-    "language": "fr",
-    "scale": {
-      "min": 1,
-      "max": 5,
-      "instruction": "A predicted score is accepted if it falls within the expected range."
+  "dataset_name": "logic_coherence_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "instruction": "A predicted score is accepted if it falls within the expected range."
+  },
+  "criterion": "logic_coherence",
+  "items": [
+    {
+      "id": "L001",
+      "input": {
+        "content_id": "logic_coherence_control:L001",
+        "content_type": "comment",
+        "text": "Si on automatise les demandes simples, on réduit le volume traité manuellement et on peut concentrer les équipes sur les cas complexes.",
+        "created_at": "2026-03-01T09:01:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:02:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L001",
+          "text": "On veut réduire le temps de traitement des demandes internes.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L001",
+          "text": "On veut réduire le temps de traitement des demandes internes."
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
-    "criterion": "logic_coherence",
-    "items": [
-      {
-        "id": "L001",
-        "previous_message": "On veut réduire le temps de traitement des demandes internes.",
-        "message": "Si on automatise les demandes simples, on réduit le volume traité manuellement et on peut concentrer les équipes sur les cas complexes.",
-        "next_message": "Oui, le raisonnement se tient.",
-        "expected_score_range": [4, 5]
+    {
+      "id": "L002",
+      "input": {
+        "content_id": "logic_coherence_control:L002",
+        "content_type": "comment",
+        "text": "Il faut ajouter plus de champs pour aller plus vite.",
+        "created_at": "2026-03-01T09:02:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:03:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L002",
+          "text": "Pourquoi proposes-tu de modifier le formulaire ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L002",
+          "text": "Pourquoi proposes-tu de modifier le formulaire ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L002",
-        "previous_message": "Pourquoi proposes-tu de modifier le formulaire ?",
-        "message": "Il faut ajouter plus de champs pour aller plus vite.",
-        "next_message": "Je ne vois pas bien le lien logique.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "L003",
+      "input": {
+        "content_id": "logic_coherence_control:L003",
+        "content_type": "comment",
+        "text": "En contrôlant automatiquement les données obligatoires avant soumission, on évite qu'une partie des erreurs arrive jusqu'au traitement manuel.",
+        "created_at": "2026-03-01T09:03:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:04:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L003",
+          "text": "Comment limiter les erreurs sur les commandes ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L003",
+          "text": "Comment limiter les erreurs sur les commandes ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L003",
-        "previous_message": "Comment limiter les erreurs sur les commandes ?",
-        "message": "En contrôlant automatiquement les données obligatoires avant soumission, on évite qu'une partie des erreurs arrive jusqu'au traitement manuel.",
-        "next_message": "Oui, c'est cohérent.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L004",
+      "input": {
+        "content_id": "logic_coherence_control:L004",
+        "content_type": "comment",
+        "text": "Oui, car moins d'étapes rendrait le processus plus sécurisé.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L004",
+          "text": "Faut-il garder deux niveaux de validation ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L004",
+          "text": "Faut-il garder deux niveaux de validation ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L004",
-        "previous_message": "Faut-il garder deux niveaux de validation ?",
-        "message": "Oui, car moins d'étapes rendrait le processus plus sécurisé.",
-        "next_message": "L'argument paraît contradictoire tel qu'il est formulé.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "L005",
+      "input": {
+        "content_id": "logic_coherence_control:L005",
+        "content_type": "comment",
+        "text": "Un pilote permet d'identifier les problèmes avant généralisation, ce qui limite le risque d'impact large en cas d'erreur.",
+        "created_at": "2026-03-01T09:05:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:06:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L005",
+          "text": "Pourquoi tester sur un périmètre réduit d'abord ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L005",
+          "text": "Pourquoi tester sur un périmètre réduit d'abord ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L005",
-        "previous_message": "Pourquoi tester sur un périmètre réduit d'abord ?",
-        "message": "Un pilote permet d'identifier les problèmes avant généralisation, ce qui limite le risque d'impact large en cas d'erreur.",
-        "next_message": "Le raisonnement est solide.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L006",
+      "input": {
+        "content_id": "logic_coherence_control:L006",
+        "content_type": "comment",
+        "text": "Il est à la fois trop long et pas assez encadré, donc il faudrait soit le simplifier soit ajouter encore plus d'étapes.",
+        "created_at": "2026-03-01T09:06:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:07:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L006",
+          "text": "Que penses-tu du nouveau circuit de validation ?",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L006",
+          "text": "Que penses-tu du nouveau circuit de validation ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L006",
-        "previous_message": "Que penses-tu du nouveau circuit de validation ?",
-        "message": "Il est à la fois trop long et pas assez encadré, donc il faudrait soit le simplifier soit ajouter encore plus d'étapes.",
-        "next_message": "Le message mélange des pistes sans logique très claire.",
-        "expected_score_range": [2, 3]
+      "expected_score_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "L007",
+      "input": {
+        "content_id": "logic_coherence_control:L007",
+        "content_type": "comment",
+        "text": "Une catégorisation initiale plus fine permettrait d'orienter les dossiers vers la bonne équipe dès le départ, ce qui réduirait les transferts inutiles.",
+        "created_at": "2026-03-01T09:07:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:08:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L007",
+          "text": "Comment mieux répartir les demandes entre équipes ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L007",
+          "text": "Comment mieux répartir les demandes entre équipes ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L007",
-        "previous_message": "Comment mieux répartir les demandes entre équipes ?",
-        "message": "Une catégorisation initiale plus fine permettrait d'orienter les dossiers vers la bonne équipe dès le départ, ce qui réduirait les transferts inutiles.",
-        "next_message": "Oui, bonne cohérence.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L008",
+      "input": {
+        "content_id": "logic_coherence_control:L008",
+        "content_type": "comment",
+        "text": "Parce qu'elle prend du temps, donc elle améliore forcément la qualité.",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L008",
+          "text": "Pourquoi veux-tu supprimer cette étape ?",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L008",
+          "text": "Pourquoi veux-tu supprimer cette étape ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L008",
-        "previous_message": "Pourquoi veux-tu supprimer cette étape ?",
-        "message": "Parce qu'elle prend du temps, donc elle améliore forcément la qualité.",
-        "next_message": "La conclusion ne découle pas du motif donné.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "L009",
+      "input": {
+        "content_id": "logic_coherence_control:L009",
+        "content_type": "comment",
+        "text": "Mesurer d'abord les causes principales de retard permettrait d'éviter de corriger le mauvais problème.",
+        "created_at": "2026-03-01T09:09:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:10:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L009",
+          "text": "Quelle serait une bonne première action ?",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L009",
+          "text": "Quelle serait une bonne première action ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L009",
-        "previous_message": "Quelle serait une bonne première action ?",
-        "message": "Mesurer d'abord les causes principales de retard permettrait d'éviter de corriger le mauvais problème.",
-        "next_message": "Oui, le raisonnement est cohérent.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L010",
+      "input": {
+        "content_id": "logic_coherence_control:L010",
+        "content_type": "comment",
+        "text": "C'est utile, sauf quand ça ne l'est pas, donc je suis pour sans vraiment l'être.",
+        "created_at": "2026-03-01T09:10:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:11:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L010",
+          "text": "Quel est ton avis sur les escalades automatiques ?",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L010",
+          "text": "Quel est ton avis sur les escalades automatiques ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L010",
-        "previous_message": "Quel est ton avis sur les escalades automatiques ?",
-        "message": "C'est utile, sauf quand ça ne l'est pas, donc je suis pour sans vraiment l'être.",
-        "next_message": "La position manque de cohérence interne.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "L011",
+      "input": {
+        "content_id": "logic_coherence_control:L011",
+        "content_type": "comment",
+        "text": "Si on impose une vérification finale sur les dossiers les plus sensibles, on peut réduire les résolutions incomplètes et donc les réouvertures.",
+        "created_at": "2026-03-01T09:11:00Z",
+        "author_id": 11,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:12:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L011",
+          "text": "Comment réduire le nombre de tickets réouverts ?",
+          "author_id": 911,
+          "created_at": "2026-03-01T09:10:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L011",
+          "text": "Comment réduire le nombre de tickets réouverts ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L011",
-        "previous_message": "Comment réduire le nombre de tickets réouverts ?",
-        "message": "Si on impose une vérification finale sur les dossiers les plus sensibles, on peut réduire les résolutions incomplètes et donc les réouvertures.",
-        "next_message": "Oui, logique.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L012",
+      "input": {
+        "content_id": "logic_coherence_control:L012",
+        "content_type": "comment",
+        "text": "Non, car moins de notifications aiderait les gens à mieux voir les alertes importantes.",
+        "created_at": "2026-03-01T09:12:00Z",
+        "author_id": 12,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:13:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L012",
+          "text": "Faut-il augmenter le nombre de notifications ?",
+          "author_id": 912,
+          "created_at": "2026-03-01T09:11:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L012",
+          "text": "Faut-il augmenter le nombre de notifications ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L012",
-        "previous_message": "Faut-il augmenter le nombre de notifications ?",
-        "message": "Oui, car moins de notifications aiderait les gens à mieux voir les alertes importantes.",
-        "next_message": "Le lien est contradictoire.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L013",
+      "input": {
+        "content_id": "logic_coherence_control:L013",
+        "content_type": "comment",
+        "text": "Un point d'entrée unique simplifie l'orientation, évite les doublons et améliore le suivi.",
+        "created_at": "2026-03-01T09:13:00Z",
+        "author_id": 13,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:14:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L013",
+          "text": "Pourquoi centraliser les demandes ?",
+          "author_id": 913,
+          "created_at": "2026-03-01T09:12:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L013",
+          "text": "Pourquoi centraliser les demandes ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L013",
-        "previous_message": "Pourquoi centraliser les demandes ?",
-        "message": "Un point d'entrée unique simplifie l'orientation, évite les doublons et améliore le suivi.",
-        "next_message": "Raisonnement clair et cohérent.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L014",
+      "input": {
+        "content_id": "logic_coherence_control:L014",
+        "content_type": "comment",
+        "text": "Il faudrait faire quelque chose de plus efficace, parce qu'aujourd'hui ce n'est pas assez efficace.",
+        "created_at": "2026-03-01T09:14:00Z",
+        "author_id": 14,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:15:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L014",
+          "text": "Que proposes-tu pour améliorer le support ?",
+          "author_id": 914,
+          "created_at": "2026-03-01T09:13:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L014",
+          "text": "Que proposes-tu pour améliorer le support ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L014",
-        "previous_message": "Que proposes-tu pour améliorer le support ?",
-        "message": "Il faudrait faire quelque chose de plus efficace, parce qu'aujourd'hui ce n'est pas assez efficace.",
-        "next_message": "C'est circulaire et peu argumenté.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "L015",
+      "input": {
+        "content_id": "logic_coherence_control:L015",
+        "content_type": "comment",
+        "text": "Définir plus tôt les critères de décision permettrait de limiter les retours en arrière au moment du choix final.",
+        "created_at": "2026-03-01T09:15:00Z",
+        "author_id": 15,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:16:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L015",
+          "text": "Comment éviter les arbitrages trop tardifs ?",
+          "author_id": 915,
+          "created_at": "2026-03-01T09:14:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:parent:L015",
+          "text": "Comment éviter les arbitrages trop tardifs ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
       },
-      {
-        "id": "L015",
-        "previous_message": "Comment éviter les arbitrages trop tardifs ?",
-        "message": "Définir plus tôt les critères de décision permettrait de limiter les retours en arrière au moment du choix final.",
-        "next_message": "Oui, c'est cohérent.",
-        "expected_score_range": [4, 5]
-      }
-    ]
-  }
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L016",
+      "input": {
+        "content_id": "logic_coherence_control:L016",
+        "content_type": "comment",
+        "text": "Si on automatise les demandes simples, on réduit le volume traité manuellement et on peut concentrer les équipes sur les cas complexes.",
+        "created_at": "2026-03-01T09:16:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:17:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L016",
+          "text": "On veut réduire le temps de traitement des demandes internes.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:thread:L016",
+          "text": "On veut réduire le temps de traitement des demandes internes."
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L017",
+      "input": {
+        "content_id": "logic_coherence_control:L017",
+        "content_type": "comment",
+        "text": "Il faut ajouter plus de champs pour aller plus vite.",
+        "created_at": "2026-03-01T09:18:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:19:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L017",
+          "text": "Pourquoi proposes-tu de modifier le formulaire ?",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:thread:L017",
+          "text": "Pourquoi proposes-tu de modifier le formulaire ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "L018",
+      "input": {
+        "content_id": "logic_coherence_control:L018",
+        "content_type": "comment",
+        "text": "En contrôlant automatiquement les données obligatoires avant soumission, on évite qu'une partie des erreurs arrive jusqu'au traitement manuel.",
+        "created_at": "2026-03-01T09:20:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:21:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L018",
+          "text": "Comment limiter les erreurs sur les commandes ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:thread:L018",
+          "text": "Comment limiter les erreurs sur les commandes ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "L019",
+      "input": {
+        "content_id": "logic_coherence_control:L019",
+        "content_type": "comment",
+        "text": "Oui, car moins d'étapes rendrait le processus plus sécurisé.",
+        "created_at": "2026-03-01T09:22:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:23:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L019",
+          "text": "Faut-il garder deux niveaux de validation ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:thread:L019",
+          "text": "Faut-il garder deux niveaux de validation ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "L020",
+      "input": {
+        "content_id": "logic_coherence_control:L020",
+        "content_type": "comment",
+        "text": "Un pilote permet d'identifier les problèmes avant généralisation, ce qui limite le risque d'impact large en cas d'erreur.",
+        "created_at": "2026-03-01T09:24:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:25:00Z",
+        "parent": {
+          "content_id": "logic_coherence_control:parent:L020",
+          "text": "Pourquoi tester sur un périmètre réduit d'abord ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "logic_coherence_control:thread:L020",
+          "text": "Pourquoi tester sur un périmètre réduit d'abord ?"
+        },
+        "context": {
+          "edito_id": 104,
+          "phase": "test_criterion",
+          "topic_id": 4,
+          "tags": [
+            "logic_coherence"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    }
+  ]
+}

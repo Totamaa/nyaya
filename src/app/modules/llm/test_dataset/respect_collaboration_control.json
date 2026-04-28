@@ -1,118 +1,693 @@
 {
-    "dataset_name": "respect_collaboration_control",
-    "version": "v1",
-    "language": "fr",
-    "scale": {
-      "min": 1,
-      "max": 5,
-      "instruction": "A predicted score is accepted if it falls within the expected range."
+  "dataset_name": "respect_collaboration_control",
+  "version": "v1",
+  "language": "fr",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "instruction": "A predicted score is accepted if it falls within the expected range."
+  },
+  "criterion": "respect_collaboration",
+  "items": [
+    {
+      "id": "RC001",
+      "input": {
+        "content_id": "respect_collaboration_control:RC001",
+        "content_type": "comment",
+        "text": "Je comprends l'objectif, mais je préfère qu'on regarde d'abord les risques avant de supprimer cette étape.",
+        "created_at": "2026-03-01T09:01:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:02:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC001",
+          "text": "Je pense qu'on devrait supprimer une étape de validation.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC001",
+          "text": "Je pense qu'on devrait supprimer une étape de validation."
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
     },
-    "criterion": "respect_collaboration",
-    "items": [
-      {
-        "id": "RC001",
-        "previous_message": "Je pense qu'on devrait supprimer une étape de validation.",
-        "message": "Je comprends l'objectif, mais je préfère qu'on regarde d'abord les risques avant de supprimer cette étape.",
-        "next_message": "Oui, c'est une bonne manière de nuancer.",
-        "expected_score_range": [4, 5]
+    {
+      "id": "RC002",
+      "input": {
+        "content_id": "respect_collaboration_control:RC002",
+        "content_type": "comment",
+        "text": "Franchement, c'est une idée absurde, tu compliques toujours tout.",
+        "created_at": "2026-03-01T09:02:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:03:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC002",
+          "text": "Je pense qu'on devrait supprimer une étape de validation.",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC002",
+          "text": "Je pense qu'on devrait supprimer une étape de validation."
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC002",
-        "previous_message": "Je pense qu'on devrait supprimer une étape de validation.",
-        "message": "Franchement, c'est une idée absurde, tu compliques toujours tout.",
-        "next_message": "Le ton n'est pas constructif.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "RC003",
+      "input": {
+        "content_id": "respect_collaboration_control:RC003",
+        "content_type": "comment",
+        "text": "Merci pour le partage. Je trouve la base intéressante, mais certaines métriques gagneraient à être clarifiées.",
+        "created_at": "2026-03-01T09:03:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:04:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC003",
+          "text": "Avez-vous un avis sur le nouveau tableau de bord ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC003",
+          "text": "Avez-vous un avis sur le nouveau tableau de bord ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC003",
-        "previous_message": "Avez-vous un avis sur le nouveau tableau de bord ?",
-        "message": "Merci pour le partage. Je trouve la base intéressante, mais certaines métriques gagneraient à être clarifiées.",
-        "next_message": "Retour constructif.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC004",
+      "input": {
+        "content_id": "respect_collaboration_control:RC004",
+        "content_type": "comment",
+        "text": "Encore une proposition brillante... On voit le niveau.",
+        "created_at": "2026-03-01T09:04:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:05:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC004",
+          "text": "Peut-on revoir le process actuel ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC004",
+          "text": "Peut-on revoir le process actuel ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC004",
-        "previous_message": "Peut-on revoir le process actuel ?",
-        "message": "Encore une proposition brillante... On voit le niveau.",
-        "next_message": "Clairement moqueur et peu collaboratif.",
-        "expected_score_range": [1, 1]
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "RC005",
+      "input": {
+        "content_id": "respect_collaboration_control:RC005",
+        "content_type": "comment",
+        "text": "Je ne suis pas convaincu par cette option, mais je serais preneur d'un retour complémentaire si vous voyez des avantages que j'ai manqués.",
+        "created_at": "2026-03-01T09:05:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:06:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC005",
+          "text": "Quelqu'un a-t-il une alternative à proposer ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC005",
+          "text": "Quelqu'un a-t-il une alternative à proposer ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC005",
-        "previous_message": "Quelqu'un a-t-il une alternative à proposer ?",
-        "message": "Je ne suis pas convaincu par cette option, mais je serais preneur d'un retour complémentaire si vous voyez des avantages que j'ai manqués.",
-        "next_message": "Très collaboratif.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC006",
+      "input": {
+        "content_id": "respect_collaboration_control:RC006",
+        "content_type": "comment",
+        "text": "Ça ne marchera pas. On sait tous très bien comment ça finit à chaque fois avec ce genre d'idée.",
+        "created_at": "2026-03-01T09:06:00Z",
+        "author_id": 6,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:07:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC006",
+          "text": "Que pensez-vous du planning proposé ?",
+          "author_id": 906,
+          "created_at": "2026-03-01T09:05:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC006",
+          "text": "Que pensez-vous du planning proposé ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC006",
-        "previous_message": "Que pensez-vous du planning proposé ?",
-        "message": "Ça ne marchera pas. On sait tous très bien comment ça finit à chaque fois avec ce genre d'idée.",
-        "next_message": "Le ton est fermé et peu constructif.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "RC007",
+      "input": {
+        "content_id": "respect_collaboration_control:RC007",
+        "content_type": "comment",
+        "text": "Je pense qu'il y a un intérêt à l'automatiser partiellement, mais il faudrait aussi prendre en compte les cas exceptionnels soulevés par l'équipe support.",
+        "created_at": "2026-03-01T09:07:00Z",
+        "author_id": 7,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:08:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC007",
+          "text": "Faut-il automatiser cette étape ?",
+          "author_id": 907,
+          "created_at": "2026-03-01T09:06:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC007",
+          "text": "Faut-il automatiser cette étape ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC007",
-        "previous_message": "Faut-il automatiser cette étape ?",
-        "message": "Je pense qu'il y a un intérêt à l'automatiser partiellement, mais il faudrait aussi prendre en compte les cas exceptionnels soulevés par l'équipe support.",
-        "next_message": "Oui, c'est respectueux et ouvert.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC008",
+      "input": {
+        "content_id": "respect_collaboration_control:RC008",
+        "content_type": "comment",
+        "text": "Non mais sérieusement, il suffit de réfléchir deux minutes pour voir que ça ne tient pas.",
+        "created_at": "2026-03-01T09:08:00Z",
+        "author_id": 8,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:09:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC008",
+          "text": "Peux-tu donner ton retour sur cette proposition ?",
+          "author_id": 908,
+          "created_at": "2026-03-01T09:07:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC008",
+          "text": "Peux-tu donner ton retour sur cette proposition ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC008",
-        "previous_message": "Peux-tu donner ton retour sur cette proposition ?",
-        "message": "Non mais sérieusement, il suffit de réfléchir deux minutes pour voir que ça ne tient pas.",
-        "next_message": "Le propos est dévalorisant.",
-        "expected_score_range": [1, 2]
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "RC009",
+      "input": {
+        "content_id": "respect_collaboration_control:RC009",
+        "content_type": "comment",
+        "text": "Les deux approches ont des avantages ; on pourrait peut-être les tester sur deux populations différentes avant de trancher.",
+        "created_at": "2026-03-01T09:09:00Z",
+        "author_id": 9,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:10:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC009",
+          "text": "Nous hésitons entre deux options pour l'onboarding.",
+          "author_id": 909,
+          "created_at": "2026-03-01T09:08:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC009",
+          "text": "Nous hésitons entre deux options pour l'onboarding."
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC009",
-        "previous_message": "Nous hésitons entre deux options pour l'onboarding.",
-        "message": "Les deux approches ont des avantages ; on pourrait peut-être les tester sur deux populations différentes avant de trancher.",
-        "next_message": "Bonne posture collaborative.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC010",
+      "input": {
+        "content_id": "respect_collaboration_control:RC010",
+        "content_type": "comment",
+        "text": "Je ne partage pas ton analyse, mais je pense qu'on peut converger si on repart des données de charge.",
+        "created_at": "2026-03-01T09:10:00Z",
+        "author_id": 10,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:11:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC010",
+          "text": "Faut-il revoir la répartition des tickets ?",
+          "author_id": 910,
+          "created_at": "2026-03-01T09:09:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC010",
+          "text": "Faut-il revoir la répartition des tickets ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC010",
-        "previous_message": "Faut-il revoir la répartition des tickets ?",
-        "message": "Je ne partage pas ton analyse, mais je pense qu'on peut converger si on repart des données de charge.",
-        "next_message": "Désaccord respectueux.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC011",
+      "input": {
+        "content_id": "respect_collaboration_control:RC011",
+        "content_type": "comment",
+        "text": "C'est n'importe quoi, personne de compétent ne validerait ça.",
+        "created_at": "2026-03-01T09:11:00Z",
+        "author_id": 11,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:12:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC011",
+          "text": "Quel est votre avis sur la nouvelle procédure ?",
+          "author_id": 911,
+          "created_at": "2026-03-01T09:10:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC011",
+          "text": "Quel est votre avis sur la nouvelle procédure ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC011",
-        "previous_message": "Quel est votre avis sur la nouvelle procédure ?",
-        "message": "C'est n'importe quoi, personne de compétent ne validerait ça.",
-        "next_message": "Très faible sur le respect.",
-        "expected_score_range": [1, 1]
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "RC012",
+      "input": {
+        "content_id": "respect_collaboration_control:RC012",
+        "content_type": "comment",
+        "text": "J'ai quelques réserves sur le calendrier, mais je pense qu'on peut trouver un compromis réaliste.",
+        "created_at": "2026-03-01T09:12:00Z",
+        "author_id": 12,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:13:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC012",
+          "text": "Avez-vous des réserves sur ce déploiement ?",
+          "author_id": 912,
+          "created_at": "2026-03-01T09:11:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC012",
+          "text": "Avez-vous des réserves sur ce déploiement ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC012",
-        "previous_message": "Avez-vous des réserves sur ce déploiement ?",
-        "message": "J'ai quelques réserves sur le calendrier, mais je pense qu'on peut trouver un compromis réaliste.",
-        "next_message": "Ton constructif.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC013",
+      "input": {
+        "content_id": "respect_collaboration_control:RC013",
+        "content_type": "comment",
+        "text": "Je vois l'intention, mais la version actuelle me semble incomplète sur les impacts support.",
+        "created_at": "2026-03-01T09:13:00Z",
+        "author_id": 13,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:14:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC013",
+          "text": "Peux-tu commenter la proposition ?",
+          "author_id": 913,
+          "created_at": "2026-03-01T09:12:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC013",
+          "text": "Peux-tu commenter la proposition ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC013",
-        "previous_message": "Peux-tu commenter la proposition ?",
-        "message": "Je vois l'intention, mais la version actuelle me semble incomplète sur les impacts support.",
-        "next_message": "Critique respectueuse.",
-        "expected_score_range": [4, 5]
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC014",
+      "input": {
+        "content_id": "respect_collaboration_control:RC014",
+        "content_type": "comment",
+        "text": "Ton plan est mauvais, comme d'habitude.",
+        "created_at": "2026-03-01T09:14:00Z",
+        "author_id": 14,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:15:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC014",
+          "text": "Qu'as-tu pensé du plan ?",
+          "author_id": 914,
+          "created_at": "2026-03-01T09:13:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC014",
+          "text": "Qu'as-tu pensé du plan ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC014",
-        "previous_message": "Qu'as-tu pensé du plan ?",
-        "message": "Ton plan est mauvais, comme d'habitude.",
-        "next_message": "Attaque personnelle, non collaboratif.",
-        "expected_score_range": [1, 1]
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "RC015",
+      "input": {
+        "content_id": "respect_collaboration_control:RC015",
+        "content_type": "comment",
+        "text": "Je proposerais de retenir l'option B, tout en intégrant les remarques soulevées par les équipes concernées.",
+        "created_at": "2026-03-01T09:15:00Z",
+        "author_id": 15,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:16:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC015",
+          "text": "Avez-vous une recommandation finale ?",
+          "author_id": 915,
+          "created_at": "2026-03-01T09:14:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:parent:RC015",
+          "text": "Avez-vous une recommandation finale ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
       },
-      {
-        "id": "RC015",
-        "previous_message": "Avez-vous une recommandation finale ?",
-        "message": "Je proposerais de retenir l'option B, tout en intégrant les remarques soulevées par les équipes concernées.",
-        "next_message": "Oui, bonne posture de synthèse et de coopération.",
-        "expected_score_range": [4, 5]
-      }
-    ]
-  }
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC016",
+      "input": {
+        "content_id": "respect_collaboration_control:RC016",
+        "content_type": "comment",
+        "text": "Je comprends l'objectif, mais je préfère qu'on regarde d'abord les risques avant de supprimer cette étape.",
+        "created_at": "2026-03-01T09:16:00Z",
+        "author_id": 1,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:17:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC016",
+          "text": "Je pense qu'on devrait supprimer une étape de validation.",
+          "author_id": 901,
+          "created_at": "2026-03-01T09:00:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:thread:RC016",
+          "text": "Je pense qu'on devrait supprimer une étape de validation."
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC017",
+      "input": {
+        "content_id": "respect_collaboration_control:RC017",
+        "content_type": "comment",
+        "text": "Franchement, c'est une idée absurde, tu compliques toujours tout.",
+        "created_at": "2026-03-01T09:18:00Z",
+        "author_id": 2,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:19:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC017",
+          "text": "Je pense qu'on devrait supprimer une étape de validation.",
+          "author_id": 902,
+          "created_at": "2026-03-01T09:01:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:thread:RC017",
+          "text": "Je pense qu'on devrait supprimer une étape de validation."
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "RC018",
+      "input": {
+        "content_id": "respect_collaboration_control:RC018",
+        "content_type": "comment",
+        "text": "Merci pour le partage. Je trouve la base intéressante, mais certaines métriques gagneraient à être clarifiées.",
+        "created_at": "2026-03-01T09:20:00Z",
+        "author_id": 3,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:21:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC018",
+          "text": "Avez-vous un avis sur le nouveau tableau de bord ?",
+          "author_id": 903,
+          "created_at": "2026-03-01T09:02:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:thread:RC018",
+          "text": "Avez-vous un avis sur le nouveau tableau de bord ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "RC019",
+      "input": {
+        "content_id": "respect_collaboration_control:RC019",
+        "content_type": "comment",
+        "text": "Encore une proposition brillante... On voit le niveau.",
+        "created_at": "2026-03-01T09:22:00Z",
+        "author_id": 4,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:23:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC019",
+          "text": "Peut-on revoir le process actuel ?",
+          "author_id": 904,
+          "created_at": "2026-03-01T09:03:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:thread:RC019",
+          "text": "Peut-on revoir le process actuel ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
+      },
+      "expected_score_range": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "RC020",
+      "input": {
+        "content_id": "respect_collaboration_control:RC020",
+        "content_type": "comment",
+        "text": "Je ne suis pas convaincu par cette option, mais je serais preneur d'un retour complémentaire si vous voyez des avantages que j'ai manqués.",
+        "created_at": "2026-03-01T09:24:00Z",
+        "author_id": 5,
+        "tenant_id": "nyaya-benchmark",
+        "evaluation_requested_at": "2026-03-01T09:25:00Z",
+        "parent": {
+          "content_id": "respect_collaboration_control:parent:RC020",
+          "text": "Quelqu'un a-t-il une alternative à proposer ?",
+          "author_id": 905,
+          "created_at": "2026-03-01T09:04:00Z"
+        },
+        "thread_root": {
+          "content_id": "respect_collaboration_control:thread:RC020",
+          "text": "Quelqu'un a-t-il une alternative à proposer ?"
+        },
+        "context": {
+          "edito_id": 108,
+          "phase": "test_criterion",
+          "topic_id": 8,
+          "tags": [
+            "respect_collaboration"
+          ]
+        }
+      },
+      "expected_score_range": [
+        4,
+        5
+      ]
+    }
+  ]
+}
