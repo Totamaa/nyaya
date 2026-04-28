@@ -1,0 +1,13 @@
+alembic
+sqlalchemy
+greenlet
+fastapi[all]
+python-json-logger
+apscheduler
+asyncpg
+python-jose
+passlib[bcrypt]
+argon2-cffi
+taskiq
+taskiq-redis
+taskiq[reload]

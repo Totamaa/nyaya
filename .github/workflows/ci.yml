@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # Ephemeral Postgres + Redis — same images as prod
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB:       nyaya_test
+          POSTGRES_USER:     nyaya_user
+          POSTGRES_PASSWORD: ci_db_password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U nyaya_user"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      ENVIRONMENT:                     test
+      APP_NAME:                        Nyaya
+      APP_VERSION:                     0.1.0
+      APP_DESCRIPTION:                 Nyaya backend API
+      APP_PORT:                        8000
+      CORS_ORIGINS:                    '["*"]'
+      LOG_LEVEL:                       DEBUG
+      LOG_MAX_BYTES:                   10485760
+      LOG_BACKUP_COUNT:                5
+      DB_HOST:                         localhost
+      DB_PORT:                         5432
+      DB_NAME:                         nyaya_test
+      DB_USER:                         nyaya_user
+      DB_PASSWORD:                     ci_db_password
+      REDIS_HOST:                      localhost
+      REDIS_PORT:                      6379
+      REDIS_PASSWORD:                  ci_redis_pw
+      JWT_SECRET_KEY:                  ci_secret_key_only_for_testing_not_used_in_prod_xxxxxxxxxx
+      JWT_ALGORITHM:                   HS256
+      JWT_ACCESS_TOKEN_EXPIRE_MINUTES: 30
+      JWT_REFRESH_TOKEN_EXPIRE_DAYS:   7
+      JWT_SESSION_MAX_LIFETIME_DAYS:   30
+      JWT_SESSION_MAX_COUNT:           5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-dev.txt
+          pip install -e .
+
+      - name: Run migrations
+        run: alembic upgrade head
+
+      - name: Run tests
+        run: pytest

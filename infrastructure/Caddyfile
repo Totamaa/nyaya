@@ -1,0 +1,60 @@
+# ══════════════════════════════════════════════════════════════════════════════
+#  Caddyfile — Nyaya reverse proxy
+#  Caddy handles: HTTPS (auto Let's Encrypt), HTTP→HTTPS redirect,
+#                 HTTP/3 (QUIC), compression, security headers.
+# ══════════════════════════════════════════════════════════════════════════════
+
+{
+    # Email used by Let's Encrypt for expiry notifications
+    email {$CADDY_EMAIL}
+
+    # ACME endpoint — controlled via CADDY_ACME_CA in .env:
+    #   Staging : https://acme-staging-v02.api.letsencrypt.org/directory
+    #   Prod    : https://acme-v02.api.letsencrypt.org/directory
+    acme_ca {$CADDY_ACME_CA}
+}
+
+{$APP_DOMAIN} {
+
+    # ── Reverse proxy ─────────────────────────────────────────────────────────
+    reverse_proxy app:{$APP_PORT} {
+        # Health checks: Caddy stops routing to the app if /health fails
+        health_uri    /health
+        health_interval 15s
+        health_timeout  5s
+    }
+
+    # ── Compression ───────────────────────────────────────────────────────────
+    encode zstd gzip
+
+    # ── Security headers ──────────────────────────────────────────────────────
+    header {
+        # Remove server fingerprinting
+        -Server
+        -X-Powered-By
+
+        # Force HTTPS for 1 year (enable preload only once you're confident)
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+        # Prevent MIME-type sniffing
+        X-Content-Type-Options "nosniff"
+
+        # No clickjacking (API — no iframes expected)
+        X-Frame-Options "DENY"
+
+        # Leak minimal referrer info to third parties
+        Referrer-Policy "strict-origin-when-cross-origin"
+
+        # Disable browser features the API doesn't need
+        Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+    }
+
+    # ── Access logs ───────────────────────────────────────────────────────────
+    log {
+        output file /var/log/caddy/access.log {
+            roll_size  50mb
+            roll_keep  7
+        }
+        format json
+    }
+}
