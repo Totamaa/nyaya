@@ -9,7 +9,10 @@ DATABASE_URL = f"postgresql+asyncpg://{settings.DB_USER}:{settings.DB_PASSWORD}@
 
 engine = create_async_engine(
     DATABASE_URL,
-    echo=False,
+    echo=settings.ENVIRONMENT == "dev",
+    pool_size=10,
+    max_overflow=20,
+    pool_recycle=1800,
     pool_pre_ping=True,
 )
 

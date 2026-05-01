@@ -31,8 +31,9 @@ class LoggerManager:
         # Use a single logger name for the singleton
         self._logger = logging.getLogger("app_logger")
         self._logger.setLevel(self.settings.LOG_LEVEL)
-        
-        if not self._logger.hasHandlers():
+        self._logger.propagate = False
+
+        if not self._logger.handlers:
             self._setup_handlers()
             
         self._initialized = True

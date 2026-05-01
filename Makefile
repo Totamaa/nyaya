@@ -3,13 +3,9 @@
 #  Compatible: Linux / macOS / Windows (Git Bash)
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ── Raccourcis Docker Compose ─────────────────────────────────────────────────
 APP_ENTRY := src/app/main.py
-DC_BASE   := docker compose -f infrastructure/docker-compose.base.yml --env-file .env
-DC_DEV    := $(DC_BASE) -f infrastructure/docker-compose.dev.yml
-DC_PROD   := $(DC_BASE) -f infrastructure/docker-compose.prod.yml
 
-# ── Configuration de l'environnement virtuel (Venv) ───────────────────────────
+# ── Virtualenv configuration ──────────────────────────────────────────────────
 ifeq ($(OS),Windows_NT)
   VENV_BIN           := .venv/Scripts
   PYTHON_SYSTEM      := py
@@ -20,7 +16,6 @@ else
   TASKIQ_WORKER_OPTS := --reload
 endif
 
-# Pointeurs vers les exécutables locaux du projet
 PYTHON      := $(VENV_BIN)/python
 PIP         := $(VENV_BIN)/pip
 UV          := $(VENV_BIN)/uv
@@ -38,11 +33,10 @@ _venv-check:
 		&&  echo "" \
 		&&  exit 1)
 
-# ── Règle par défaut ──────────────────────────────────────────────────────────
 .DEFAULT_GOAL := help
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  AIDE (HELP)
+#  HELP
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: help
@@ -55,7 +49,7 @@ help: ## Show available commands
 	@echo ""
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  INITIALISATION (SETUP)
+#  SETUP
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: venv
@@ -75,14 +69,14 @@ setup: venv compile sync ## First-time setup: venv → compile → sync → migr
 	@echo ""
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  DÉVELOPPEMENT LOCAL (DEV)
+#  LOCAL DEV
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: up
 up: ## Start dev services (Postgres + Redis)
-	$(DC_DEV) up -d
+	docker compose up -d
 	@echo "Waiting for Postgres..."
-	@until $(DC_DEV) exec -T postgres pg_isready -q 2>/dev/null; do printf "."; sleep 1; done
+	@until docker compose exec -T postgres pg_isready -q 2>/dev/null; do printf "."; sleep 1; done
 	@echo " ready."
 
 .PHONY: sync
@@ -94,7 +88,7 @@ sync: _venv-check up ## Recompile deps + sync venv + apply migrations
 	$(ALEMBIC) upgrade head
 
 .PHONY: dev
-dev: _venv-check up ## Start API + worker (Ctrl+C stops all)
+dev: _venv-check up migrate ## Start API + worker (Ctrl+C stops all)
 	@trap 'kill 0' INT TERM; \
 	$(TASKIQ) worker app.core.config.broker:broker app.background.tasks $(TASKIQ_WORKER_OPTS) & \
 	$(FASTAPI) dev $(APP_ENTRY) & \
@@ -102,26 +96,30 @@ dev: _venv-check up ## Start API + worker (Ctrl+C stops all)
 
 .PHONY: down
 down: ## Stop dev services
-	$(DC_DEV) down
+	docker compose down
 
 .PHONY: logs
 logs: ## Follow dev services logs (Ctrl+C to stop)
-	$(DC_DEV) logs -f
+	docker compose logs -f
 
 .PHONY: ps
 ps: ## Show dev services status
-	$(DC_DEV) ps
+	docker compose ps
+
+.PHONY: trigger-review
+trigger-review: _venv-check ## Manually enqueue the monthly review (for testing)
+	$(PYTHON) scripts/trigger_monthly_review.py
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  BASE DE DONNÉES (MIGRATIONS)
+#  DATABASE MIGRATIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: migrate
-migrate: _venv-check ## Apply pending migrations (dev)
+migrate: _venv-check ## Apply pending migrations
 	$(ALEMBIC) upgrade head
 
 .PHONY: migrate-down
-migrate-down: _venv-check ## Rollback the last migration (dev)
+migrate-down: _venv-check ## Rollback the last migration
 	$(ALEMBIC) downgrade -1
 
 .PHONY: revision
@@ -130,48 +128,6 @@ ifndef msg
 	$(error Usage: make revision msg="your description")
 endif
 	$(ALEMBIC) revision --autogenerate -m "$(msg)"
-
-.PHONY: migrate-prod-down
-migrate-prod-down: ## Rollback the last migration in production
-	$(DC_PROD) run --rm --entrypoint="" app alembic downgrade -1
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  PRODUCTION (PROD)
-# ══════════════════════════════════════════════════════════════════════════════
-
-.PHONY: push
-push: ## Build and push image to the registry (set DOCKER_IMAGE in .env)
-	$(DC_PROD) build app
-	docker push $$(grep '^DOCKER_IMAGE=' .env | cut -d= -f2)
-
-.PHONY: prod
-prod: ## [Mode A] Build image locally and start the full prod stack
-	$(DC_PROD) up -d --build
-
-.PHONY: prod-update
-prod-update: ## [Mode A] Rebuild app from updated code and restart
-	$(DC_PROD) up -d --build app
-
-.PHONY: prod-pull
-prod-pull: ## [Mode B] Pull latest image from registry and restart
-	$(DC_PROD) pull app
-	$(DC_PROD) up -d app
-
-.PHONY: prod-down
-prod-down: ## Stop the production stack
-	$(DC_PROD) down
-
-.PHONY: prod-logs
-prod-logs: ## Follow production logs (Ctrl+C to stop)
-	$(DC_PROD) logs -f
-
-.PHONY: prod-ps
-prod-ps: ## Show production services status
-	$(DC_PROD) ps
-
-.PHONY: prod-shell
-prod-shell: ## Open a shell inside the running app container
-	$(DC_PROD) exec app /bin/bash
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  TESTS
@@ -186,7 +142,7 @@ test-cov: _venv-check ## Run tests with coverage report
 	$(PYTEST) --cov=app --cov-report=term-missing
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  NETTOYAGE (CLEAN)
+#  CLEAN
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: compile
@@ -208,7 +164,7 @@ clean: ## Remove Python cache and test artifacts
 nuke: clean ## Hard reset: venv + dev containers + volumes  ⚠ IRREVERSIBLE
 	@echo "WARNING: This will delete venv, Docker volumes, and all dev data."
 	@read -p "Are you sure? [y/N] " confirm && [ "$$confirm" = "y" ] || exit 1
-	$(DC_DEV) down -v --remove-orphans
+	docker compose down -v --remove-orphans
 	rm -rf .venv venv env
 	@echo ""
 	@echo "  Done. To start fresh: make setup"
