@@ -129,6 +129,18 @@ ifndef msg
 endif
 	$(ALEMBIC) revision --autogenerate -m "$(msg)"
 
+.PHONY: db-reset
+db-reset: _venv-check ## Wipe Postgres container + volume, recreate and migrate  ⚠ DEV ONLY
+	@echo "WARNING: Postgres container and data volume will be destroyed."
+	@read -p "Are you sure? [y/N] " confirm && [ "$$confirm" = "y" ] || exit 1
+	docker compose rm -sf postgres
+	docker volume rm nyaya-backend_postgres_data 2>/dev/null || true
+	docker compose up -d postgres
+	@echo "Waiting for Postgres..."
+	@until docker compose exec -T postgres pg_isready -q 2>/dev/null; do printf "."; sleep 1; done
+	@echo " ready."
+	$(ALEMBIC) upgrade head
+
 # ══════════════════════════════════════════════════════════════════════════════
 #  TESTS
 # ══════════════════════════════════════════════════════════════════════════════

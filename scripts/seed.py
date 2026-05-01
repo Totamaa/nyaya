@@ -22,19 +22,13 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from faker import Faker
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import NullPool
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from app.core.config.database import DATABASE_URL, UnitOfWork
+from app.core.config.database import AsyncSessionLocal, UnitOfWork
 from app.modules.evaluations.model import EvaluationModel
 from app.modules.messages.model import MessageModel
 from app.modules.users.model import UserModel
-
-_engine = create_async_engine(DATABASE_URL, poolclass=NullPool)
-_Session = sessionmaker(_engine, class_=AsyncSession, expire_on_commit=False)
 
 fake = Faker("fr_FR")
 
@@ -57,7 +51,7 @@ def _chunks(lst: list, n: int):
 
 
 async def _bulk_insert(rows: list) -> None:
-    async with _Session() as session:
+    async with AsyncSessionLocal() as session:
         async with UnitOfWork(session):
             session.add_all(rows)
             await session.flush()
@@ -168,7 +162,8 @@ async def seed(
     now = datetime.now(timezone.utc)
     t0 = time.perf_counter()
 
-    print(f"  building {n_users} users × ~{messages_per_user} msgs in memory...", end=" ", flush=True)
+    # --- Phase 0 : construction en mémoire (aucun appel DB) ---
+    print(f"Building {n_users} users × ~{messages_per_user} messages in memory…")
 
     users: list[UserModel] = [_make_user() for _ in range(n_users)]
     root_messages: list[MessageModel] = []
@@ -190,23 +185,30 @@ async def seed(
                 evaluations.append(_make_evaluation(message_id=msg.id))
 
     n_messages = len(root_messages) + len(reply_messages)
-    print(f"done  ({n_users} users, {n_messages} msgs, {len(evaluations)} evals)  {time.perf_counter() - t0:.2f}s")
+    t_build = time.perf_counter() - t0
+    print(
+        f"  → {n_users} users  |  {n_messages} messages "
+        f"({len(root_messages)} root / {len(reply_messages)} replies)  |  {len(evaluations)} evaluations\n"
+        f"  → built in {t_build:.2f}s — starting parallel DB inserts (batch={batch_size})…\n"
+    )
 
+    # --- Phases 1-4 : insertions parallèles par batch ---
     async def phase(label: str, rows: list) -> None:
         if not rows:
             return
         batches = list(_chunks(rows, batch_size))
         t = time.perf_counter()
-        print(f"  {label:<16}  {len(rows):>6} rows  {len(batches):>3} batch(es)...", end=" ", flush=True)
+        print(f"  [{label}]  {len(rows):>7} rows  {len(batches):>4} batch(es) …", end=" ", flush=True)
         await asyncio.gather(*[_bulk_insert(b) for b in batches])
-        print(f"{time.perf_counter() - t:.2f}s")
+        print(f"✓  {time.perf_counter() - t:.2f}s")
 
-    await phase("users",         users)
-    await phase("root messages", root_messages)
-    await phase("replies",       reply_messages)
-    await phase("evaluations",   evaluations)
+    # Ordre strict : FK users → messages → replies → evaluations
+    await phase("users          ", users)
+    await phase("root messages  ", root_messages)
+    await phase("replies        ", reply_messages)
+    await phase("evaluations    ", evaluations)
 
-    print(f"\n  done in {time.perf_counter() - t0:.2f}s")
+    print(f"\nSeed terminé en {time.perf_counter() - t0:.2f}s total.")
 
 
 # ---------------------------------------------------------------------------
