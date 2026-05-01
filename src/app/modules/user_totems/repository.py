@@ -1,5 +1,4 @@
-import uuid
-from datetime import date, datetime, timezone
+from datetime import date
 from uuid import UUID
 
 from sqlalchemy import delete, select
@@ -59,22 +58,9 @@ class UserTotemRepository:
 
     async def create(
         self,
-        user_id: UUID,
-        totem_id: UUID,
-        month: date,
-        score_snapshot: float | None,
+        user_totem: UserTotemModel,
         db: AsyncSession,
     ) -> UserTotemModel:
-        now = datetime.now(timezone.utc)
-        user_totem = UserTotemModel(
-            id=uuid.uuid4(),
-            created_at=now,
-            updated_at=now,
-            user_id=user_id,
-            totem_id=totem_id,
-            month=month,
-            score_snapshot=score_snapshot,
-        )
         db.add(user_totem)
         await db.flush()
         return user_totem

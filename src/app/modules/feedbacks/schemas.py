@@ -3,19 +3,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
+from app.modules.evaluations.schemas import CRITERIA
 from app.modules.feedbacks.model import UserMonthlyFeedbackModel
-
-SCORE_CATEGORIES = [
-    "clarte_des_idees",
-    "exactitude_verifiabilite",
-    "pertinence",
-    "logique_coherence",
-    "absence_de_sophismes",
-    "ouverture_d_esprit",
-    "volonte_de_comprendre",
-    "contribution_utile",
-    "respect_collaboration",
-]
 
 
 class WorstMessageEntry(BaseModel):

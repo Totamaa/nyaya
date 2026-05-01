@@ -20,12 +20,14 @@ class UserService:
         session: AsyncSession,
         request_id: str,
         user_repository: UserRepository,
+        message_repository: MessageRepository,
     ):
         self.tag = "SERVICE:User"
         self.logger = logger
         self.session = session
         self.request_id = request_id
         self.user_repository = user_repository
+        self.message_repository = message_repository
 
     async def get_by_external_id(self, external_id: str) -> UserResponse:
         user = await self.user_repository.get_by_external_id(
@@ -45,7 +47,7 @@ class UserService:
         else:
             period_start = period_end.replace(month=now.month - 1)
 
-        return await MessageRepository().get_eligible_user_ids_for_monthly_review(
+        return await self.message_repository.get_eligible_user_ids_for_monthly_review(
             db=self.session,
             period_start=period_start,
             period_end=period_end,

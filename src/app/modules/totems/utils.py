@@ -1,18 +1,7 @@
 from uuid import UUID
 
+from app.modules.evaluations.schemas import CRITERIA
 from app.modules.totems.schemas import TotemAssignment
-
-CRITERIA = [
-    "clarte_des_idees",
-    "exactitude_verifiabilite",
-    "pertinence",
-    "logique_coherence",
-    "absence_de_sophismes",
-    "ouverture_d_esprit",
-    "volonte_de_comprendre",
-    "contribution_utile",
-    "respect_collaboration",
-]
 
 # Paliers ordonnés du plus exclusif au plus large
 # (seuil percentile ou None pour le #1 absolu, code_suffix)

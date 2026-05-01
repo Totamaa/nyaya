@@ -7,6 +7,7 @@ from app.core.config.logs import get_logger
 from app.modules.evaluations.repository import EvaluationRepository
 from app.modules.evaluations.service import EvaluationService
 from app.modules.feedbacks.dependencies import get_feedback_repository
+from app.modules.feedbacks.exceptions import InsufficientDataForFeedbackException, LLMTimeoutException
 from app.modules.feedbacks.service import FeedbackService
 from app.modules.messages.repository import MessageRepository
 from app.modules.totems.dependencies import get_totem_repository
@@ -15,6 +16,7 @@ from app.modules.totems.service import TotemService
 from app.modules.totems.utils import CRITERIA, compute_totem_assignments
 from app.modules.user_totems.dependencies import get_user_totem_repository
 from app.modules.users.dependencies import get_user_repository, get_user_service
+from app.modules.users.exceptions import UserNotFoundException
 from app.modules.users.repository import UserRepository
 
 logger = get_logger()
@@ -43,6 +45,7 @@ async def orchestrate_monthly_reviews() -> None:
                 session=session,
                 request_id="task:review:orchestrate",
                 user_repository=get_user_repository(),
+                message_repository=MessageRepository(),
             )
             user_ids = await user_service.get_eligible_user_ids_for_monthly_review()
 
@@ -94,16 +97,17 @@ async def review_single_user(
                 message_repository=MessageRepository(),
                 user_repository=UserRepository(),
             )
-            result = await feedback_service.generate(
-                user_id=user_id,
-                period_start=period_start,
-                period_end=period_end,
-            )
-
-    if result:
-        logger.info("TASK:review_user", f"Feedback generated id={result.id} for user_id={user_id}")
-    else:
-        logger.warning("TASK:review_user", f"No feedback generated for user_id={user_id} (insufficient data)")
+            try:
+                result = await feedback_service.generate(
+                    user_id=user_id,
+                    period_start=period_start,
+                    period_end=period_end,
+                )
+                logger.info("TASK:review_user", f"Feedback generated id={result.id} for user_id={user_id}")
+            except UserNotFoundException:
+                return
+            except (InsufficientDataForFeedbackException, LLMTimeoutException):
+                pass
 
     # --- Étape 2 : assignation des totems ---
     async with AsyncSessionLocal() as session:

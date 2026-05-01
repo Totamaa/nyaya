@@ -4,6 +4,8 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.logs import LoggerManager
+from app.core.utils.date_lib import month_range
+from app.modules.totems.exceptions import InvalidYearMonthFormatException
 from app.modules.totems.repository import TotemRepository
 from app.modules.totems.schemas import TotemAssignment
 from app.modules.user_totems.model import UserTotemModel
@@ -11,20 +13,6 @@ from app.modules.user_totems.repository import UserTotemRepository
 from app.modules.user_totems.schemas import UserTotemResponse
 from app.modules.users.exceptions import UserNotFoundException
 from app.modules.users.repository import UserRepository
-
-
-def _subtract_months(d: date, n: int) -> date:
-    month = d.month - n % 12
-    year = d.year - n // 12
-    if month <= 0:
-        month += 12
-        year -= 1
-    return date(year, month, 1)
-
-
-def _month_range(limit: int, offset: int) -> tuple[date, date]:
-    today = date.today()
-    return _subtract_months(today, offset + limit - 1), _subtract_months(today, offset)
 
 
 class TotemService:
@@ -52,10 +40,18 @@ class TotemService:
         month: date,
         assignments: list[TotemAssignment],
     ) -> list[UserTotemModel]:
-        """
-        Persiste les totems pré-calculés pour un user sur un mois donné.
-        Remplace les entrées existantes du mois.
-        """
+        """Persiste les totems pré-calculés pour un user sur un mois donné. Remplace les entrées existantes."""
+        existing = await self.user_totem_repository.get_by_user_month(
+            user_id=user_id, month=month, db=self.session
+        )
+        if existing:
+            self.logger.info(
+                tag=self.tag,
+                message=f"Totems already assigned for user_id={user_id} month={month}, skipping.",
+                extra=self.request_id,
+            )
+            return existing
+
         deleted = await self.user_totem_repository.delete_by_user_month(
             user_id=user_id, month=month, db=self.session
         )
@@ -91,10 +87,12 @@ class TotemService:
                 )
                 continue
             user_totem = await self.user_totem_repository.create(
-                user_id=user_id,
-                totem_id=totem.id,
-                month=month,
-                score_snapshot=assignment.score_snapshot,
+                user_totem=UserTotemModel(
+                    user_id=user_id,
+                    totem_id=totem.id,
+                    month=month,
+                    score_snapshot=assignment.score_snapshot,
+                ),
                 db=self.session,
             )
             created.append(user_totem)
@@ -111,7 +109,7 @@ class TotemService:
         user_external_id: str,
         year_month: str,
     ) -> list[UserTotemResponse]:
-        """Retourne les totems d'un user pour un mois précis (format: 'yyyy-mm')."""
+        """Retourne les totems d'un user pour un mois précis (format: 'YYYY-MM')."""
         user = await self.user_repository.get_by_external_id(
             external_id=user_external_id,
             db=self.session,
@@ -119,8 +117,11 @@ class TotemService:
         if not user:
             raise UserNotFoundException(external_id=user_external_id)
 
-        parsed = datetime.strptime(year_month, "%Y-%m")
-        month = date(parsed.year, parsed.month, 1)
+        try:
+            parsed = datetime.strptime(year_month, "%Y-%m")
+            month = date(parsed.year, parsed.month, 1)
+        except ValueError:
+            raise InvalidYearMonthFormatException(year_month=year_month)
 
         user_totems = await self.user_totem_repository.get_by_user_month(
             user_id=user.id,
@@ -143,7 +144,7 @@ class TotemService:
         if not user:
             raise UserNotFoundException(external_id=user_external_id)
 
-        start_month, end_month = _month_range(limit, offset)
+        start_month, end_month = month_range(limit, offset)
         user_totems = await self.user_totem_repository.get_by_user_and_month_range(
             user_id=user.id,
             start_month=start_month,

@@ -2,31 +2,23 @@ import asyncio
 from datetime import date, datetime, timezone
 from uuid import UUID
 
-
-def _subtract_months(d: date, n: int) -> date:
-    month = d.month - n % 12
-    year = d.year - n // 12
-    if month <= 0:
-        month += 12
-        year -= 1
-    return date(year, month, 1)
-
-
-def _month_range(limit: int, offset: int) -> tuple[date, date]:
-    today = date.today()
-    return _subtract_months(today, offset + limit - 1), _subtract_months(today, offset)
-
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.logs import LoggerManager
 from app.core.config.settings import get_settings
+from app.core.utils.date_lib import month_range
 from app.modules.evaluations.model import EvaluationModel
-from app.modules.feedbacks.exceptions import FeedbackNotFoundException
+from app.modules.evaluations.schemas import CRITERIA
+from app.modules.feedbacks.exceptions import (
+    FeedbackNotFoundException,
+    InsufficientDataForFeedbackException,
+    InvalidYearMonthFormatException,
+    LLMTimeoutException,
+)
 from app.modules.feedbacks.repository import FeedbackRepository
 from app.modules.feedbacks.schemas import (
     LLMFeedbackInput,
     LLMFeedbackResult,
-    SCORE_CATEGORIES,
     UserMonthlyFeedbackResponse,
     WorstCategoryEntry,
     WorstMessageEntry,
@@ -44,15 +36,10 @@ def _build_llm_input(
     top_n_categories: int,
     n_messages_per_category: int,
 ) -> LLMFeedbackInput | None:
-    """
-    À partir des (message, evaluation) du mois, sélectionne les N pires catégories
-    et les M messages les plus bas dans chacune.
-    Retourne None si aucune donnée n'est exploitable.
-    """
-    category_data: dict[str, list[tuple[str, float]]] = {cat: [] for cat in SCORE_CATEGORIES}
+    category_data: dict[str, list[tuple[str, float]]] = {cat: [] for cat in CRITERIA}
 
     for message, evaluation in rows:
-        for cat in SCORE_CATEGORIES:
+        for cat in CRITERIA:
             score = getattr(evaluation, cat)
             if score is not None:
                 category_data[cat].append((message.text, score))
@@ -91,9 +78,8 @@ async def _simulate_llm_feedback(llm_input: LLMFeedbackInput) -> LLMFeedbackResu
     """
     Stub : simule l'appel au LLM pour générer le feedback mensuel.
     À remplacer par le vrai connecteur LLM une fois disponible.
-    Le vrai connecteur consommera `llm_input` (pires catégories + messages).
     """
-    _ = llm_input  # unused in stub, will be consumed by the real LLM connector
+    _ = llm_input
     await asyncio.sleep(0)
     worst_cat_names = [entry.category for entry in llm_input.worst_categories]
     content = (
@@ -131,12 +117,7 @@ class FeedbackService:
         user_id: UUID,
         period_start: datetime,
         period_end: datetime,
-    ) -> UserMonthlyFeedbackResponse | None:
-        """
-        Récupère les messages évalués du user sur la période, construit l'input LLM,
-        appelle le LLM (stub), persiste et retourne le feedback.
-        Retourne None si le user n'a pas assez de données évaluées.
-        """
+    ) -> UserMonthlyFeedbackResponse:
         settings = get_settings()
         period_str = period_start.strftime("%Y-%m")
         month = date(period_start.year, period_start.month, 1)
@@ -149,12 +130,7 @@ class FeedbackService:
 
         user = await self.user_repository.get_by_id(user_id=user_id, db=self.session)
         if not user:
-            self.logger.warning(
-                tag=self.tag,
-                message=f"User not found for user_id={user_id}, skipping.",
-                extra=self.request_id,
-            )
-            return None
+            raise UserNotFoundException(external_id=str(user_id))
 
         existing = await self.feedback_repository.get_by_user_and_month(
             user_id=user_id,
@@ -162,9 +138,9 @@ class FeedbackService:
             db=self.session,
         )
         if existing:
-            self.logger.warning(
+            self.logger.info(
                 tag=self.tag,
-                message=f"Feedback already exists for user_id={user_id} period={period_str}, skipping.",
+                message=f"Feedback already exists for user_id={user_id} period={period_str}, returning existing.",
                 extra=self.request_id,
             )
             return UserMonthlyFeedbackResponse.from_model(existing)
@@ -185,12 +161,7 @@ class FeedbackService:
         )
 
         if llm_input is None:
-            self.logger.warning(
-                tag=self.tag,
-                message=f"No evaluated messages for user_id={user_id} period={period_str}, skipping.",
-                extra=self.request_id,
-            )
-            return None
+            raise InsufficientDataForFeedbackException(user_id=user_id)
 
         timeout = settings.LLM_TIMEOUT_SECONDS
         try:
@@ -199,12 +170,7 @@ class FeedbackService:
                 timeout=timeout,
             )
         except asyncio.TimeoutError:
-            self.logger.error(
-                tag=self.tag,
-                message=f"LLM timeout after {timeout}s for user_id={user_id} period={period_str}",
-                extra=self.request_id,
-            )
-            return None
+            raise LLMTimeoutException(user_id=user_id, period=period_str, timeout=timeout)
 
         feedback = llm_result.to_model(user_id=user_id, user_external_id=user.external_id, month=month)
         await self.feedback_repository.create(feedback=feedback, db=self.session)
@@ -223,7 +189,6 @@ class FeedbackService:
         limit: int,
         offset: int,
     ) -> list[UserMonthlyFeedbackResponse]:
-        """Retourne les feedbacks d'un user sur une plage de mois (du plus récent au plus ancien)."""
         user = await self.user_repository.get_by_external_id(
             external_id=user_external_id,
             db=self.session,
@@ -231,7 +196,7 @@ class FeedbackService:
         if not user:
             raise UserNotFoundException(external_id=user_external_id)
 
-        start_month, end_month = _month_range(limit, offset)
+        start_month, end_month = month_range(limit, offset)
         feedbacks = await self.feedback_repository.get_by_user_and_month_range(
             user_id=user.id,
             start_month=start_month,
@@ -245,7 +210,6 @@ class FeedbackService:
         user_external_id: str,
         year_month: str,
     ) -> UserMonthlyFeedbackResponse:
-        """Retourne le feedback d'un user pour un mois donné (format: 'yyyy-mm')."""
         user = await self.user_repository.get_by_external_id(
             external_id=user_external_id,
             db=self.session,
@@ -257,7 +221,7 @@ class FeedbackService:
             parsed = datetime.strptime(year_month, "%Y-%m")
             month = date(parsed.year, parsed.month, 1)
         except ValueError:
-            raise FeedbackNotFoundException(user_external_id=user_external_id, year_month=year_month)
+            raise InvalidYearMonthFormatException(year_month=year_month)
 
         feedback = await self.feedback_repository.get_by_user_and_month(
             user_id=user.id,
