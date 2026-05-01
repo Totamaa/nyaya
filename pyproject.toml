@@ -8,3 +8,20 @@ version = "0.1.0"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]
+pythonpath = [".", "src", "src/app/modules"]
+markers = [
+    "unit: pure logic, no I/O",
+    "integration: requires PostgreSQL test database",
+    "api: full HTTP stack, requires PostgreSQL",
+    "ai: LLM evaluation pipeline tests",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:sqlalchemy",
+    "ignore::DeprecationWarning:asyncpg",
+]
