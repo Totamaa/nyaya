@@ -1,9 +1,19 @@
 ﻿import logging
 from logging.handlers import RotatingFileHandler
 import os
+import shutil
 import sys
 import threading
 from typing import Optional
+
+
+class _SafeRotatingFileHandler(RotatingFileHandler):
+    """Copy+truncate rotation — safe in multi-process environments on all platforms."""
+    def rotate(self, source: str, dest: str) -> None:
+        if os.path.exists(dest):
+            os.remove(dest)
+        shutil.copy2(source, dest)
+        open(source, "w").close()
 
 from app.core.config.settings import get_settings
 
@@ -48,10 +58,10 @@ class LoggerManager:
             datefmt="%Y-%m-%d %H:%M:%S %z"
         )
         
-        file_handler = RotatingFileHandler(
-            self.log_file_path, 
-            maxBytes=self.max_bytes, 
-            backupCount=self.backup_count
+        file_handler = _SafeRotatingFileHandler(
+            self.log_file_path,
+            maxBytes=self.max_bytes,
+            backupCount=self.backup_count,
         )
         file_handler.setFormatter(formatter)
         self._logger.addHandler(file_handler)
