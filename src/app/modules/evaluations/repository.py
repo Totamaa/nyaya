@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.evaluations.model import EvaluationModel
@@ -39,3 +39,35 @@ class EvaluationRepository:
         db.add(evaluation)
         await db.flush()
         return evaluation
+
+    async def get_criterion_ranking(
+        self,
+        criterion: str,
+        db: AsyncSession,
+    ) -> list[tuple[UUID, float]]:
+        """Retourne [(user_id, avg_score), ...] trié DESC pour un critère donné."""
+        col = getattr(EvaluationModel, criterion)
+        stmt = (
+            select(MessageModel.author_id, func.avg(col).label("avg"))
+            .join(EvaluationModel, EvaluationModel.message_id == MessageModel.id)
+            .where(col.is_not(None))
+            .group_by(MessageModel.author_id)
+            .order_by(func.avg(col).desc())
+        )
+        rows = await db.execute(stmt)
+        return [(row.author_id, float(row.avg)) for row in rows]
+
+    async def get_global_ranking(
+        self,
+        db: AsyncSession,
+    ) -> list[tuple[UUID, float]]:
+        """Retourne [(user_id, avg_score_total), ...] trié DESC."""
+        stmt = (
+            select(MessageModel.author_id, func.avg(EvaluationModel.score_total).label("avg"))
+            .join(EvaluationModel, EvaluationModel.message_id == MessageModel.id)
+            .where(EvaluationModel.score_total.is_not(None))
+            .group_by(MessageModel.author_id)
+            .order_by(func.avg(EvaluationModel.score_total).desc())
+        )
+        rows = await db.execute(stmt)
+        return [(row.author_id, float(row.avg)) for row in rows]

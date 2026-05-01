@@ -3,17 +3,13 @@
 #  Compatible: Linux / macOS / Windows (Git Bash)
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ── Docker compose shortcuts ──────────────────────────────────────────────────
-
+# ── Raccourcis Docker Compose ─────────────────────────────────────────────────
 APP_ENTRY := src/app/main.py
 DC_BASE   := docker compose -f infrastructure/docker-compose.base.yml --env-file .env
 DC_DEV    := $(DC_BASE) -f infrastructure/docker-compose.dev.yml
 DC_PROD   := $(DC_BASE) -f infrastructure/docker-compose.prod.yml
 
-# ── Venv ──────────────────────────────────────────────────────────────────────
-# Each Make recipe runs in its own shell so `source .venv/bin/activate` doesn't
-# persist. Pointing directly to the venv binaries is exactly equivalent.
-
+# ── Configuration de l'environnement virtuel (Venv) ───────────────────────────
 ifeq ($(OS),Windows_NT)
   VENV_BIN           := .venv/Scripts
   PYTHON_SYSTEM      := py
@@ -24,14 +20,14 @@ else
   TASKIQ_WORKER_OPTS := --reload
 endif
 
+# Pointeurs vers les exécutables locaux du projet
 PYTHON      := $(VENV_BIN)/python
 PIP         := $(VENV_BIN)/pip
-PIP_SYNC    := $(VENV_BIN)/pip-sync
-PIP_COMPILE := $(VENV_BIN)/pip-compile
+UV          := $(VENV_BIN)/uv
 FASTAPI     := $(VENV_BIN)/fastapi
 ALEMBIC     := $(VENV_BIN)/alembic
 PYTEST      := $(VENV_BIN)/pytest
-TASKIQ    	:= $(VENV_BIN)/taskiq
+TASKIQ      := $(VENV_BIN)/taskiq
 
 .PHONY: _venv-check
 _venv-check:
@@ -42,12 +38,11 @@ _venv-check:
 		&&  echo "" \
 		&&  exit 1)
 
-# ── Default ───────────────────────────────────────────────────────────────────
-
+# ── Règle par défaut ──────────────────────────────────────────────────────────
 .DEFAULT_GOAL := help
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  HELP
+#  AIDE (HELP)
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: help
@@ -60,26 +55,27 @@ help: ## Show available commands
 	@echo ""
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  SETUP  (first-time only)
+#  INITIALISATION (SETUP)
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: venv
-venv: ## Create the virtual environment (.venv)
+venv: ## Create the virtual environment (.venv) and install uv
 	$(PYTHON_SYSTEM) -m venv .venv
+	$(PIP) install uv
 
 .PHONY: install
-install: _venv-check ## Install dependencies for the first time (before pip-sync is available)
-	$(PIP) install -r requirements-dev.txt
-	$(PIP) install -e .
+install: _venv-check ## Install dependencies for the first time
+	$(UV) pip install -r requirements-dev.txt
+	$(UV) pip install -e .
 
 .PHONY: setup
-setup: venv install sync ## First-time setup: venv → install → services → migrate
+setup: venv compile sync ## First-time setup: venv → compile → sync → migrate
 	@echo ""
 	@echo "  Setup complete. Run 'make dev'."
 	@echo ""
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  DEV
+#  DÉVELOPPEMENT LOCAL (DEV)
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: up
@@ -90,11 +86,11 @@ up: ## Start dev services (Postgres + Redis)
 	@echo " ready."
 
 .PHONY: sync
-sync: _venv-check up ## Recompile deps + sync venv + apply migrations — run after every git pull
-	$(PIP_COMPILE) requirements.in     -o requirements.txt
-	$(PIP_COMPILE) requirements-dev.in -o requirements-dev.txt
-	$(PIP_SYNC) requirements-dev.txt
-	$(PIP) install --no-deps -e .
+sync: _venv-check up ## Recompile deps + sync venv + apply migrations
+	$(UV) pip compile --universal --upgrade requirements.in     -o requirements.txt
+	$(UV) pip compile --universal --upgrade requirements-dev.in -o requirements-dev.txt
+	$(UV) pip sync requirements.txt requirements-dev.txt
+	$(UV) pip install --no-deps -e .
 	$(ALEMBIC) upgrade head
 
 .PHONY: dev
@@ -117,7 +113,7 @@ ps: ## Show dev services status
 	$(DC_DEV) ps
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  MIGRATIONS
+#  BASE DE DONNÉES (MIGRATIONS)
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: migrate
@@ -140,10 +136,7 @@ migrate-prod-down: ## Rollback the last migration in production
 	$(DC_PROD) run --rm --entrypoint="" app alembic downgrade -1
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  PROD
-#
-#  Mode A — code on the VPS:   make prod / make prod-update
-#  Mode B — CI/CD + registry:  make prod-pull   (set DOCKER_IMAGE in .env)
+#  PRODUCTION (PROD)
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: push
@@ -193,13 +186,13 @@ test-cov: _venv-check ## Run tests with coverage report
 	$(PYTEST) --cov=app --cov-report=term-missing
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  CLEAN
+#  NETTOYAGE (CLEAN)
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: compile
 compile: _venv-check ## Recompile requirements*.txt from *.in source files
-	$(PIP_COMPILE) requirements.in     -o requirements.txt
-	$(PIP_COMPILE) requirements-dev.in -o requirements-dev.txt
+	$(UV) pip compile --universal requirements.in     -o requirements.txt
+	$(UV) pip compile --universal requirements-dev.in -c requirements.txt -o requirements-dev.txt
 
 .PHONY: clean
 clean: ## Remove Python cache and test artifacts

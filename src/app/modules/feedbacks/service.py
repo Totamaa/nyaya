@@ -2,6 +2,20 @@ import asyncio
 from datetime import date, datetime, timezone
 from uuid import UUID
 
+
+def _subtract_months(d: date, n: int) -> date:
+    month = d.month - n % 12
+    year = d.year - n // 12
+    if month <= 0:
+        month += 12
+        year -= 1
+    return date(year, month, 1)
+
+
+def _month_range(limit: int, offset: int) -> tuple[date, date]:
+    today = date.today()
+    return _subtract_months(today, offset + limit - 1), _subtract_months(today, offset)
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.logs import LoggerManager
@@ -202,6 +216,29 @@ class FeedbackService:
         )
 
         return UserMonthlyFeedbackResponse.from_model(feedback)
+
+    async def get_history_by_user(
+        self,
+        user_external_id: str,
+        limit: int,
+        offset: int,
+    ) -> list[UserMonthlyFeedbackResponse]:
+        """Retourne les feedbacks d'un user sur une plage de mois (du plus récent au plus ancien)."""
+        user = await self.user_repository.get_by_external_id(
+            external_id=user_external_id,
+            db=self.session,
+        )
+        if not user:
+            raise UserNotFoundException(external_id=user_external_id)
+
+        start_month, end_month = _month_range(limit, offset)
+        feedbacks = await self.feedback_repository.get_by_user_and_month_range(
+            user_id=user.id,
+            start_month=start_month,
+            end_month=end_month,
+            db=self.session,
+        )
+        return [UserMonthlyFeedbackResponse.from_model(f) for f in feedbacks]
 
     async def get_by_user_and_month(
         self,
