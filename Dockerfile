@@ -22,10 +22,12 @@ FROM python:3.12-slim AS runtime
 
 WORKDIR /app
 
+ARG APP_PORT=8000
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app/src \
-    APP_PORT=8000 \
+    APP_PORT=${APP_PORT} \
     APP_WORKERS=1
 
 COPY --from=builder /install /usr/local
@@ -42,7 +44,7 @@ RUN pip install --no-cache-dir --no-deps .
 RUN adduser --disabled-password --gecos "" appuser
 USER appuser
 
-EXPOSE 8000
+EXPOSE ${APP_PORT}
 
 # Default = API. Override at runtime for worker / cron job:
 #   worker:    taskiq worker app.core.config.broker:broker app.background.tasks

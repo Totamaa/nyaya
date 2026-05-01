@@ -163,7 +163,7 @@ async def seed(
     t0 = time.perf_counter()
 
     # --- Phase 0 : construction en mémoire (aucun appel DB) ---
-    print(f"Building {n_users} users × ~{messages_per_user} messages in memory…")
+    print(f"Building {n_users} users x ~{messages_per_user} messages in memory...")
 
     users: list[UserModel] = [_make_user() for _ in range(n_users)]
     root_messages: list[MessageModel] = []
@@ -187,28 +187,30 @@ async def seed(
     n_messages = len(root_messages) + len(reply_messages)
     t_build = time.perf_counter() - t0
     print(
-        f"  → {n_users} users  |  {n_messages} messages "
+        f"  {n_users} users  |  {n_messages} messages "
         f"({len(root_messages)} root / {len(reply_messages)} replies)  |  {len(evaluations)} evaluations\n"
-        f"  → built in {t_build:.2f}s — starting parallel DB inserts (batch={batch_size})…\n"
+        f"  built in {t_build:.2f}s\n"
     )
+    print(f"Inserting (batch={batch_size})...")
 
     # --- Phases 1-4 : insertions parallèles par batch ---
     async def phase(label: str, rows: list) -> None:
         if not rows:
             return
         batches = list(_chunks(rows, batch_size))
+        n_b = len(batches)
         t = time.perf_counter()
-        print(f"  [{label}]  {len(rows):>7} rows  {len(batches):>4} batch(es) …", end=" ", flush=True)
+        print(f"  {label:<16}  {len(rows):>6} rows  {n_b:>3} batch{'es' if n_b > 1 else '  '}  ...", end=" ", flush=True)
         await asyncio.gather(*[_bulk_insert(b) for b in batches])
-        print(f"✓  {time.perf_counter() - t:.2f}s")
+        print(f"ok  {time.perf_counter() - t:.2f}s")
 
     # Ordre strict : FK users → messages → replies → evaluations
-    await phase("users          ", users)
-    await phase("root messages  ", root_messages)
-    await phase("replies        ", reply_messages)
-    await phase("evaluations    ", evaluations)
+    await phase("users",         users)
+    await phase("root messages", root_messages)
+    await phase("replies",       reply_messages)
+    await phase("evaluations",   evaluations)
 
-    print(f"\nSeed terminé en {time.perf_counter() - t0:.2f}s total.")
+    print(f"\nDone in {time.perf_counter() - t0:.2f}s.")
 
 
 # ---------------------------------------------------------------------------

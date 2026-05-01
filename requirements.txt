@@ -189,7 +189,7 @@ taskiq-dependencies==1.5.7
     # via taskiq
 taskiq-redis==1.2.2
     # via -r requirements.in
-typer==0.24.2
+typer==0.25.0
     # via
     #   fastapi-cli
     #   fastapi-cloud-cli
