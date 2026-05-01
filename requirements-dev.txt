@@ -65,7 +65,7 @@ email-validator==2.3.0
     #   pydantic
 faker==40.15.0
     # via -r requirements-dev.in
-fastapi==0.136.0
+fastapi==0.136.1
     # via -r requirements.in
 fastapi-cli==0.0.24
     # via fastapi
