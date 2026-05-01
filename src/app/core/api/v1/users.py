@@ -45,6 +45,22 @@ async def get_user_totems_history(
 
 
 @router.get(
+    "/{user_external_id}/{year_month}/feedback",
+    response_model=UserMonthlyFeedbackResponse,
+    status_code=status.HTTP_200_OK,
+)
+async def get_user_feedback_by_month(
+    user_external_id: str,
+    year_month: str,
+    service: FeedbackService = Depends(get_feedback_service),
+) -> UserMonthlyFeedbackResponse:
+    return await service.get_by_user_and_month(
+        user_external_id=user_external_id,
+        year_month=year_month,
+    )
+
+
+@router.get(
     "/{user_external_id}/feedbacks",
     response_model=list[UserMonthlyFeedbackResponse],
     status_code=status.HTTP_200_OK,

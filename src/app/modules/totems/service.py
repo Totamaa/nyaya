@@ -7,7 +7,7 @@ from app.core.config.logs import LoggerManager
 from app.core.utils.date_lib import month_range
 from app.modules.totems.exceptions import InvalidYearMonthFormatException
 from app.modules.totems.repository import TotemRepository
-from app.modules.totems.schemas import TotemAssignment
+from app.modules.totems.schemas import TotemAssignment, TotemResponse
 from app.modules.user_totems.model import UserTotemModel
 from app.modules.user_totems.repository import UserTotemRepository
 from app.modules.user_totems.schemas import UserTotemResponse
@@ -34,13 +34,18 @@ class TotemService:
         self.user_totem_repository = user_totem_repository
         self.user_repository = user_repository
 
+    async def get_all(self) -> list[TotemResponse]:
+        """Retourne tous les totems disponibles."""
+        totems = await self.totem_repository.get_all(db=self.session)
+        return [TotemResponse.from_model(t) for t in totems]
+
     async def assign_monthly_totems(
         self,
         user_id: UUID,
         month: date,
         assignments: list[TotemAssignment],
     ) -> list[UserTotemModel]:
-        """Persiste les totems pré-calculés pour un user sur un mois donné. Remplace les entrées existantes."""
+        """Persiste les totems pré-calculés pour un user sur un mois donné. Idempotent : aucun recalcul si déjà assignés."""
         existing = await self.user_totem_repository.get_by_user_month(
             user_id=user_id, month=month, db=self.session
         )
@@ -51,16 +56,6 @@ class TotemService:
                 extra=self.request_id,
             )
             return existing
-
-        deleted = await self.user_totem_repository.delete_by_user_month(
-            user_id=user_id, month=month, db=self.session
-        )
-        if deleted:
-            self.logger.info(
-                tag=self.tag,
-                message=f"Cleared {deleted} existing totem(s) for user_id={user_id} month={month}",
-                extra=self.request_id,
-            )
 
         if not assignments:
             self.logger.info(

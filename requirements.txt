@@ -189,7 +189,7 @@ taskiq-dependencies==1.5.7
     # via taskiq
 taskiq-redis==1.2.2
     # via -r requirements.in
-typer==0.24.1
+typer==0.24.2
     # via
     #   fastapi-cli
     #   fastapi-cloud-cli
@@ -214,7 +214,7 @@ tzlocal==5.3.1
     # via apscheduler
 urllib3==2.6.3
     # via sentry-sdk
-uvicorn==0.45.0
+uvicorn==0.46.0
     # via
     #   fastapi
     #   fastapi-cli
