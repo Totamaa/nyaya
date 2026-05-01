@@ -1,10 +1,6 @@
 # ─────────────────────────────────────────────
 #  Nyaya — GitLab CI
 # ─────────────────────────────────────────────
-#  Required CI/CD variables (Settings → CI/CD → Variables):
-#    API_KEY          — min 32 chars, masked
-#    JWT_SECRET_KEY   — masked
-# ─────────────────────────────────────────────
 
 stages:
   - test
@@ -12,7 +8,6 @@ stages:
 default:
   image: python:3.12-slim
 
-# ── Non-secret config ─────────────────────────
 variables:
   # App
   ENVIRONMENT: "test"
@@ -32,7 +27,7 @@ variables:
   DB_PORT: "5432"
   DB_NAME: "nyaya_ci"
   DB_USER: "nyaya"
-  DB_PASSWORD: "nyaya_ci_pass"       # ephemeral, not a secret
+  DB_PASSWORD: "nyaya_ci_pass"
   POSTGRES_DB: "nyaya_ci"
   POSTGRES_USER: "nyaya"
   POSTGRES_PASSWORD: "nyaya_ci_pass"
@@ -40,9 +35,11 @@ variables:
   # Redis — points to the Redis service below
   REDIS_HOST: "redis"
   REDIS_PORT: "6379"
-  REDIS_PASSWORD: "redis_ci_pass"    # ephemeral, not a secret
+  REDIS_PASSWORD: "redis_ci_pass"
 
-  # JWT
+  # Auth — valeurs CI jetables, pas de secrets à gérer
+  API_KEY: "ci_api_key_not_a_secret_replace_me_xx"
+  JWT_SECRET_KEY: "ci_jwt_secret_not_a_secret_replace_me"
   JWT_ALGORITHM: "HS256"
   JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "30"
   JWT_REFRESH_TOKEN_EXPIRE_DAYS: "7"
