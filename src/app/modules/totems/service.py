@@ -44,8 +44,8 @@ class TotemService:
         user_id: UUID,
         month: date,
         assignments: list[TotemAssignment],
-    ) -> list[UserTotemModel]:
-        """Persiste les totems pré-calculés pour un user sur un mois donné. Idempotent : aucun recalcul si déjà assignés."""
+    ) -> list[UserTotemModel] | None:
+        """Persiste les totems pré-calculés pour un user sur un mois donné. Idempotent : retourne None si déjà assignés."""
         existing = await self.user_totem_repository.get_by_user_month(
             user_id=user_id, month=month, db=self.session
         )
@@ -55,7 +55,7 @@ class TotemService:
                 message=f"Totems already assigned for user_id={user_id} month={month}, skipping.",
                 extra=self.request_id,
             )
-            return existing
+            return None
 
         if not assignments:
             self.logger.info(

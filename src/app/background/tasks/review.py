@@ -126,4 +126,7 @@ async def review_single_user(
                 assignments=totem_assignments,
             )
 
-    logger.info("TASK:review_user", f"Assigned {len(totems)} totem(s) for user_id={user_id}")
+    if totems is None:
+        logger.info("TASK:review_user", f"Skipped totem assignment (already assigned) for user_id={user_id}")
+    else:
+        logger.info("TASK:review_user", f"Assigned {len(totems)} totem(s) for user_id={user_id}")
