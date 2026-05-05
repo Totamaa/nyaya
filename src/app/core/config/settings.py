@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     JWT_SESSION_MAX_COUNT: int = Field(le=10)
 
     LLM_TIMEOUT_SECONDS: int = Field(ge=10, le=300)
+    LLM_MISTRAL_API_KEY: str = Field(min_length=16)
 
     REVIEW_MIN_MESSAGES: int = Field(ge=1, le=100)
     REVIEW_TOP_WORST_CATEGORIES: int = Field(ge=1, le=9)
