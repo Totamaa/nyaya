@@ -1,11 +1,13 @@
+import asyncio
+
 import asyncpg
 import pytest
+from alembic import command
+from alembic.config import Config
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 from app.core.config.settings import get_settings
-from app.modules.base.model import BaseModel
 
-# Register all models with BaseModel.metadata before create_all()
 import app.modules.users.model  # noqa: F401
 import app.modules.messages.model  # noqa: F401
 import app.modules.evaluations.model  # noqa: F401
@@ -33,8 +35,7 @@ def test_db_url(settings, test_db_name) -> str:
 
 
 @pytest.fixture(scope="session", autouse=True)
-async def _bootstrap_test_db(settings, test_db_name):
-    """Create the test database if it doesn't exist (runs once per session)."""
+async def _bootstrap_test_db(settings, test_db_name, test_db_url):
     conn = await asyncpg.connect(
         host=settings.DB_HOST,
         port=settings.DB_PORT,
@@ -49,20 +50,39 @@ async def _bootstrap_test_db(settings, test_db_name):
         await conn.execute(f'CREATE DATABASE "{test_db_name}"')
     await conn.close()
 
+    def _run_migrations() -> None:
+        alembic_cfg = Config("alembic.ini")
+        alembic_cfg.set_main_option("sqlalchemy.url", test_db_url)
+        command.upgrade(alembic_cfg, "head")
+
+    # Run in a thread: command.upgrade() calls asyncio.run() internally,
+    # which cannot nest inside pytest-asyncio's already-running event loop.
+    await asyncio.to_thread(_run_migrations)
+
+    yield  # tests run here
+
+    # Drop the test DB entirely after the session.
+    # test_engine.dispose() runs before this (reverse dependency order).
+    conn = await asyncpg.connect(
+        host=settings.DB_HOST,
+        port=settings.DB_PORT,
+        user=settings.DB_USER,
+        password=settings.DB_PASSWORD,
+        database="postgres",
+    )
+    await conn.execute(f'DROP DATABASE IF EXISTS "{test_db_name}" WITH (FORCE)')
+    await conn.close()
+
 
 @pytest.fixture(scope="session")
 async def test_engine(test_db_url, _bootstrap_test_db):
     engine = create_async_engine(test_db_url, echo=False)
-    async with engine.begin() as conn:
-        await conn.run_sync(BaseModel.metadata.create_all)
     yield engine
-    async with engine.begin() as conn:
-        await conn.run_sync(BaseModel.metadata.drop_all)
-    await engine.dispose()
+    await engine.dispose()  # runs before _bootstrap_test_db drops the DB
 
 
 @pytest.fixture
 async def db_session(test_engine) -> AsyncSession:
     async with AsyncSession(test_engine, expire_on_commit=False) as session:
         yield session
-        await session.rollback()
+        await session.rollback()  # undoes all flushes — test isolation
