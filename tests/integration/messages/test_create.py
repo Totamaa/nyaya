@@ -23,6 +23,7 @@ class TestCreateMessage:
 
     async def test_creates_user_on_the_fly_if_missing(self, client, db_session):
         from sqlalchemy import select
+
         from app.modules.users.model import UserModel
 
         await client.post(BASE + "/", json=VALID_PAYLOAD)
@@ -33,23 +34,9 @@ class TestCreateMessage:
         user = result.scalars().one_or_none()
         assert user is not None
 
-    async def test_duplicate_content_id_returns_409(self, client):
-        await client.post(BASE + "/", json=VALID_PAYLOAD)
-
-        response = await client.post(BASE + "/", json=VALID_PAYLOAD)
-        assert response.status_code == 409
-
-    async def test_missing_required_field_returns_422(self, client):
-        payload = {k: v for k, v in VALID_PAYLOAD.items() if k != "text"}
-        response = await client.post(BASE + "/", json=payload)
-        assert response.status_code == 422
-
-    async def test_auth_required_without_override(self, authed_client):
-        response = await authed_client.post(BASE + "/", json=VALID_PAYLOAD)
-        assert response.status_code == 201
-
     async def test_reuses_existing_user_if_already_present(self, client, db_session):
         from sqlalchemy import select
+
         from app.modules.users.model import UserModel
 
         second_payload = {**VALID_PAYLOAD, "content_id": "msg-ext-002"}
@@ -63,8 +50,34 @@ class TestCreateMessage:
         users = result.scalars().all()
         assert len(users) == 1
 
+    async def test_duplicate_content_id_returns_409(self, client):
+        await client.post(BASE + "/", json=VALID_PAYLOAD)
+
+        response = await client.post(BASE + "/", json=VALID_PAYLOAD)
+        assert response.status_code == 409
+
+    async def test_missing_text_returns_422(self, client):
+        payload = {k: v for k, v in VALID_PAYLOAD.items() if k != "text"}
+        response = await client.post(BASE + "/", json=payload)
+        assert response.status_code == 422
+
+    async def test_missing_content_id_returns_422(self, client):
+        payload = {k: v for k, v in VALID_PAYLOAD.items() if k != "content_id"}
+        response = await client.post(BASE + "/", json=payload)
+        assert response.status_code == 422
+
+    async def test_missing_author_id_returns_422(self, client):
+        payload = {k: v for k, v in VALID_PAYLOAD.items() if k != "author_id"}
+        response = await client.post(BASE + "/", json=payload)
+        assert response.status_code == 422
+
+    async def test_auth_header_accepted(self, authed_client):
+        response = await authed_client.post(BASE + "/", json=VALID_PAYLOAD)
+        assert response.status_code == 201
+
     async def test_creates_evaluation_alongside_message(self, client, db_session):
         from sqlalchemy import select
+
         from app.modules.evaluations.model import EvaluationModel
         from app.modules.messages.model import MessageModel
 

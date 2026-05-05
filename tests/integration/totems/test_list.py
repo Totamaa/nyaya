@@ -2,7 +2,7 @@ import pytest
 
 BASE = "/api/v1/totems"
 
-EXPECTED_TOTEM_COUNT = 60  # 9 criteria × 6 tiers + 6 global tiers (seeded by migration 0006)
+EXPECTED_TOTAL = 60  # 9 criteria × 6 tiers + 6 global tiers
 
 
 @pytest.mark.integration
@@ -12,7 +12,7 @@ class TestGetAllTotems:
         response = await client.get(BASE + "/")
 
         assert response.status_code == 200
-        assert len(response.json()) == EXPECTED_TOTEM_COUNT
+        assert len(response.json()) == EXPECTED_TOTAL
 
     async def test_totem_has_expected_fields(self, client):
         response = await client.get(BASE + "/")

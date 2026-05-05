@@ -22,7 +22,7 @@ class InsufficientDataForFeedbackException(BusinessException):
         super().__init__(
             message_front="Not enough evaluated messages to generate feedback.",
             message_log=f"No evaluated messages found for user_id={user_id} in the given period.",
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             log_level=logging.WARNING,
             tag="SERVICE:Feedback",
         )

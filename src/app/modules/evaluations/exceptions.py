@@ -102,7 +102,7 @@ class LLMContextLengthException(BusinessException):
         super().__init__(
             message_front="Le message est trop long pour être évalué.",
             message_log="LLM context length exceeded: input is too long for the model.",
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             log_level=logging.WARNING,
             tag="SERVICE:LLM",
         )

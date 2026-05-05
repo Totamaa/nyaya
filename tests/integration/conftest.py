@@ -5,6 +5,7 @@ from httpx import ASGITransport, AsyncClient
 
 from app.core.api.dependencies.auth import verify_api_key
 from app.core.api.dependencies.db import get_session
+from app.core.config.logs import get_logger as _get_logger
 
 
 @pytest.fixture
@@ -43,3 +44,8 @@ async def authed_client(_test_app, settings):
             headers={"X-API-Key": settings.API_KEY},
         ) as c:
             yield c
+
+
+@pytest.fixture
+def app_logger():
+    return _get_logger()
