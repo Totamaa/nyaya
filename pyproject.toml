@@ -17,8 +17,7 @@ testpaths = ["tests"]
 pythonpath = [".", "src", "src/app/modules"]
 markers = [
     "unit: pure logic, no I/O",
-    "integration: requires PostgreSQL test database",
-    "api: full HTTP stack, requires PostgreSQL",
+    "integration: full HTTP stack, requires PostgreSQL",
     "ai: LLM evaluation pipeline tests",
 ]
 filterwarnings = [
