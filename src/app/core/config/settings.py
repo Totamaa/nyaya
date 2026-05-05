@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, HttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -36,8 +36,10 @@ class Settings(BaseSettings):
     JWT_SESSION_MAX_LIFETIME_DAYS: int = Field(le=100)
     JWT_SESSION_MAX_COUNT: int = Field(le=10)
 
+    LLM_BASE_URL: str = Field(min_length=5, max_length=200)
+    LLM_MODEL: str = Field(min_length=3, max_length=128)
+    LLM_API_KEY: str = Field(min_length=16)
     LLM_TIMEOUT_SECONDS: int = Field(ge=10, le=300)
-    LLM_MISTRAL_API_KEY: str = Field(min_length=16)
 
     REVIEW_MIN_MESSAGES: int = Field(ge=1, le=100)
     REVIEW_TOP_WORST_CATEGORIES: int = Field(ge=1, le=9)
