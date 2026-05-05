@@ -146,7 +146,7 @@ db-reset: _venv-check ## Wipe Postgres container + volume, recreate and migrate 
 # ══════════════════════════════════════════════════════════════════════════════
 
 .PHONY: test
-test: _venv-check ## Run all tests
+test: _venv-check up ## Run all tests
 	$(PYTEST)
 
 .PHONY: test-cov
