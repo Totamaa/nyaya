@@ -38,8 +38,9 @@ class Settings(BaseSettings):
 
     LLM_BASE_URL: str = Field(min_length=5, max_length=200)
     LLM_MODEL: str = Field(min_length=3, max_length=128)
-    LLM_API_KEY: str = Field(min_length=16)
+    LLM_API_KEY: str = Field(min_length=0, max_length=256)
     LLM_TIMEOUT_SECONDS: int = Field(ge=10, le=300)
+    LLM_USE_MOCK: bool = Field()
 
     REVIEW_MIN_MESSAGES: int = Field(ge=1, le=100)
     REVIEW_TOP_WORST_CATEGORIES: int = Field(ge=1, le=9)

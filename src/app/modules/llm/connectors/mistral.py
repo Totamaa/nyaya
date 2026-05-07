@@ -5,8 +5,6 @@ from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from app.core.config.settings import get_settings
-
 from .base import Message
 from .utils import parse_structured_output
 
@@ -39,15 +37,12 @@ class MistralClient:
     ) -> None:
         if not api_key:
             raise RuntimeError(
-                "Aucune clé API Mistral fournie. Définis `mistral.api_key` "
-                "ou la variable d'environnement `MISTRAL_API_KEY`."
+                "Aucune clé API fournie. Définis LLM_API_KEY dans ton .env."
             )
-            
-        self.settings = get_settings()
 
-        self.api_key = self.settings.LLM_API_KEY
-        self.model = self.settings.LLM_MODEL
-        self.base_url = self.settings.LLM_BASE_URL.rstrip("/")
+        self.api_key = api_key
+        self.model = model
+        self.base_url = base_url.rstrip("/")
         self.reasoning_effort = reasoning_effort
         self.timeout_s = float(timeout_s)
         self.temperature = float(temperature)

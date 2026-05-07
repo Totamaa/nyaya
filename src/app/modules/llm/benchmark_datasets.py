@@ -6,14 +6,16 @@ import sys
 from pathlib import Path
 
 
-LLM_DIR = Path(__file__).resolve().parent
+SRC_DIR = Path(__file__).resolve().parents[3]
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
-if str(LLM_DIR) not in sys.path:
-    sys.path.insert(0, str(LLM_DIR))
+from app.core.config.settings import get_settings
+from app.modules.llm.connectors.factory import build_llm_client
+from app.modules.llm.evaluation.benchmark import BenchmarkRunner
+from app.modules.llm.evaluation.constants import DEFAULT_SYSTEM_PROMPT
 
-from llm.config import load_config
-from llm.connectors.factory import build_llm
-from llm.evaluation.benchmark import BenchmarkRunner
+_DEFAULT_DATASET_DIR = Path(__file__).with_name("test_dataset")
 
 
 def parse_args() -> argparse.Namespace:
@@ -22,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--dataset-dir",
-        default=str(Path(__file__).with_name("test_dataset")),
+        default=str(_DEFAULT_DATASET_DIR),
         help="Répertoire contenant les datasets JSON.",
     )
     parser.add_argument(
@@ -30,11 +32,6 @@ def parse_args() -> argparse.Namespace:
         action="append",
         default=[],
         help="Chemin explicite vers un dataset JSON. Peut être répété.",
-    )
-    parser.add_argument(
-        "--config",
-        default=str(Path(__file__).with_name("config.toml")),
-        help="Chemin vers le fichier TOML de configuration.",
     )
     parser.add_argument(
         "--output",
@@ -51,18 +48,14 @@ def parse_args() -> argparse.Namespace:
         "--max-tokens",
         type=int,
         default=0,
-        help="Surcharge locale du budget max_tokens, 0 = config.",
+        help="Surcharge locale du budget max_tokens, 0 = défaut (1600).",
     )
     return parser.parse_args()
 
 
 def resolve_dataset_paths(args: argparse.Namespace) -> list[Path]:
-    explicit = [Path(path) for path in args.dataset]
-    if explicit:
-        paths = explicit
-    else:
-        dataset_dir = Path(args.dataset_dir)
-        paths = sorted(dataset_dir.glob("*.json"))
+    explicit = [Path(p) for p in args.dataset]
+    paths = explicit if explicit else sorted(Path(args.dataset_dir).glob("*.json"))
     if args.max_datasets > 0:
         paths = paths[: args.max_datasets]
     if not paths:
@@ -70,7 +63,7 @@ def resolve_dataset_paths(args: argparse.Namespace) -> list[Path]:
     return paths
 
 
-def print_human_summary(report: dict[str, object]) -> None:
+def print_human_summary(report: dict) -> None:
     print(
         f"Model: {report['backend_model']} | "
         f"Datasets: {report['dataset_count']} | "
@@ -83,10 +76,7 @@ def print_human_summary(report: dict[str, object]) -> None:
             f"{summary['passed']}/{summary['total']} passed "
             f"({summary['accuracy']:.2%})"
         )
-        failures = [item for item in summary["results"] if item["status"] == "failed"][
-            :3
-        ]
-        for failure in failures:
+        for failure in [i for i in summary["results"] if i["status"] == "failed"][:3]:
             print(
                 f"  - {failure['item_id']}: expected={failure['expected']} "
                 f"actual={failure.get('actual')} error={failure.get('error')}"
@@ -96,15 +86,18 @@ def print_human_summary(report: dict[str, object]) -> None:
 def main() -> int:
     args = parse_args()
     dataset_paths = resolve_dataset_paths(args)
-    cfg = load_config(args.config)
-    client = build_llm(cfg)
-    model_name = cfg.ollama.model if cfg.llm.backend == "ollama" else cfg.mistral.model
+    settings = get_settings()
+    client = build_llm_client(
+        base_url=settings.LLM_BASE_URL,
+        model=settings.LLM_MODEL,
+        api_key=settings.LLM_API_KEY,
+        timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+    )
     runner = BenchmarkRunner(
         client=client,
-        model_name=model_name,
-        system_prompt=cfg.llm.system_prompt,
-        temperature=cfg.llm.temperature,
-        max_tokens=(args.max_tokens if args.max_tokens > 0 else cfg.llm.max_tokens),
+        model_name=settings.LLM_MODEL,
+        system_prompt=DEFAULT_SYSTEM_PROMPT,
+        max_tokens=(args.max_tokens if args.max_tokens > 0 else 1600),
     )
     report = runner.run_paths(dataset_paths)
     report_dict = report.model_dump()

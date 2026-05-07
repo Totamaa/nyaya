@@ -6,6 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.logs import LoggerManager
 from app.core.config.settings import get_settings
+from app.modules.llm.connectors.factory import build_llm_client
+from app.modules.llm.feedback.runner import generate_feedback
 from app.core.utils.date_lib import month_range
 from app.modules.evaluations.model import EvaluationModel
 from app.modules.evaluations.schemas import CRITERIA
@@ -165,10 +167,22 @@ class FeedbackService:
 
         timeout = settings.LLM_TIMEOUT_SECONDS
         try:
-            llm_result = await asyncio.wait_for(
-                _simulate_llm_feedback(llm_input),
-                timeout=timeout,
-            )
+            if settings.LLM_USE_MOCK:
+                llm_result = await asyncio.wait_for(
+                    _simulate_llm_feedback(llm_input),
+                    timeout=timeout,
+                )
+            else:
+                client = build_llm_client(
+                    base_url=settings.LLM_BASE_URL,
+                    model=settings.LLM_MODEL,
+                    api_key=settings.LLM_API_KEY,
+                    timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+                )
+                llm_result = await asyncio.wait_for(
+                    asyncio.to_thread(generate_feedback, client, llm_input),
+                    timeout=timeout,
+                )
         except asyncio.TimeoutError:
             raise LLMTimeoutException(user_id=user_id, period=period_str, timeout=timeout)
 

@@ -7,13 +7,13 @@ import sys
 from pathlib import Path
 
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-if str(ROOT_DIR) not in sys.path:
-    sys.path.insert(0, str(ROOT_DIR))
+SRC_DIR = Path(__file__).resolve().parents[3]
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
-from llm.config import load_config
-from llm.connectors.factory import build_llm
-from llm.evaluation import (
+from app.core.config.settings import get_settings
+from app.modules.llm.connectors.factory import build_llm_client
+from app.modules.llm.evaluation import (
     AsyncMessageEvaluationWorker,
     JsonlEvaluationEventSink,
     JsonlEvaluationRepository,
@@ -27,11 +27,6 @@ def parse_args() -> argparse.Namespace:
         description="Traite un lot de messages et persiste les évaluations JSONL.",
     )
     parser.add_argument("input", help="Fichier JSONL contenant une requête par ligne.")
-    parser.add_argument(
-        "--config",
-        default=str(Path(__file__).with_name("config.toml")),
-        help="Chemin vers le fichier TOML de configuration.",
-    )
     parser.add_argument(
         "--evaluation-store",
         default="data/message_evaluations.jsonl",
@@ -54,12 +49,11 @@ def parse_args() -> argparse.Namespace:
 def load_requests(path: str | Path) -> list[MessageEvaluationInput]:
     requests: list[MessageEvaluationInput] = []
     with Path(path).open("r", encoding="utf-8") as handle:
-        for index, line in enumerate(handle, start=1):
+        for line in handle:
             stripped = line.strip()
             if not stripped:
                 continue
-            payload = json.loads(stripped)
-            requests.append(MessageEvaluationInput.model_validate(payload))
+            requests.append(MessageEvaluationInput.model_validate(json.loads(stripped)))
     if not requests:
         raise SystemExit("Aucune requête valide trouvée dans le fichier JSONL.")
     return requests
@@ -67,40 +61,37 @@ def load_requests(path: str | Path) -> list[MessageEvaluationInput]:
 
 async def run() -> int:
     args = parse_args()
-    cfg = load_config(args.config)
-    client = build_llm(cfg)
+    settings = get_settings()
+    client = build_llm_client(
+        base_url=settings.LLM_BASE_URL,
+        model=settings.LLM_MODEL,
+        api_key=settings.LLM_API_KEY,
+        timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+    )
     repository = JsonlEvaluationRepository(args.evaluation_store)
     event_sink = JsonlEvaluationEventSink(args.event_store)
     service = MessageEvaluationService(
         client=client,
         repository=repository,
         event_sink=event_sink,
-        model_name=(
-            cfg.ollama.model
-            if cfg.llm.backend == "ollama"
-            else cfg.mistral.model
-        ),
-        temperature=cfg.llm.temperature,
-        max_tokens=cfg.llm.max_tokens,
+        model_name=settings.LLM_MODEL,
     )
     worker = AsyncMessageEvaluationWorker(service, concurrency=args.concurrency)
-    requests = load_requests(args.input)
-    records = await worker.process_batch(requests)
-    success_count = sum(1 for record in records if record.status == "success")
-    failure_count = len(records) - success_count
+    records = await worker.process_batch(load_requests(args.input))
+    success_count = sum(1 for r in records if r.status == "success")
     print(
         json.dumps(
             {
                 "processed": len(records),
                 "success": success_count,
-                "failed": failure_count,
+                "failed": len(records) - success_count,
                 "evaluation_store": str(Path(args.evaluation_store)),
                 "event_store": str(Path(args.event_store)),
             },
             ensure_ascii=False,
         )
     )
-    return 0 if failure_count == 0 else 1
+    return 0 if success_count == len(records) else 1
 
 
 def main() -> int:

@@ -2,11 +2,14 @@ import asyncio
 import random
 from uuid import UUID
 
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.logs import LoggerManager
 from app.core.config.settings import get_settings
 from app.modules.evaluations.exceptions import EvaluationNotFoundException, LLMTimeoutException
+from app.modules.llm.connectors.factory import build_llm_client
+from app.modules.llm.evaluation import evaluate_message
 from app.modules.evaluations.repository import EvaluationRepository
 from app.modules.evaluations.schemas import EvaluationResponse, LLMEvaluationResult
 from app.modules.messages.schemas import CreateMessageRequest
@@ -61,10 +64,32 @@ class EvaluationService:
         settings = get_settings()
         timeout = settings.LLM_TIMEOUT_SECONDS
         try:
-            llm_result = await asyncio.wait_for(
-                _simulate_llm_evaluation(request),
-                timeout=timeout,
-            )
+            if settings.LLM_USE_MOCK:
+                llm_result = await asyncio.wait_for(
+                    _simulate_llm_evaluation(request),
+                    timeout=timeout,
+                )
+            else:
+                client = build_llm_client(
+                    base_url=settings.LLM_BASE_URL,
+                    model=settings.LLM_MODEL,
+                    api_key=settings.LLM_API_KEY,
+                    timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+                )
+                raw = await asyncio.wait_for(
+                    asyncio.to_thread(
+                        evaluate_message,
+                        client,
+                        content_id=request.content_id,
+                        content_type=request.content_type,
+                        text=request.text,
+                        created_at=request.created_at,
+                        author_id=request.author_id,
+                        context=request.context.model_dump() if request.context else None,
+                    ),
+                    timeout=timeout,
+                )
+                llm_result = LLMEvaluationResult(**raw)
         except asyncio.TimeoutError:
             raise LLMTimeoutException(timeout_seconds=timeout)
 

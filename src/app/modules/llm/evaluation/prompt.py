@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 
-from llm.connectors.base import Message
+from app.modules.llm.connectors.base import Message
 
 from .constants import DEFAULT_SYSTEM_PROMPT, TEXT_CRITERIA
 from .models import PreparedEvaluationInput

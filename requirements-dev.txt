@@ -96,6 +96,7 @@ httpx==0.28.1
     #   -r requirements-dev.in
     #   fastapi
     #   fastapi-cloud-cli
+    #   ollama
 idna==3.13
     # via
     #   anyio
@@ -110,7 +111,7 @@ jinja2==3.1.6
     # via fastapi
 mako==1.3.12
     # via alembic
-markdown-it-py==4.0.0
+markdown-it-py==4.1.0
     # via rich
 markupsafe==3.0.3
     # via
@@ -122,6 +123,8 @@ multidict==6.7.1
     # via
     #   aiohttp
     #   yarl
+ollama==0.6.2
+    # via -r requirements.in
 packaging==26.2
     # via
     #   build
@@ -148,19 +151,22 @@ pycparser==3.0 ; implementation_name != 'PyPy'
     # via cffi
 pycron==3.2.0
     # via taskiq
-pydantic==2.13.3
+pydantic==2.13.4
     # via
     #   fastapi
     #   fastapi-cloud-cli
+    #   ollama
     #   pydantic-extra-types
     #   pydantic-settings
     #   taskiq
-pydantic-core==2.46.3
+pydantic-core==2.46.4
     # via pydantic
 pydantic-extra-types==2.11.1
     # via fastapi
 pydantic-settings==2.14.0
-    # via fastapi
+    # via
+    #   -r requirements.in
+    #   fastapi
 pygments==2.20.0
     # via
     #   pytest
@@ -252,7 +258,7 @@ tzlocal==5.3.1
     # via apscheduler
 urllib3==2.6.3
     # via sentry-sdk
-uv==0.11.9
+uv==0.11.11
     # via -r requirements-dev.in
 uvicorn==0.46.0
     # via

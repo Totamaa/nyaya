@@ -7,11 +7,13 @@ from pathlib import Path
 from typing import Any
 
 
-LLM_DIR = Path(__file__).resolve().parent
-if str(LLM_DIR) not in sys.path:
-    sys.path.insert(0, str(LLM_DIR))
+SRC_DIR = Path(__file__).resolve().parents[3]
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
-from llm.evaluation.datasets import (  # noqa: E402
+_DEFAULT_DATASET_DIR = Path(__file__).resolve().parents[4] / "tests" / "data" / "llm"
+
+from app.modules.llm.evaluation.datasets import (  # noqa: E402
     EndToEndControlDataset,
     FallacyControlDataset,
     RangeControlDataset,
@@ -29,7 +31,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--dataset-dir",
-        default=str(Path(__file__).with_name("test_dataset")),
+        default=str(_DEFAULT_DATASET_DIR),
         help="Répertoire contenant les fichiers JSON source.",
     )
     parser.add_argument(
