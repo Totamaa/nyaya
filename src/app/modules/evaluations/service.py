@@ -189,3 +189,15 @@ class EvaluationService:
         if not evaluation:
             raise EvaluationNotFoundException(message_external_id=message_external_id)
         return EvaluationResponse.from_model(evaluation)
+
+    async def get_all_rankings(
+        self,
+        criteria: list[str],
+    ) -> tuple[list[tuple[str, list[tuple[UUID, float]]]], list[tuple[UUID, float]]]:
+        """Calcule les rankings par critère + global. Appelé une fois par l'orchestrateur."""
+        criteria_rankings = [
+            (crit, await self.evaluation_repository.get_criterion_ranking(crit, self.session))
+            for crit in criteria
+        ]
+        global_ranking = await self.evaluation_repository.get_global_ranking(self.session)
+        return criteria_rankings, global_ranking

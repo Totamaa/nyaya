@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config.logs import LoggerManager
 from app.modules.base.schemas import IdResponse
 from app.modules.evaluations.service import EvaluationService
+from app.modules.messages.exceptions import MessageAlreadyExistsException
 from app.modules.messages.repository import MessageRepository
 from app.modules.messages.schemas import CreateMessageRequest
 from app.modules.users.exceptions import UserNotFoundException
@@ -34,6 +35,12 @@ class MessageService:
             message=f"Ingesting message external_id={request.content_id}",
             extra=self.request_id,
         )
+
+        existing = await self.message_repository.get_by_external_id(
+            external_id=str(request.content_id), db=self.session
+        )
+        if existing:
+            raise MessageAlreadyExistsException()
 
         try:
             user = await self.user_service.get_by_external_id(str(request.author_id))

@@ -11,6 +11,7 @@ from app.core.errors.handlers.business import handle_business_exceptions
 from app.core.errors.handlers.catchall import handle_generic_exceptions
 from app.core.errors.handlers.db import handle_db_exceptions
 from app.core.middleware.headers import add_global_headers
+from app.core.middleware.rate_limit import rate_limiter
 from app.core.api.router import router_api
 from app.scheduler.scheduler import start_scheduler, stop_scheduler
 
@@ -56,6 +57,7 @@ def create_app() -> FastAPI:
     )
     
     app.middleware("http")(add_global_headers)
+    app.middleware("http")(rate_limiter)
     
     app.add_exception_handler(AppException, handle_business_exceptions)
     app.add_exception_handler(SQLAlchemyError, handle_db_exceptions)

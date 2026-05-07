@@ -31,11 +31,11 @@ target_metadata = BaseModel.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-from app.core.config.settings import get_settings
-settings = get_settings()
-# Use asyncpg for async support
-database_url = f"postgresql+asyncpg://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
-config.set_main_option("sqlalchemy.url", database_url)
+if not config.get_main_option("sqlalchemy.url", None):
+    from app.core.config.settings import get_settings
+    settings = get_settings()
+    database_url = f"postgresql+asyncpg://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
+    config.set_main_option("sqlalchemy.url", database_url)
 
 
 

@@ -1,0 +1,78 @@
+# ─────────────────────────────────────────────
+#  Nyaya — GitLab CI
+# ─────────────────────────────────────────────
+
+stages:
+  - test
+
+default:
+  image: python:3.12-slim
+
+variables:
+  # App
+  ENVIRONMENT: "test"
+  APP_NAME: "Nyaya"
+  APP_VERSION: "0.1.0"
+  APP_DESCRIPTION: "Nyaya backend"
+  APP_PORT: "8000"
+  CORS_ORIGINS: '["*"]'
+
+  # Logging
+  LOG_LEVEL: "ERROR"
+  LOG_MAX_BYTES: "10485760"
+  LOG_BACKUP_COUNT: "3"
+
+  # Database — points to the Postgres service below
+  DB_HOST: "postgres"
+  DB_PORT: "5432"
+  DB_NAME: "nyaya_ci"
+  DB_USER: "nyaya"
+  DB_PASSWORD: "nyaya_ci_pass"
+  POSTGRES_DB: "nyaya_ci"
+  POSTGRES_USER: "nyaya"
+  POSTGRES_PASSWORD: "nyaya_ci_pass"
+
+  # Redis — points to the Redis service below
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: "redis_ci_pass"
+
+  # Auth — valeurs CI jetables, pas de secrets à gérer
+  API_KEY: "ci_api_key_not_a_secret_replace_me_xx"
+  JWT_SECRET_KEY: "ci_jwt_secret_not_a_secret_replace_me"
+  JWT_ALGORITHM: "HS256"
+  JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+  JWT_REFRESH_TOKEN_EXPIRE_DAYS: "7"
+  JWT_SESSION_MAX_LIFETIME_DAYS: "30"
+  JWT_SESSION_MAX_COUNT: "5"
+
+  # LLM / Review
+  LLM_TIMEOUT_SECONDS: "30"
+  REVIEW_MIN_MESSAGES: "5"
+  REVIEW_TOP_WORST_CATEGORIES: "3"
+  REVIEW_WORST_MESSAGES_PER_CATEGORY: "5"
+
+  # pip cache
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+# ── Test job ──────────────────────────────────
+test:
+  stage: test
+  services:
+    - name: postgres:16-alpine
+      alias: postgres
+    - name: redis:7-alpine
+      alias: redis
+      command: ["redis-server", "--requirepass", "redis_ci_pass"]
+  cache:
+    key:
+      files:
+        - requirements-dev.txt
+    paths:
+      - .cache/pip
+  before_script:
+    - pip install uv --quiet
+    - uv pip install --system -r requirements-dev.txt --quiet
+    - uv pip install --system -e . --no-deps --quiet
+  script:
+    - pytest --tb=short -q
