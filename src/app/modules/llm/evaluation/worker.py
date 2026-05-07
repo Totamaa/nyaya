@@ -3,8 +3,12 @@ from __future__ import annotations
 import asyncio
 from collections.abc import Sequence
 
+from app.core.config.logs import get_logger
 from .models import MessageEvaluationInput, PersistedEvaluationRecord
 from .service import MessageEvaluationService
+
+logger = get_logger()
+_TAG = "LLM:EvalWorker"
 
 
 class AsyncMessageEvaluationWorker:
@@ -23,6 +27,9 @@ class AsyncMessageEvaluationWorker:
         self,
         requests: Sequence[MessageEvaluationInput],
     ) -> list[PersistedEvaluationRecord]:
+        total = len(requests)
+        logger.info(_TAG, f"Starting batch", extra=f"total={total} concurrency={self.concurrency}")
+
         queue: asyncio.Queue[MessageEvaluationInput | None] = asyncio.Queue()
         for request in requests:
             await queue.put(request)
@@ -47,4 +54,7 @@ class AsyncMessageEvaluationWorker:
         workers = [asyncio.create_task(consume()) for _ in range(self.concurrency)]
         await queue.join()
         await asyncio.gather(*workers)
+
+        success = sum(1 for r in results if r.status == "success")
+        logger.info(_TAG, f"Batch done", extra=f"success={success}/{total}")
         return results

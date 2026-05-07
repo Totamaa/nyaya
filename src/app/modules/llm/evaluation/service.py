@@ -3,7 +3,11 @@ from __future__ import annotations
 import threading
 from datetime import UTC, datetime
 
+from app.core.config.logs import get_logger
 from app.modules.llm.connectors.base import LLMClient
+
+logger = get_logger()
+_TAG = "LLM:EvalService"
 
 from .constants import EVALUATION_VERSION, PROMPT_VERSION
 from .models import (
@@ -64,6 +68,7 @@ class MessageEvaluationService:
         )
         for attempt in range(max_retries):
             try:
+                logger.debug(_TAG, f"LLM call attempt {attempt + 1}/{max_retries}")
                 return self.client.complete_structured(
                     messages,
                     LLMMessageEvaluationOutput,
@@ -72,6 +77,7 @@ class MessageEvaluationService:
                 )
             except Exception as exc:
                 last_error = exc
+                logger.warning(_TAG, f"LLM attempt {attempt + 1} failed", extra=str(exc)[:120])
                 if attempt < max_retries - 1:
                     messages = messages + [
                         {
@@ -157,15 +163,19 @@ class MessageEvaluationService:
                 self.evaluation_version,
             )
             if existing is not None:
+                logger.debug(_TAG, "Cache hit, skipping evaluation", extra=f"content_id={message_input.content_id}")
                 return existing
 
+            logger.info(_TAG, "Evaluating message", extra=f"content_id={message_input.content_id} model={self.model_name}")
             prepared_input = prepare_message_for_evaluation(message_input)
             try:
                 llm_output = self._call_llm(prepared_input)
                 record = self._build_success_record(
                     message_input, prepared_input, llm_output
                 )
+                logger.info(_TAG, "Evaluation success", extra=f"content_id={message_input.content_id}")
             except Exception as exc:
+                logger.error(_TAG, "Evaluation failed", extra=f"content_id={message_input.content_id} reason={exc}", exc=exc)
                 record = self._build_failure_record(
                     message_input, prepared_input, str(exc)
                 )

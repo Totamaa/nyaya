@@ -2,8 +2,12 @@ from __future__ import annotations
 
 from typing import Any, Iterable
 
+from app.core.config.logs import get_logger
 from .base import Message
 from .utils import parse_structured_output
+
+logger = get_logger()
+_TAG = "LLM:Ollama"
 
 
 def _extract_message_content(response: Any) -> str:
@@ -102,22 +106,27 @@ class OllamaClient:
         if max_tokens is not None:
             kwargs["options"]["num_predict"] = int(max_tokens)
 
+        logger.debug(_TAG, "complete_text", extra=f"model={self.model}")
         try:
             response = self._client.chat(**kwargs)
         except ConnectionError as exc:
+            logger.error(_TAG, f"Ollama unavailable at {self.base_url}", exc=exc)
             _raise_ollama_unavailable(exc, base_url=self.base_url, model=self.model)
         content = _extract_message_content(response)
         if content:
+            logger.debug(_TAG, "complete_text done", extra=f"len={len(content)}")
             return content
 
         done_reason = _extract_done_reason(response)
         thinking = _extract_thinking(response)
         if think not in (None, False) and done_reason == "length" and thinking:
+            logger.debug(_TAG, "Retrying without think (done_reason=length)", extra=f"model={self.model}")
             retry_kwargs = dict(kwargs)
             retry_kwargs["think"] = False
             try:
                 retry_response = self._client.chat(**retry_kwargs)
             except ConnectionError as exc:
+                logger.error(_TAG, f"Ollama unavailable on retry at {self.base_url}", exc=exc)
                 _raise_ollama_unavailable(exc, base_url=self.base_url, model=self.model)
             retry_content = _extract_message_content(retry_response)
             if retry_content:
@@ -144,12 +153,14 @@ class OllamaClient:
         if max_tokens is not None:
             kwargs["options"]["num_predict"] = int(max_tokens)
 
+        logger.debug(_TAG, "stream_text", extra=f"model={self.model}")
         try:
             for chunk in self._client.chat(**kwargs):
                 content = _extract_message_content(chunk)
                 if content:
                     yield content
         except ConnectionError as exc:
+            logger.error(_TAG, f"Ollama unavailable during stream at {self.base_url}", exc=exc)
             _raise_ollama_unavailable(exc, base_url=self.base_url, model=self.model)
 
     def complete_structured(

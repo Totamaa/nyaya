@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -34,7 +35,7 @@ class MessageContext(BaseModel):
 
 class CreateMessageRequest(BaseModel):
     content_id: str = Field(..., description="External identifier from the source backend.")
-    content_type: str = Field(..., description="Type of content (e.g. comment, reply).")
+    content_type: Literal["post", "comment"] = Field(..., description="Type of content.")
     text: str = Field(..., min_length=1, description="Text content of the message.")
     created_at: datetime = Field(..., description="Original creation date from the source backend.")
     author_id: int = Field(..., description="External user ID from the source backend.")

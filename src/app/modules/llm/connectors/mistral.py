@@ -5,8 +5,12 @@ from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+from app.core.config.logs import get_logger
 from .base import Message
 from .utils import parse_structured_output
+
+logger = get_logger()
+_TAG = "LLM:Mistral"
 
 
 def _extract_content(message: dict[str, Any]) -> str:
@@ -82,8 +86,10 @@ class MistralClient:
             return urlopen(request, timeout=self.timeout_s)
         except HTTPError as exc:
             body = exc.read().decode("utf-8", errors="replace")
+            logger.error(_TAG, f"HTTP {exc.code} from Mistral", extra=body[:200])
             raise RuntimeError(f"Erreur HTTP Mistral {exc.code}: {body}") from exc
         except URLError as exc:
+            logger.error(_TAG, f"Cannot reach Mistral at {self.base_url}", exc=exc)
             raise RuntimeError(
                 f"Impossible de joindre Mistral sur {self.base_url}."
             ) from exc
@@ -95,6 +101,7 @@ class MistralClient:
         temperature: float | None = None,
         max_tokens: int | None = None,
     ) -> str:
+        logger.debug(_TAG, "complete_text", extra=f"model={self.model}")
         payload = self._payload(
             messages,
             temperature=temperature,
@@ -106,9 +113,12 @@ class MistralClient:
 
         choices = data.get("choices", [])
         if not choices:
+            logger.warning(_TAG, "No choices in Mistral response")
             return ""
         message = choices[0].get("message", {})
-        return _extract_content(message)
+        result = _extract_content(message)
+        logger.debug(_TAG, "complete_text done", extra=f"len={len(result)}")
+        return result
 
     def stream_text(
         self,
@@ -117,6 +127,7 @@ class MistralClient:
         temperature: float | None = None,
         max_tokens: int | None = None,
     ) -> Iterable[str]:
+        logger.debug(_TAG, "stream_text", extra=f"model={self.model}")
         payload = self._payload(
             messages,
             temperature=temperature,
@@ -152,8 +163,10 @@ class MistralClient:
                         yield text
         except HTTPError as exc:
             body = exc.read().decode("utf-8", errors="replace")
+            logger.error(_TAG, f"HTTP {exc.code} during stream", extra=body[:200])
             raise RuntimeError(f"Erreur HTTP Mistral {exc.code}: {body}") from exc
         except URLError as exc:
+            logger.error(_TAG, f"Cannot reach Mistral at {self.base_url}", exc=exc)
             raise RuntimeError(
                 f"Impossible de joindre Mistral sur {self.base_url}."
             ) from exc

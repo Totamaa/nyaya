@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+from app.core.config.logs import get_logger
 from app.modules.llm.connectors.base import LLMClient
 from app.modules.feedbacks.schemas import LLMFeedbackInput, LLMFeedbackResult
+
+logger = get_logger()
+_TAG = "LLM:FeedbackRunner"
 
 
 _SYSTEM_PROMPT = (
@@ -46,7 +50,9 @@ def generate_feedback(
 
     Conçu pour être appelé via asyncio.to_thread depuis un service async.
     """
+    logger.info(_TAG, "Generating feedback", extra=f"user_id={llm_input.user_id} period={llm_input.period}")
     messages = _build_messages(llm_input)
     content = client.complete_text(messages, temperature=0.5)
     worst_cat_names = [entry.category for entry in llm_input.worst_categories]
+    logger.info(_TAG, "Feedback generated", extra=f"user_id={llm_input.user_id} len={len(content)}")
     return LLMFeedbackResult(content=content, worst_categories=worst_cat_names)
