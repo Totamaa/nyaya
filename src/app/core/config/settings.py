@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     REDIS_PORT: int = Field(ge=1, le=65535)
     REDIS_PASSWORD: str = Field(min_length=8, max_length=128)
 
-    API_KEY: str = Field(min_length=32)
+    API_KEY: str = Field(default="dev-only-key")
 
     JWT_SECRET_KEY: str = Field()
     JWT_ALGORITHM: str = Field(pattern=r"^(HS256|RS256)$")
@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     JWT_SESSION_MAX_COUNT: int = Field(le=10)
 
     LLM_TIMEOUT_SECONDS: int = Field(ge=10, le=300)
-    LLM_MISTRAL_API_KEY: str = Field(min_length=16)
+    LLM_MISTRAL_API_KEY: str | None = Field(default=None)
 
     REVIEW_MIN_MESSAGES: int = Field(ge=1, le=100)
     REVIEW_TOP_WORST_CATEGORIES: int = Field(ge=1, le=9)

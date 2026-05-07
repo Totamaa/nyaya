@@ -4,6 +4,8 @@ import json
 import threading
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from .models import EvaluationEvent, PersistedEvaluationRecord
 
 
@@ -22,10 +24,27 @@ class JsonlEvaluationRepository:
             with self.path.open("r", encoding="utf-8") as handle:
                 for line in handle:
                     if line.strip():
-                        record = PersistedEvaluationRecord.model_validate_json(line)
+                        record = self._decode_record(line)
+                        if record is None:
+                            continue
                         self._index[(record.content_id, record.evaluation_version)] = (
                             record
                         )
+
+    def _decode_record(self, raw_line: str) -> PersistedEvaluationRecord | None:
+        try:
+            return PersistedEvaluationRecord.model_validate_json(raw_line)
+        except ValidationError:
+            try:
+                payload = json.loads(raw_line)
+            except json.JSONDecodeError:
+                return None
+            if "prepared_snapshot" not in payload and "context_snapshot" in payload:
+                payload["prepared_snapshot"] = payload["context_snapshot"]
+            try:
+                return PersistedEvaluationRecord.model_validate(payload)
+            except ValidationError:
+                return None
 
     def get(
         self, content_id: str, evaluation_version: str

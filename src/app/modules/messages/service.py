@@ -1,4 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
+from pydantic import ValidationError
 
 from app.core.config.logs import LoggerManager
 from app.modules.base.schemas import IdResponse
@@ -67,7 +68,23 @@ class MessageService:
 
         message = request.to_model(author=user, parent_id=parent_id, root_id=root_id)
         await self.message_repository.create(message=message, db=self.session)
-        await self.evaluation_service.evaluate(request=request, message_id=message.id)
+        try:
+            await self.evaluation_service.evaluate(request=request, message_id=message.id)
+        except ValidationError as exc:
+            self.logger.warning(
+                tag=self.tag,
+                message=(
+                    f"Evaluation skipped for message id={message.id}: "
+                    f"invalid evaluation payload ({exc})"
+                ),
+                extra=self.request_id,
+            )
+        except Exception as exc:
+            self.logger.warning(
+                tag=self.tag,
+                message=f"Evaluation failed for message id={message.id}: {exc}",
+                extra=self.request_id,
+            )
 
         self.logger.info(
             tag=self.tag,

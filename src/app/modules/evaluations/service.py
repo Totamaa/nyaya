@@ -65,10 +65,11 @@ async def _to_llm_input(
             external_id=request.parent.content_id,
             db=session,
         )
-        parent_payload = {
-            "content_id": request.parent.content_id,
-            "text": (parent.text if parent else None),
-        }
+        if parent and parent.text:
+            parent_payload = {
+                "content_id": request.parent.content_id,
+                "text": parent.text,
+            }
 
     thread_root_payload = None
     if request.thread_root:
@@ -76,10 +77,11 @@ async def _to_llm_input(
             external_id=request.thread_root.content_id,
             db=session,
         )
-        thread_root_payload = {
-            "content_id": request.thread_root.content_id,
-            "text": (thread_root.text if thread_root else None),
-        }
+        if thread_root and thread_root.text:
+            thread_root_payload = {
+                "content_id": request.thread_root.content_id,
+                "text": thread_root.text,
+            }
 
     return MessageEvaluationInput(
         content_id=request.content_id,
@@ -89,7 +91,11 @@ async def _to_llm_input(
         author_id=str(request.author_id),
         parent=parent_payload,
         thread_root=thread_root_payload,
-        context=(request.context.model_dump(mode="json") if request.context else None),
+        context=(
+            request.context.model_dump(mode="json", exclude_none=True)
+            if request.context
+            else None
+        ),
         likes_normalized=0.0,
     )
 
