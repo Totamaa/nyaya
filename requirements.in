@@ -11,3 +11,4 @@ argon2-cffi
 taskiq
 taskiq-redis
 taskiq[reload]
+ollama

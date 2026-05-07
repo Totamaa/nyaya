@@ -7,7 +7,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-from llm.connectors.base import LLMClient
+from ..connectors.base import LLMClient
 
 from .constants import TEXT_CRITERIA
 from .datasets import (

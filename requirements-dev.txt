@@ -78,7 +78,9 @@ frozenlist==1.8.0
 gitignore-parser==0.1.13
     # via taskiq
 greenlet==3.4.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   sqlalchemy
 h11==0.16.0
     # via
     #   httpcore

@@ -1,1 +1,4 @@
 {"event_type":"message_evaluated","content_id":"c_900","tenant_id":"nyaya-demo","evaluation_version":"message_eval_v1","record_id":"80c9be12-0662-4048-bbff-41b2452e2cd5","status":"success","occurred_at":"2026-04-01T08:50:02.436986Z"}
+{"event_type":"message_evaluated","content_id":"c_smoke_1777363836","tenant_id":"default","evaluation_version":"message_eval_v1","record_id":"359108af-991c-4e1f-aed5-4a26c28a8eb5","status":"success","occurred_at":"2026-04-28T08:11:02.951834Z"}
+{"event_type":"message_evaluated","content_id":"c_smoke_1777363919","tenant_id":"default","evaluation_version":"message_eval_v1","record_id":"cf57d70b-0a05-4cc9-88b5-139e66ea3fd5","status":"success","occurred_at":"2026-04-28T08:12:43.343375Z"}
+{"event_type":"message_evaluated","content_id":"c_smoke_1777365143","tenant_id":"default","evaluation_version":"message_eval_v1","record_id":"46289c14-45af-4079-a43b-0b5d9204f09d","status":"success","occurred_at":"2026-04-28T08:32:36.016370Z"}

@@ -3,7 +3,7 @@ from __future__ import annotations
 import threading
 from datetime import UTC, datetime
 
-from llm.connectors.base import LLMClient
+from ..connectors.base import LLMClient
 
 from .constants import EVALUATION_VERSION, PROMPT_VERSION
 from .models import (
