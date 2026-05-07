@@ -15,7 +15,7 @@ from llm.evaluation.models import MessageEvaluationInput
 
 @pytest.mark.unit
 def test_all_datasets_validate() -> None:
-    dataset_dir = Path("src/app/modules/llm/test_dataset")
+    dataset_dir = Path("tests/data/llm")
     dataset_paths = sorted(dataset_dir.glob("*.json"))
     assert dataset_paths
 
@@ -28,7 +28,7 @@ def test_all_datasets_validate() -> None:
 
 @pytest.mark.unit
 def test_end_to_end_dataset_contains_low_and_full_context() -> None:
-    dataset = load_dataset("src/app/modules/llm/test_dataset/message_eval_end_to_end.json")
+    dataset = load_dataset("tests/data/llm/message_eval_end_to_end.json")
 
     assert isinstance(dataset, EndToEndControlDataset)
     context_levels = {item.expected.context_completeness for item in dataset.items}
@@ -38,7 +38,7 @@ def test_end_to_end_dataset_contains_low_and_full_context() -> None:
 
 @pytest.mark.unit
 def test_control_datasets_use_input_payload_shape() -> None:
-    dataset_dir = Path("src/app/modules/llm/test_dataset")
+    dataset_dir = Path("tests/data/llm")
     dataset_paths = sorted(dataset_dir.glob("*.json"))
     assert dataset_paths
 

@@ -64,8 +64,8 @@ def test_benchmark_runner_on_selected_datasets() -> None:
     runner = BenchmarkRunner(client=client, model_name="fake-model", max_tokens=500)
     report = runner.run_paths(
         [
-            Path("src/app/modules/llm/test_dataset/relevance_control.json"),
-            Path("src/app/modules/llm/test_dataset/fallacies_control.json"),
+            Path("tests/data/llm/relevance_control.json"),
+            Path("tests/data/llm/fallacies_control.json"),
         ]
     )
 
@@ -78,7 +78,7 @@ def test_benchmark_runner_on_selected_datasets() -> None:
 def test_benchmark_runner_respects_explicit_range_dataset_failure() -> None:
     client = FakeLLMClient([build_single(1)])
     runner = BenchmarkRunner(client=client, model_name="fake-model", max_tokens=500)
-    report = runner.run_paths([Path("src/app/modules/llm/test_dataset/clarity_control.json")])
+    report = runner.run_paths([Path("tests/data/llm/clarity_control.json")])
 
     assert report.dataset_count == 1
     assert report.summaries[0].dataset_name == "clarity_control"
