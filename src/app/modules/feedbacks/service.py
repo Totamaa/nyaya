@@ -1,4 +1,3 @@
-import asyncio
 from datetime import date, datetime, timezone
 from uuid import UUID
 
@@ -15,12 +14,10 @@ from app.modules.feedbacks.exceptions import (
     FeedbackNotFoundException,
     InsufficientDataForFeedbackException,
     InvalidYearMonthFormatException,
-    LLMTimeoutException,
 )
 from app.modules.feedbacks.repository import FeedbackRepository
 from app.modules.feedbacks.schemas import (
     LLMFeedbackInput,
-    LLMFeedbackResult,
     UserMonthlyFeedbackResponse,
     WorstCategoryEntry,
     WorstMessageEntry,
@@ -75,24 +72,6 @@ def _build_llm_input(
         worst_categories=worst_categories,
     )
 
-
-async def _simulate_llm_feedback(llm_input: LLMFeedbackInput) -> LLMFeedbackResult:
-    """
-    Stub : simule l'appel au LLM pour générer le feedback mensuel.
-    À remplacer par le vrai connecteur LLM une fois disponible.
-    """
-    _ = llm_input
-    await asyncio.sleep(0)
-    worst_cat_names = [entry.category for entry in llm_input.worst_categories]
-    content = (
-        f"Feedback mensuel pour la période {llm_input.period}.\n\n"
-        + "\n".join(
-            f"- **{cat}** (moy. {next(e.mean_score for e in llm_input.worst_categories if e.category == cat):.2f}/10)"
-            f" : des améliorations sont attendues dans cette dimension."
-            for cat in worst_cat_names
-        )
-    )
-    return LLMFeedbackResult(content=content, worst_categories=worst_cat_names)
 
 
 class FeedbackService:
@@ -165,26 +144,14 @@ class FeedbackService:
         if llm_input is None:
             raise InsufficientDataForFeedbackException(user_id=user_id)
 
-        timeout = settings.LLM_TIMEOUT_SECONDS
-        try:
-            if settings.LLM_USE_MOCK:
-                llm_result = await asyncio.wait_for(
-                    _simulate_llm_feedback(llm_input),
-                    timeout=timeout,
-                )
-            else:
-                client = build_llm_client(
-                    base_url=settings.LLM_BASE_URL,
-                    model=settings.LLM_MODEL,
-                    api_key=settings.LLM_API_KEY,
-                    timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
-                )
-                llm_result = await asyncio.wait_for(
-                    asyncio.to_thread(generate_feedback, client, llm_input),
-                    timeout=timeout,
-                )
-        except asyncio.TimeoutError:
-            raise LLMTimeoutException(user_id=user_id, period=period_str, timeout=timeout)
+        client = build_llm_client(
+            base_url=settings.LLM_BASE_URL,
+            model=settings.LLM_MODEL,
+            api_key=settings.LLM_API_KEY,
+            timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+            use_mock=settings.LLM_USE_MOCK,
+        )
+        llm_result = generate_feedback(client, llm_input)
 
         feedback = llm_result.to_model(user_id=user_id, user_external_id=user.external_id, month=month)
         await self.feedback_repository.create(feedback=feedback, db=self.session)

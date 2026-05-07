@@ -31,6 +31,7 @@ def main() -> int:
         model=settings.LLM_MODEL,
         api_key=settings.LLM_API_KEY,
         timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+        use_mock=settings.LLM_USE_MOCK,
     )
     print(client.complete_text([{"role": "user", "content": question}]))
     return 0

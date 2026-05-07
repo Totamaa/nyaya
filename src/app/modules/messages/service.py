@@ -47,6 +47,12 @@ class MessageService:
         except UserNotFoundException:
             user = await self.user_service.create(str(request.author_id))
 
+        if request.parent and request.parent.author_id is not None:
+            try:
+                await self.user_service.get_by_external_id(str(request.parent.author_id))
+            except UserNotFoundException:
+                await self.user_service.create(str(request.parent.author_id))
+
         parent_id = None
         if request.parent:
             parent = await self.message_repository.get_by_external_id(

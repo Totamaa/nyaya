@@ -1,8 +1,5 @@
 from __future__ import annotations
 
-from datetime import datetime
-from typing import Any
-
 from app.modules.llm.connectors.base import LLMClient
 
 from .constants import DEFAULT_SYSTEM_PROMPT
@@ -24,28 +21,8 @@ _WEIGHTS: dict[str, float] = {
 }
 
 
-def evaluate_message(
-    client: LLMClient,
-    *,
-    content_id: str,
-    content_type: str,
-    text: str,
-    created_at: datetime,
-    author_id: str | int,
-    context: Any = None,
-) -> dict[str, float]:
-    """Évalue un message via le LLM. Retourne les scores par critère (0-10) + score_total (0-10).
-
-    Conçu pour être appelé via asyncio.to_thread depuis un service async.
-    """
-    eval_input = MessageEvaluationInput(
-        content_id=content_id,
-        content_type=content_type,
-        text=text,
-        created_at=created_at,
-        author_id=author_id,
-        context=context,
-    )
+def evaluate_message(client: LLMClient, eval_input: MessageEvaluationInput) -> dict[str, float]:
+    """Évalue un message via le LLM. Retourne les scores par critère (0-10) + score_total (0-10)."""
     prepared = prepare_message_for_evaluation(eval_input)
     messages = build_evaluation_messages(prepared, system_prompt=DEFAULT_SYSTEM_PROMPT)
 

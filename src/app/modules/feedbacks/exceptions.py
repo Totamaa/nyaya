@@ -37,14 +37,3 @@ class InvalidYearMonthFormatException(BusinessException):
             log_level=logging.WARNING,
             tag="SERVICE:Feedback",
         )
-
-
-class LLMTimeoutException(BusinessException):
-    def __init__(self, user_id: UUID, period: str, timeout: float):
-        super().__init__(
-            message_front="LLM took too long to respond.",
-            message_log=f"LLM timeout after {timeout}s for user_id={user_id} period={period}.",
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            log_level=logging.ERROR,
-            tag="SERVICE:Feedback",
-        )

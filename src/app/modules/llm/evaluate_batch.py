@@ -67,6 +67,7 @@ async def run() -> int:
         model=settings.LLM_MODEL,
         api_key=settings.LLM_API_KEY,
         timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+        use_mock=settings.LLM_USE_MOCK,
     )
     repository = JsonlEvaluationRepository(args.evaluation_store)
     event_sink = JsonlEvaluationEventSink(args.event_store)

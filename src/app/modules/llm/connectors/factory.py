@@ -13,12 +13,17 @@ def build_llm_client(
     timeout_s: float = 120.0,
     temperature: float = 0.0,
     reasoning_effort: str | None = None,
+    use_mock: bool,
 ) -> LLMClient:
     """Instancie le bon client LLM en fonction de l'URL.
 
+    use_mock=True → MockLLMClient (scores aléatoires, aucun appel réseau).
     URL locale (localhost / 127.0.0.1) → OllamaClient.
     Toute autre URL → MistralClient (compatible OpenAI /v1/chat/completions).
     """
+    if use_mock:
+        from .mock import MockLLMClient
+        return MockLLMClient()
     if "localhost" in base_url or "127.0.0.1" in base_url:
         return OllamaClient(
             base_url=base_url,

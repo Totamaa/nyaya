@@ -7,7 +7,8 @@ from app.core.config.logs import get_logger
 from app.modules.evaluations.repository import EvaluationRepository
 from app.modules.evaluations.service import EvaluationService
 from app.modules.feedbacks.dependencies import get_feedback_repository
-from app.modules.feedbacks.exceptions import InsufficientDataForFeedbackException, LLMTimeoutException
+from app.modules.feedbacks.exceptions import InsufficientDataForFeedbackException
+from app.modules.llm.exceptions import LLMTimeoutException
 from app.modules.feedbacks.service import FeedbackService
 from app.modules.messages.repository import MessageRepository
 from app.modules.totems.dependencies import get_totem_repository
@@ -97,17 +98,22 @@ async def review_single_user(
                 message_repository=MessageRepository(),
                 user_repository=UserRepository(),
             )
-            try:
-                result = await feedback_service.generate(
-                    user_id=user_id,
-                    period_start=period_start,
-                    period_end=period_end,
-                )
-                logger.info("TASK:review_user", f"Feedback generated id={result.id} for user_id={user_id}")
-            except UserNotFoundException:
-                return
-            except (InsufficientDataForFeedbackException, LLMTimeoutException):
-                pass
+            for attempt in range(2):
+                try:
+                    result = await feedback_service.generate(
+                        user_id=user_id,
+                        period_start=period_start,
+                        period_end=period_end,
+                    )
+                    logger.info("TASK:review_user", f"Feedback generated id={result.id} for user_id={user_id}")
+                    break
+                except UserNotFoundException:
+                    return
+                except (InsufficientDataForFeedbackException, LLMTimeoutException):
+                    break
+                except Exception:
+                    if attempt == 1:
+                        break
 
     # --- Étape 2 : assignation des totems ---
     async with AsyncSessionLocal() as session:
