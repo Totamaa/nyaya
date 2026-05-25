@@ -9,31 +9,21 @@ _TAG = "LLM:FeedbackRunner"
 
 
 _SYSTEM_PROMPT = (
-    "Tu es un coach de communication bienveillant et direct. "
-    "Tu analyses les performances de communication d'un utilisateur sur un réseau social d'entreprise "
-    "et tu lui fournis un feedback mensuel personnalisé, constructif et actionnable. "
-    "Tu réponds uniquement en français."
+    "Coach de communication bienveillant. "
+    "Feedback direct et actionnable, dans la langue des messages fournis, sans introduction ni conclusion générique."
 )
 
 
 def _build_messages(llm_input: LLMFeedbackInput) -> list[dict[str, str]]:
-    lines = [
-        f"Période : {llm_input.period}",
-        "",
-        "Voici les catégories où cet utilisateur a le plus de marge de progression, "
-        "avec ses messages les moins bien notés :",
-        "",
-    ]
+    lines = [f"Période : {llm_input.period}", ""]
     for entry in llm_input.worst_categories:
-        lines.append(f"### {entry.category} (moyenne : {entry.mean_score:.2f}/10)")
-        for msg in entry.worst_messages:
-            lines.append(f'- "{msg.text}" (score : {msg.score:.2f}/10)')
-        lines.append("")
+        examples = " / ".join(f'"{m.text[:100]}"' for m in entry.worst_messages[:2])
+        lines.append(f"• {entry.category} ({entry.mean_score:.1f}/10) — {examples}")
 
     lines += [
-        "Rédige un feedback mensuel personnalisé de 3 à 5 paragraphes.",
-        "Pour chaque catégorie, identifie le problème principal et propose une piste concrète d'amélioration.",
-        "Adopte un ton bienveillant mais direct.",
+        "",
+        "Pour chaque catégorie : 1 phrase sur le problème, 1 conseil concret.",
+        "Format strict : « • Catégorie : [problème]. [conseil]. »",
     ]
 
     return [
