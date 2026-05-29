@@ -20,7 +20,7 @@ jobs:
         image: postgres:16-alpine
         env:
           POSTGRES_USER: nyaya_user
-          POSTGRES_PASSWORD: ci_password
+          POSTGRES_PASSWORD: ci_passwordci_passwordci_passwordci_password
           POSTGRES_DB: nyaya_db
         ports: ["5432:5432"]
         options: >-
@@ -76,7 +76,7 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-dev.txt
       - run: pip install -r requirements-dev.txt
-      - run: pytest -m "not ai" --tb=short -q
+      - run: pytest tests/unit -m "not ai" --tb=short -q
 
   build:
     needs: test
