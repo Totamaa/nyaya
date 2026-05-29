@@ -67,6 +67,8 @@ services:
     env_file: .env
     networks:
       - nyaya_net
+    volumes:
+      - logs_data:/app/logs
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -95,6 +97,8 @@ services:
     env_file: .env
     networks:
       - nyaya_net
+    volumes:
+      - logs_data:/app/logs
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -133,3 +137,4 @@ volumes:
   redis_data:
   caddy_data:     # TLS certificates — do not delete
   caddy_config:
+  logs_data:
