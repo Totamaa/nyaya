@@ -1,0 +1,180 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: nyaya_user
+          POSTGRES_PASSWORD: ci_password
+          POSTGRES_DB: nyaya_db
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 5s --health-timeout 5s --health-retries 10
+
+    env:
+      ENVIRONMENT: test
+      APP_NAME: Nyaya
+      APP_VERSION: "0.1.0"
+      APP_DESCRIPTION: Nyaya backend API
+      APP_PORT: "8000"
+      APP_WORKERS: "1"
+      CORS_ORIGINS: '["http://localhost:3000"]'
+      LOG_LEVEL: WARNING
+      LOG_MAX_BYTES: "10485760"
+      LOG_BACKUP_COUNT: "5"
+      DB_HOST: localhost
+      DB_PORT: "5432"
+      DB_NAME: nyaya_db
+      DB_USER: nyaya_user
+      DB_PASSWORD: ci_password
+      REDIS_HOST: localhost
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: ""
+      API_KEY: ci_api_key
+      JWT_ALGORITHM: HS256
+      JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+      JWT_REFRESH_TOKEN_EXPIRE_DAYS: "7"
+      JWT_SESSION_MAX_LIFETIME_DAYS: "30"
+      JWT_SESSION_MAX_COUNT: "5"
+      JWT_SECRET_KEY: ci_jwt_secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      LLM_BASE_URL: http://localhost:11434
+      LLM_MODEL: gemma4:e2b
+      LLM_API_KEY: ci_unused
+      LLM_TIMEOUT_SECONDS: "60"
+      LLM_USE_MOCK: "true"
+      REVIEW_MIN_MESSAGES: "5"
+      REVIEW_TOP_WORST_CATEGORIES: "3"
+      REVIEW_WORST_MESSAGES_PER_CATEGORY: "5"
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: pytest -m "not ai" --tb=short -q
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=,format=long
+            type=raw,value=latest
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-to: type=inline
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate .env
+        env:
+          E_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          E_REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          E_API_KEY: ${{ secrets.API_KEY }}
+          E_JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          E_LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+        run: |
+          cat > .env << EOF
+          DOCKER_IMAGE=ghcr.io/${{ github.repository }}:${{ github.sha }}
+          CADDY_DOMAIN=${{ vars.CADDY_DOMAIN }}
+          ENVIRONMENT=${{ vars.ENVIRONMENT }}
+          APP_NAME=${{ vars.APP_NAME }}
+          APP_VERSION=${{ vars.APP_VERSION }}
+          APP_DESCRIPTION=${{ vars.APP_DESCRIPTION }}
+          APP_PORT=${{ vars.APP_PORT }}
+          APP_WORKERS=${{ vars.APP_WORKERS }}
+          CORS_ORIGINS=${{ vars.CORS_ORIGINS }}
+          LOG_LEVEL=${{ vars.LOG_LEVEL }}
+          LOG_MAX_BYTES=${{ vars.LOG_MAX_BYTES }}
+          LOG_BACKUP_COUNT=${{ vars.LOG_BACKUP_COUNT }}
+          DB_HOST=${{ vars.DB_HOST }}
+          DB_PORT=${{ vars.DB_PORT }}
+          DB_NAME=${{ vars.DB_NAME }}
+          DB_USER=${{ vars.DB_USER }}
+          DB_PASSWORD=${E_DB_PASSWORD}
+          REDIS_HOST=${{ vars.REDIS_HOST }}
+          REDIS_PORT=${{ vars.REDIS_PORT }}
+          REDIS_PASSWORD=${E_REDIS_PASSWORD}
+          API_KEY=${E_API_KEY}
+          JWT_ALGORITHM=${{ vars.JWT_ALGORITHM }}
+          JWT_ACCESS_TOKEN_EXPIRE_MINUTES=${{ vars.JWT_ACCESS_TOKEN_EXPIRE_MINUTES }}
+          JWT_REFRESH_TOKEN_EXPIRE_DAYS=${{ vars.JWT_REFRESH_TOKEN_EXPIRE_DAYS }}
+          JWT_SESSION_MAX_LIFETIME_DAYS=${{ vars.JWT_SESSION_MAX_LIFETIME_DAYS }}
+          JWT_SESSION_MAX_COUNT=${{ vars.JWT_SESSION_MAX_COUNT }}
+          JWT_SECRET_KEY=${E_JWT_SECRET_KEY}
+          LLM_BASE_URL=${{ vars.LLM_BASE_URL }}
+          LLM_MODEL=${{ vars.LLM_MODEL }}
+          LLM_API_KEY=${E_LLM_API_KEY}
+          LLM_TIMEOUT_SECONDS=${{ vars.LLM_TIMEOUT_SECONDS }}
+          LLM_USE_MOCK=${{ vars.LLM_USE_MOCK }}
+          REVIEW_MIN_MESSAGES=${{ vars.REVIEW_MIN_MESSAGES }}
+          REVIEW_TOP_WORST_CATEGORIES=${{ vars.REVIEW_TOP_WORST_CATEGORIES }}
+          REVIEW_WORST_MESSAGES_PER_CATEGORY=${{ vars.REVIEW_WORST_MESSAGES_PER_CATEGORY }}
+          EOF
+
+      - name: Copy config files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: nyaya
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: ".env,docker-compose.prod.yml,Caddyfile"
+          target: /opt/nyaya/
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: nyaya
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            cd /opt/nyaya
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml run --rm migrate
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
+            docker image prune -f
