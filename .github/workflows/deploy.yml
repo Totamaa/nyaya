@@ -26,10 +26,12 @@ jobs:
         options: >-
           --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
       redis:
-        image: redis:7-alpine
+        image: bitnami/redis:7.0
+        env:
+          REDIS_PASSWORD: ci_passwordci_passwordci_passwordci_password
         ports: ["6379:6379"]
         options: >-
-          --health-cmd "redis-cli ping" --health-interval 5s --health-timeout 5s --health-retries 10
+          --health-cmd "redis-cli -a ci_passwordci_passwordci_passwordci_password ping" --health-interval 5s --health-timeout 5s --health-retries 10
 
     env:
       ENVIRONMENT: test
@@ -46,11 +48,11 @@ jobs:
       DB_PORT: "5432"
       DB_NAME: nyaya_db
       DB_USER: nyaya_user
-      DB_PASSWORD: ci_password
+      DB_PASSWORD: ci_passwordci_passwordci_passwordci_password
       REDIS_HOST: localhost
       REDIS_PORT: "6379"
-      REDIS_PASSWORD: ""
-      API_KEY: ci_api_key
+      REDIS_PASSWORD: ci_passwordci_passwordci_passwordci_password
+      API_KEY: ci_api_key_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       JWT_ALGORITHM: HS256
       JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "30"
       JWT_REFRESH_TOKEN_EXPIRE_DAYS: "7"
