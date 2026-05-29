@@ -44,6 +44,7 @@ RUN pip install --no-cache-dir --no-deps .
 RUN mkdir -p /app/logs
 
 RUN adduser --disabled-password --gecos "" appuser
+RUN chown appuser:appuser /app/logs
 USER appuser
 
 EXPOSE ${APP_PORT}
