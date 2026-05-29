@@ -41,6 +41,8 @@ COPY pyproject.toml .
 
 RUN pip install --no-cache-dir --no-deps .
 
+RUN mkdir -p /app/logs
+
 RUN adduser --disabled-password --gecos "" appuser
 USER appuser
 
