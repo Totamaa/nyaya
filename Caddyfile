@@ -1,0 +1,11 @@
+{$CADDY_DOMAIN} {
+    reverse_proxy api:8000
+
+    encode gzip
+
+    log {
+        output stderr
+        format json
+        level INFO
+    }
+}

@@ -1,4 +1,5 @@
 from .constants import EVALUATION_VERSION, PROMPT_VERSION
+from .runner import evaluate_message
 from .models import (
     CriterionAssessment,
     LLMMessageEvaluationOutput,
@@ -15,6 +16,7 @@ from .worker import AsyncMessageEvaluationWorker
 
 __all__ = [
     "AsyncMessageEvaluationWorker",
+    "evaluate_message",
     "CriterionAssessment",
     "EVALUATION_VERSION",
     "JsonlEvaluationEventSink",

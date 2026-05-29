@@ -1,0 +1,135 @@
+name: nyaya-prod
+
+# ── Production stack ──────────────────────────────────────────────────────────
+# Start:   docker compose -f docker-compose.prod.yml up -d
+# Stop:    docker compose -f docker-compose.prod.yml down
+# Logs:    docker compose -f docker-compose.prod.yml logs -f
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── PostgreSQL ─────────────────────────────────────────────────────────────
+  # Never exposed outside the VPS — internal network only.
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    shm_size: "256mb"
+    environment:
+      POSTGRES_DB:       ${DB_NAME}
+      POSTGRES_USER:     ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - nyaya_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis ──────────────────────────────────────────────────────────────────
+  # Broker for Taskiq tasks + rate-limiting backend.
+  # Never exposed outside the VPS — internal network only.
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - nyaya_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Migrations ─────────────────────────────────────────────────────────────
+  # One-shot init container: runs "alembic upgrade head" then exits.
+  # api and worker will not start until this exits with code 0.
+  # Idempotent: safe to re-run on every "docker compose up".
+  migrate:
+    image: ${DOCKER_IMAGE}
+    command: ["alembic", "upgrade", "head"]
+    env_file: .env
+    restart: "no"
+    networks:
+      - nyaya_net
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ── API ────────────────────────────────────────────────────────────────────
+  api:
+    image: ${DOCKER_IMAGE}
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - nyaya_net
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # ── Worker ─────────────────────────────────────────────────────────────────
+  # Taskiq worker: processes background evaluation tasks dispatched by the API.
+  # Scale horizontally by adding replicas if evaluation throughput demands it.
+  worker:
+    image: ${DOCKER_IMAGE}
+    command:
+      - taskiq
+      - worker
+      - app.core.config.broker:broker
+      - app.background.tasks
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - nyaya_net
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  # ── Proxy (Caddy) ──────────────────────────────────────────────────────────
+  # Handles TLS (auto Let's Encrypt), HTTP→HTTPS redirect, and reverse proxy.
+  # Only service that exposes ports to the outside world.
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3 (QUIC)
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data        # TLS certificates (persist across restarts)
+      - caddy_config:/config
+    env_file: .env
+    networks:
+      - nyaya_net
+    depends_on:
+      api:
+        condition: service_healthy
+
+# ── Networks ───────────────────────────────────────────────────────────────────
+networks:
+  nyaya_net:
+    driver: bridge
+
+# ── Volumes ────────────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:  # DB data — do not delete
+  redis_data:
+  caddy_data:     # TLS certificates — do not delete
+  caddy_config:

@@ -4,9 +4,9 @@ from importlib import import_module
 from typing import Any
 
 from .base import LLMClient
-from .factory import build_llm
+from .factory import build_llm_client
 
-__all__ = ["LLMClient", "build_llm", "OllamaClient", "MistralClient"]
+__all__ = ["LLMClient", "build_llm_client", "OllamaClient", "MistralClient"]
 
 
 def __getattr__(name: str) -> Any:

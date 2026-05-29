@@ -5,31 +5,18 @@ import sys
 from pathlib import Path
 
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-if str(ROOT_DIR) not in sys.path:
-    sys.path.insert(0, str(ROOT_DIR))
+SRC_DIR = Path(__file__).resolve().parents[3]
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
-from llm.config import load_config
-from llm.connectors.factory import build_llm
+from app.core.config.settings import get_settings
+from app.modules.llm.connectors.factory import build_llm_client
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Pose une question au LLM configuré.")
     parser.add_argument("question", nargs="?", help="Question à envoyer au modèle.")
-    parser.add_argument(
-        "--config",
-        default=str(Path(__file__).with_name("config.toml")),
-        help="Chemin vers le fichier TOML de configuration.",
-    )
     return parser.parse_args()
-
-
-def build_messages(system_prompt: str, question: str) -> list[dict[str, str]]:
-    messages: list[dict[str, str]] = []
-    if system_prompt.strip():
-        messages.append({"role": "system", "content": system_prompt.strip()})
-    messages.append({"role": "user", "content": question.strip()})
-    return messages
 
 
 def main() -> int:
@@ -38,14 +25,15 @@ def main() -> int:
     if not question:
         raise SystemExit("Aucune question fournie.")
 
-    cfg = load_config(args.config)
-    client = build_llm(cfg)
-    response = client.complete_text(
-        build_messages(cfg.llm.system_prompt, question),
-        temperature=cfg.llm.temperature,
-        max_tokens=cfg.llm.max_tokens,
+    settings = get_settings()
+    client = build_llm_client(
+        base_url=settings.LLM_BASE_URL,
+        model=settings.LLM_MODEL,
+        api_key=settings.LLM_API_KEY,
+        timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+        use_mock=settings.LLM_USE_MOCK,
     )
-    print(response)
+    print(client.complete_text([{"role": "user", "content": question}]))
     return 0
 
 

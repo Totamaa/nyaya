@@ -3,22 +3,27 @@ Seed script — remplit la BD avec des données réalistes via Faker.
 
 Usage (depuis la racine du projet) :
     python scripts/seed.py
-    python scripts/seed.py --users 20 --messages 30 --thread-ratio 0.3
+    python scripts/seed.py --users 100 --messages 50 --thread-ratio 0.3 --batch 1000
+
+Architecture :
+  1. Toute la data est construite en mémoire (Python pur, IDs pré-générés côté client).
+  2. Insertions en 4 phases séquentielles qui respectent les FK,
+     chaque phase étant parallélisée via asyncio.gather (une session/commit par batch).
+
+  users → root messages → replies → evaluations
 """
 import argparse
 import asyncio
 import random
 import sys
+import time
 import uuid
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from faker import Faker
 
-# Rendre le package `app` importable sans installation
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.database import AsyncSessionLocal, UnitOfWork
 from app.modules.evaluations.model import EvaluationModel
@@ -27,24 +32,30 @@ from app.modules.users.model import UserModel
 
 fake = Faker("fr_FR")
 
-# ---------------------------------------------------------------------------
-# Config
-# ---------------------------------------------------------------------------
-
 CONTENT_TYPES = ["comment", "reply", "post"]
 PHASES = ["deliberation", "consultation", "vote", None]
 TAGS_POOL = [
     "economie", "sante", "education", "environnement", "justice",
     "logement", "transport", "culture", "numerique", "securite",
 ]
-
-# Part des messages qui tombent dans la fenêtre du mois précédent
 LAST_MONTH_RATIO = 0.80
 
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def _chunks(lst: list, n: int):
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
+
+
+async def _bulk_insert(rows: list) -> None:
+    async with AsyncSessionLocal() as session:
+        async with UnitOfWork(session):
+            session.add_all(rows)
+            await session.flush()
+
 
 def _random_score() -> float | None:
     if random.random() < 0.05:
@@ -66,8 +77,8 @@ def _make_evaluation(message_id: uuid.UUID) -> EvaluationModel:
     }
     values = [v for v in scores.values() if v is not None]
     score_total = round(sum(values) / len(values), 2) if values else None
-
     return EvaluationModel(
+        id=uuid.uuid4(),
         message_id=message_id,
         likes=random.randint(0, 150),
         score_total=score_total,
@@ -76,9 +87,7 @@ def _make_evaluation(message_id: uuid.UUID) -> EvaluationModel:
 
 
 def _source_created_at(now: datetime) -> datetime:
-    """80 % dans le mois précédent, 20 % dans le mois courant ou avant."""
     if random.random() < LAST_MONTH_RATIO:
-        # quelque part dans le mois précédent
         first_of_current = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         if now.month == 1:
             first_of_prev = first_of_current.replace(year=now.year - 1, month=12)
@@ -87,21 +96,22 @@ def _source_created_at(now: datetime) -> datetime:
         delta = (first_of_current - first_of_prev).total_seconds()
         return first_of_prev + timedelta(seconds=random.uniform(0, delta))
     else:
-        # dans le mois courant ou les 3 mois précédents (hors fenêtre)
         offset_days = random.choice([
-            random.randint(0, now.day - 1),          # mois courant
-            random.randint(32, 120),                  # 1-4 mois en arrière
+            random.randint(0, max(0, now.day - 1)),
+            random.randint(32, 120),
         ])
         return now - timedelta(days=offset_days, seconds=random.randint(0, 86400))
 
 
 def _make_user() -> UserModel:
-    return UserModel(external_id=str(uuid.uuid4()))
+    # ID pré-généré côté client pour être disponible immédiatement en mémoire
+    return UserModel(id=uuid.uuid4(), external_id=str(uuid.uuid4()))
 
 
 def _make_root_message(author_id: uuid.UUID, now: datetime) -> MessageModel:
     tags = random.sample(TAGS_POOL, k=random.randint(0, 3)) or None
     return MessageModel(
+        id=uuid.uuid4(),
         external_id=str(uuid.uuid4()),
         content_type=random.choice(CONTENT_TYPES),
         text=fake.paragraph(nb_sentences=random.randint(2, 6)),
@@ -124,6 +134,7 @@ def _make_reply(
 ) -> MessageModel:
     tags = random.sample(TAGS_POOL, k=random.randint(0, 2)) or None
     return MessageModel(
+        id=uuid.uuid4(),
         external_id=str(uuid.uuid4()),
         content_type="reply",
         text=fake.paragraph(nb_sentences=random.randint(1, 4)),
@@ -142,65 +153,64 @@ def _make_reply(
 # Seed
 # ---------------------------------------------------------------------------
 
-async def seed(n_users: int, messages_per_user: int, thread_ratio: float) -> None:
+async def seed(
+    n_users: int,
+    messages_per_user: int,
+    thread_ratio: float,
+    batch_size: int,
+) -> None:
     now = datetime.now(timezone.utc)
-    print(f"Seeding {n_users} users × ~{messages_per_user} messages (thread_ratio={thread_ratio}) …")
+    t0 = time.perf_counter()
 
-    async with AsyncSessionLocal() as session:
-        async with UnitOfWork(session):
-            all_users: list[UserModel] = []
-            all_root_messages: list[MessageModel] = []
+    # --- Phase 0 : construction en mémoire (aucun appel DB) ---
+    print(f"Building {n_users} users x ~{messages_per_user} messages in memory...")
 
-            # --- Users ---
-            for _ in range(n_users):
-                user = _make_user()
-                session.add(user)
-                all_users.append(user)
+    users: list[UserModel] = [_make_user() for _ in range(n_users)]
+    root_messages: list[MessageModel] = []
+    reply_messages: list[MessageModel] = []
+    evaluations: list[EvaluationModel] = []
 
-            await session.flush()
-            print(f"  ✓ {n_users} users créés")
+    for user in users:
+        n_msg = random.randint(max(1, messages_per_user - 5), messages_per_user + 5)
+        for _ in range(n_msg):
+            use_thread = bool(root_messages) and random.random() < thread_ratio
+            if use_thread:
+                root = random.choice(root_messages)
+                msg = _make_reply(author_id=user.id, parent=root, root=root, now=now)
+                reply_messages.append(msg)
+            else:
+                msg = _make_root_message(author_id=user.id, now=now)
+                root_messages.append(msg)
+            if random.random() < 0.85:
+                evaluations.append(_make_evaluation(message_id=msg.id))
 
-            # --- Messages & évaluations ---
-            total_messages = 0
-            total_evals = 0
+    n_messages = len(root_messages) + len(reply_messages)
+    t_build = time.perf_counter() - t0
+    print(
+        f"  {n_users} users  |  {n_messages} messages "
+        f"({len(root_messages)} root / {len(reply_messages)} replies)  |  {len(evaluations)} evaluations\n"
+        f"  built in {t_build:.2f}s\n"
+    )
+    print(f"Inserting (batch={batch_size})...")
 
-            for user in all_users:
-                n_msg = random.randint(max(1, messages_per_user - 5), messages_per_user + 5)
+    # --- Phases 1-4 : insertions parallèles par batch ---
+    async def phase(label: str, rows: list) -> None:
+        if not rows:
+            return
+        batches = list(_chunks(rows, batch_size))
+        n_b = len(batches)
+        t = time.perf_counter()
+        print(f"  {label:<16}  {len(rows):>6} rows  {n_b:>3} batch{'es' if n_b > 1 else '  '}  ...", end=" ", flush=True)
+        await asyncio.gather(*[_bulk_insert(b) for b in batches])
+        print(f"ok  {time.perf_counter() - t:.2f}s")
 
-                for _ in range(n_msg):
-                    use_thread = all_root_messages and random.random() < thread_ratio
+    # Ordre strict : FK users → messages → replies → evaluations
+    await phase("users",         users)
+    await phase("root messages", root_messages)
+    await phase("replies",       reply_messages)
+    await phase("evaluations",   evaluations)
 
-                    if use_thread:
-                        root = random.choice(all_root_messages)
-                        # choisir un parent dans le thread (root ou reply déjà créé)
-                        parent = root
-                        msg = _make_reply(
-                            author_id=user.id,
-                            parent=parent,
-                            root=root,
-                            now=now,
-                        )
-                    else:
-                        msg = _make_root_message(author_id=user.id, now=now)
-
-                    session.add(msg)
-                    await session.flush()
-                    total_messages += 1
-
-                    if not use_thread:
-                        all_root_messages.append(msg)
-
-                    # Évaluation (pas forcément sur chaque message)
-                    if random.random() < 0.85:
-                        evaluation = _make_evaluation(message_id=msg.id)
-                        session.add(evaluation)
-                        await session.flush()
-                        total_evals += 1
-
-            print(f"  ✓ {total_messages} messages créés")
-            print(f"  ✓ {total_evals} évaluations créées")
-
-    print("Seed terminé.")
+    print(f"\nDone in {time.perf_counter() - t0:.2f}s.")
 
 
 # ---------------------------------------------------------------------------
@@ -212,6 +222,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--users", type=int, default=15, help="Nombre d'users (défaut: 15)")
     parser.add_argument("--messages", type=int, default=20, help="Messages par user en moyenne (défaut: 20)")
     parser.add_argument("--thread-ratio", type=float, default=0.35, help="Ratio de réponses dans des threads existants (défaut: 0.35)")
+    parser.add_argument("--batch", type=int, default=500, help="Lignes par batch/session (défaut: 500)")
     return parser.parse_args()
 
 
@@ -221,4 +232,5 @@ if __name__ == "__main__":
         n_users=args.users,
         messages_per_user=args.messages,
         thread_ratio=args.thread_ratio,
+        batch_size=args.batch,
     ))

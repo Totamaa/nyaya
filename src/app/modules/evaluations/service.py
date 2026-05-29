@@ -1,39 +1,16 @@
-import asyncio
-import random
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config.logs import LoggerManager
 from app.core.config.settings import get_settings
-from app.modules.evaluations.exceptions import EvaluationNotFoundException, LLMTimeoutException
+from app.modules.evaluations.exceptions import EvaluationNotFoundException
 from app.modules.evaluations.repository import EvaluationRepository
 from app.modules.evaluations.schemas import EvaluationResponse, LLMEvaluationResult
+from app.modules.llm.connectors.factory import build_llm_client
+from app.modules.llm.evaluation import evaluate_message
+from app.modules.llm.evaluation.models import MessageEvaluationInput
 from app.modules.messages.schemas import CreateMessageRequest
-
-
-async def _simulate_llm_evaluation(request: CreateMessageRequest) -> LLMEvaluationResult:
-    """
-    Stub: simulates the LLM evaluation call.
-    To be replaced by the real LLM connector once available.
-    The real implementation will use `request` (text, context, parent, etc.).
-    """
-    _ = request  # unused in stub, will be consumed by the real LLM connector
-    scores = [round(random.uniform(0, 10), 2) for _ in range(9)]
-    keys = [
-        "clarte_des_idees",
-        "exactitude_verifiabilite",
-        "pertinence",
-        "logique_coherence",
-        "absence_de_sophismes",
-        "ouverture_d_esprit",
-        "volonte_de_comprendre",
-        "contribution_utile",
-        "respect_collaboration",
-    ]
-    result = dict(zip(keys, scores))
-    result["score_total"] = round(sum(scores) / len(scores), 2)
-    return LLMEvaluationResult(**result)
 
 
 class EvaluationService:
@@ -59,14 +36,25 @@ class EvaluationService:
         )
 
         settings = get_settings()
-        timeout = settings.LLM_TIMEOUT_SECONDS
-        try:
-            llm_result = await asyncio.wait_for(
-                _simulate_llm_evaluation(request),
-                timeout=timeout,
-            )
-        except asyncio.TimeoutError:
-            raise LLMTimeoutException(timeout_seconds=timeout)
+        eval_input = MessageEvaluationInput(
+            content_id=request.content_id,
+            content_type=request.content_type,
+            text=request.text,
+            created_at=request.created_at,
+            author_id=request.author_id,
+            context=request.context.model_dump() if request.context else None,
+            parent=request.parent.model_dump() if request.parent else None,
+            thread_root=request.thread_root.model_dump() if request.thread_root else None,
+        )
+        client = build_llm_client(
+            base_url=settings.LLM_BASE_URL,
+            model=settings.LLM_MODEL,
+            api_key=settings.LLM_API_KEY,
+            timeout_s=float(settings.LLM_TIMEOUT_SECONDS),
+            use_mock=settings.LLM_USE_MOCK,
+        )
+        raw = evaluate_message(client, eval_input)
+        llm_result = LLMEvaluationResult(**raw)
 
         evaluation = llm_result.to_model(message_id=message_id)
         await self.evaluation_repository.create(evaluation=evaluation, db=self.session)
@@ -87,3 +75,15 @@ class EvaluationService:
         if not evaluation:
             raise EvaluationNotFoundException(message_external_id=message_external_id)
         return EvaluationResponse.from_model(evaluation)
+
+    async def get_all_rankings(
+        self,
+        criteria: list[str],
+    ) -> tuple[list[tuple[str, list[tuple[UUID, float]]]], list[tuple[UUID, float]]]:
+        """Calcule les rankings par critère + global. Appelé une fois par l'orchestrateur."""
+        criteria_rankings = [
+            (crit, await self.evaluation_repository.get_criterion_ranking(crit, self.session))
+            for crit in criteria
+        ]
+        global_ranking = await self.evaluation_repository.get_global_ranking(self.session)
+        return criteria_rankings, global_ranking

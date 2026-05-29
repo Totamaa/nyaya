@@ -4,6 +4,18 @@ from pydantic import BaseModel, ConfigDict
 
 from app.modules.evaluations.model import EvaluationModel
 
+CRITERIA = [
+    "clarte_des_idees",
+    "exactitude_verifiabilite",
+    "pertinence",
+    "logique_coherence",
+    "absence_de_sophismes",
+    "ouverture_d_esprit",
+    "volonte_de_comprendre",
+    "contribution_utile",
+    "respect_collaboration",
+]
+
 
 class LLMEvaluationResult(BaseModel):
     """Scores returned by the LLM connector."""

@@ -30,3 +30,22 @@ class FeedbackRepository:
         )
         result = await db.execute(stmt)
         return result.scalars().one_or_none()
+
+    async def get_by_user_and_month_range(
+        self,
+        user_id: UUID,
+        start_month: date,
+        end_month: date,
+        db: AsyncSession,
+    ) -> list[UserMonthlyFeedbackModel]:
+        stmt = (
+            select(UserMonthlyFeedbackModel)
+            .where(
+                UserMonthlyFeedbackModel.user_id == user_id,
+                UserMonthlyFeedbackModel.month >= start_month,
+                UserMonthlyFeedbackModel.month <= end_month,
+            )
+            .order_by(UserMonthlyFeedbackModel.month.desc())
+        )
+        result = await db.execute(stmt)
+        return list(result.scalars().all())

@@ -2,8 +2,8 @@ def anonymize_ip(ip: str) -> str:
     parts = ip.split(".")
     if len(parts) == 4:
         parts[-1] = "x"
-        anonymize_ip = ".".join(parts)
-        return anonymize_ip
+        anonymized = ".".join(parts)
+        return anonymized
     return "unknown"
 
 def anonymize_email(email: str) -> str:

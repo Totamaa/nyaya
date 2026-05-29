@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 
-from llm.connectors.base import Message
+from app.modules.llm.connectors.base import Message
 
 from .constants import DEFAULT_SYSTEM_PROMPT, TEXT_CRITERIA
 from .models import PreparedEvaluationInput
@@ -32,15 +32,15 @@ def build_evaluation_messages(
 
     payload = {
         **prepared_input.prompt_payload(),
+        "context_completeness": prepared_input.context_completeness,
         "task": {
             "language": "fr",
-            "scale": "Each criterion must be scored from 1 to 5.",
+            "scale": "Score each criterion from 1 to 5.",
             "instructions": [
-                "Évalue uniquement à partir du texte fourni et du contexte fourni.",
-                "N'invente aucun contexte absent.",
-                "N'évalue pas la vérité du monde réel.",
-                "Pour `exactitude_verifiabilite`, juge seulement la qualité épistémique du message.",
-                "Les rationales doivent être courtes.",
+                "Évalue toujours, même si le contexte est partiel ou absent ; reflète l'incertitude dans model_confidence.",
+                "N'évalue pas la vérité des faits ; évalue uniquement la qualité communicationnelle.",
+                "Pour `exactitude_verifiabilite`, juge seulement la qualité épistémique (distinction fait/opinion, prudence).",
+                "Les rationales doivent être courtes (1-2 phrases max).",
                 "Réponds avec un JSON strict conforme au schéma.",
             ],
             "rubric": _build_rubric_lines(),

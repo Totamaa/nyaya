@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, HttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     REDIS_PORT: int = Field(ge=1, le=65535)
     REDIS_PASSWORD: str = Field(min_length=8, max_length=128)
 
+    API_KEY: str = Field(min_length=32)
+
     JWT_SECRET_KEY: str = Field()
     JWT_ALGORITHM: str = Field(pattern=r"^(HS256|RS256)$")
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(le=60)
@@ -34,7 +36,11 @@ class Settings(BaseSettings):
     JWT_SESSION_MAX_LIFETIME_DAYS: int = Field(le=100)
     JWT_SESSION_MAX_COUNT: int = Field(le=10)
 
+    LLM_BASE_URL: str = Field(min_length=5, max_length=200)
+    LLM_MODEL: str = Field(min_length=3, max_length=128)
+    LLM_API_KEY: str = Field(min_length=0, max_length=256)
     LLM_TIMEOUT_SECONDS: int = Field(ge=10, le=300)
+    LLM_USE_MOCK: bool = Field()
 
     REVIEW_MIN_MESSAGES: int = Field(ge=1, le=100)
     REVIEW_TOP_WORST_CATEGORIES: int = Field(ge=1, le=9)

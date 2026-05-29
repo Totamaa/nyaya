@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Index, Integer, String, Text, ForeignKey
+from sqlalchemy import CheckConstraint, Column, DateTime, Index, Integer, String, Text, ForeignKey
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import relationship
 
@@ -12,6 +12,7 @@ class MessageModel(BaseModel):
     content_type = Column(String, nullable=False)
     text = Column(Text, nullable=False)
     source_created_at = Column(DateTime(timezone=True), nullable=True)
+    likes = Column(Integer, nullable=True)
 
     edito_id = Column(Integer, nullable=True)
     topic_id = Column(Integer, nullable=True)
@@ -48,6 +49,7 @@ class MessageModel(BaseModel):
     )
 
     __table_args__ = (
+        CheckConstraint("likes >= 0", name="ck_messages_likes_non_negative"),
         Index("ix_messages_author_id", "author_id"),
         Index("ix_messages_created_at", "created_at"),
     )
