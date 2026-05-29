@@ -85,9 +85,10 @@ jobs:
     permissions:
       contents: read
       packages: write
-
+  
     steps:
       - uses: actions/checkout@v4
+      - run: echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
       - uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -107,14 +108,15 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
-
+  
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
+  
     steps:
       - uses: actions/checkout@v4
-
+      - run: echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+  
       - name: Generate .env
         env:
           E_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -124,7 +126,7 @@ jobs:
           E_LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         run: |
           cat > .env << EOF
-          DOCKER_IMAGE=ghcr.io/${{ github.repository }}:${{ github.sha }}
+          DOCKER_IMAGE=ghcr.io/${IMAGE_NAME}:${{ github.sha }}
           CADDY_DOMAIN=${{ vars.CADDY_DOMAIN }}
           ENVIRONMENT=${{ vars.ENVIRONMENT }}
           APP_NAME=${{ vars.APP_NAME }}
@@ -160,7 +162,7 @@ jobs:
           REVIEW_TOP_WORST_CATEGORIES=${{ vars.REVIEW_TOP_WORST_CATEGORIES }}
           REVIEW_WORST_MESSAGES_PER_CATEGORY=${{ vars.REVIEW_WORST_MESSAGES_PER_CATEGORY }}
           EOF
-
+  
       - name: Copy config files
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -169,7 +171,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           source: ".env,docker-compose.prod.yml,Caddyfile"
           target: /opt/nyaya/
-
+  
       - name: Deploy
         uses: appleboy/ssh-action@v1
         with:
